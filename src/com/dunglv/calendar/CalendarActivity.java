@@ -16,7 +16,7 @@ import com.caldroid.caldroidcustom.CaldroidFragment;
 import com.caldroid.caldroidcustom.CaldroidListener;
 
 @SuppressLint("SimpleDateFormat")
-public class CaldroidSampleActivity extends FragmentActivity {
+public class CalendarActivity extends FragmentActivity {
 	private static final String TAG = "CaldroidSampleActivity";
 	private CaldroidFragment caldroidFragment;
 
