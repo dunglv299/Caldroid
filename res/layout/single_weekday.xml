@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:background="@color/add_shift_background"
+    android:gravity="center_vertical"
+    android:minHeight="60dp"
+    android:orientation="horizontal" >
+
+    <CheckBox
+        android:id="@+id/checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp" />
+
+    <TextView
+        android:id="@+id/weekday"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:text="MON" />
+
+    <Button
+        android:id="@+id/startDate_btn"
+        android:layout_width="98dp"
+        android:layout_height="35dp"
+        android:layout_marginLeft="15dp"
+        android:background="@color/white" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:text="--" />
+
+    <Button
+        android:id="@+id/endDate_btn"
+        android:layout_width="98dp"
+        android:layout_height="35dp"
+        android:layout_marginLeft="10dp"
+        android:background="@color/white" />
+
+</LinearLayout>
