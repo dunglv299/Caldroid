@@ -37,5 +37,6 @@
     <color name="list_background">#ffffff</color>
     <color name="transperant">#00000000</color>
     <color name="list_divider">#ffffff</color>
+    <color name="add_shift_background">#eeeeee</color>
 
 </resources>

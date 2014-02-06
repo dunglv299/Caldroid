@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.os.Bundle;
@@ -98,12 +99,18 @@ public class CalendarActivity extends SherlockFragmentActivity {
 		caldroidFragment.setCaldroidListener(listener);
 	}
 
+	View calendarTv;
 	// Setup listener
 	final CaldroidListener listener = new CaldroidListener() {
 
 		@Override
 		public void onSelectDate(Date date, View view) {
 			Log.e(TAG, formatter.format(date));
+			if (calendarTv != null) {
+				calendarTv.setBackgroundResource(R.color.caldroid_white);
+			}
+			calendarTv = (View) view.findViewById(R.id.calendar_tv);
+			calendarTv.setBackgroundResource(R.drawable.red_border);
 		}
 
 		@Override
@@ -117,7 +124,7 @@ public class CalendarActivity extends SherlockFragmentActivity {
 			Toast.makeText(getApplicationContext(),
 					"Long click " + formatter.format(date), Toast.LENGTH_SHORT)
 					.show();
-			Log.e(TAG, "Long click " + formatter.format(date));
+			goToAddShiftActivity();
 		}
 
 		@Override
@@ -127,6 +134,11 @@ public class CalendarActivity extends SherlockFragmentActivity {
 			}
 		}
 	};
+
+	public void goToAddShiftActivity() {
+		Intent i = new Intent(this, AddShiftActivity.class);
+		startActivity(i);
+	}
 
 	/**
 	 * Init left menu navigation drawer
