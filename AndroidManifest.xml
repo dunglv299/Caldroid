@@ -14,7 +14,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.dunglv.calendar.CalendarActivity"
+            android:name="com.dunglv.calendar.activity.CalendarActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
             <intent-filter>
@@ -24,7 +24,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.dunglv.calendar.AddShiftActivity"
+            android:name="com.dunglv.calendar.activity.AddShiftActivity"
             android:screenOrientation="portrait" >
         </activity>
     </application>

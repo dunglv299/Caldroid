@@ -1,4 +1,4 @@
-package com.dunglv.calendar;
+package com.dunglv.calendar.activity;
 
 import java.util.ArrayList;
 
@@ -6,8 +6,9 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.widget.ListView;
 
-import com.dunglv.customcontrol.AddShiftAdapter;
-import com.dunglv.customcontrol.ItemAddShift;
+import com.dunglv.calendar.R;
+import com.dunglv.calendar.entity.ItemAddShift;
+import com.dunglv.customview.AddShiftAdapter;
 
 public class AddShiftActivity extends Activity {
 	AddShiftAdapter adapter;

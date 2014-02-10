@@ -1,4 +1,4 @@
-package com.dunglv.calendar;
+package com.dunglv.calendar.activity;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -25,6 +25,9 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.caldroid.caldroidcustom.CaldroidFragment;
 import com.caldroid.caldroidcustom.CaldroidListener;
+import com.dunglv.calendar.R;
+import com.dunglv.calendar.entity.ItemNavDrawer;
+import com.dunglv.customview.NavDrawerListAdapter;
 
 @SuppressLint("SimpleDateFormat")
 public class CalendarActivity extends SherlockFragmentActivity {
@@ -43,7 +46,7 @@ public class CalendarActivity extends SherlockFragmentActivity {
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
 	private ActionBarDrawerToggle mDrawerToggle;
-	private ArrayList<NavDrawerItem> navDrawerItems;
+	private ArrayList<ItemNavDrawer> navDrawerItems;
 	private NavDrawerListAdapter adapter;
 	private ActionBar actionBar;
 
@@ -110,7 +113,7 @@ public class CalendarActivity extends SherlockFragmentActivity {
 				calendarTv.setBackgroundResource(R.color.caldroid_white);
 			}
 			calendarTv = (View) view.findViewById(R.id.calendar_tv);
-			calendarTv.setBackgroundResource(R.drawable.red_border);
+			calendarTv.setBackgroundResource(R.drawable.today_bg);
 		}
 
 		@Override
@@ -155,14 +158,14 @@ public class CalendarActivity extends SherlockFragmentActivity {
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		mDrawerList = (ListView) findViewById(R.id.list_slidermenu);
 
-		navDrawerItems = new ArrayList<NavDrawerItem>();
+		navDrawerItems = new ArrayList<ItemNavDrawer>();
 
 		// adding nav drawer items to array
 		// Home
-		navDrawerItems.add(new NavDrawerItem(navMenuTitles[0], navMenuIcons
+		navDrawerItems.add(new ItemNavDrawer(navMenuTitles[0], navMenuIcons
 				.getResourceId(0, -1)));
 		// Find People
-		navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], navMenuIcons
+		navDrawerItems.add(new ItemNavDrawer(navMenuTitles[1], navMenuIcons
 				.getResourceId(1, -1)));
 
 		// Recycle the typed array

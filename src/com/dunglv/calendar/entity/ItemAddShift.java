@@ -1,4 +1,4 @@
-package com.dunglv.customcontrol;
+package com.dunglv.calendar.entity;
 
 public class ItemAddShift {
 	private boolean isEnable;

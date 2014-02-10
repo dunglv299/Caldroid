@@ -1,4 +1,4 @@
-package com.dunglv.customcontrol;
+package com.dunglv.customview;
 
 import java.util.ArrayList;
 
@@ -13,6 +13,7 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.dunglv.calendar.R;
+import com.dunglv.calendar.entity.ItemAddShift;
 
 public class AddShiftAdapter extends BaseAdapter {
 	private Context context;

@@ -1,6 +1,9 @@
-package com.dunglv.calendar;
+package com.dunglv.customview;
 
 import java.util.ArrayList;
+
+import com.dunglv.calendar.R;
+import com.dunglv.calendar.entity.ItemNavDrawer;
 
 import android.app.Activity;
 import android.content.Context;
@@ -14,10 +17,10 @@ import android.widget.TextView;
 public class NavDrawerListAdapter extends BaseAdapter {
 
 	private Context context;
-	private ArrayList<NavDrawerItem> navDrawerItems;
+	private ArrayList<ItemNavDrawer> navDrawerItems;
 
 	public NavDrawerListAdapter(Context context,
-			ArrayList<NavDrawerItem> navDrawerItems) {
+			ArrayList<ItemNavDrawer> navDrawerItems) {
 		this.context = context;
 		this.navDrawerItems = navDrawerItems;
 	}

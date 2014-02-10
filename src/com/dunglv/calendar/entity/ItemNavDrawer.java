@@ -1,14 +1,14 @@
-package com.dunglv.calendar;
+package com.dunglv.calendar.entity;
 
-public class NavDrawerItem {
+public class ItemNavDrawer {
 
 	private String title;
 	private int icon;
 
-	public NavDrawerItem() {
+	public ItemNavDrawer() {
 	}
 
-	public NavDrawerItem(String title, int icon) {
+	public ItemNavDrawer(String title, int icon) {
 		this.title = title;
 		this.icon = icon;
 	}
