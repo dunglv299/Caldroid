@@ -7,8 +7,8 @@ import android.os.Bundle;
 import android.widget.ListView;
 
 import com.dunglv.calendar.R;
+import com.dunglv.calendar.adapter.AddShiftAdapter;
 import com.dunglv.calendar.entity.ItemAddShift;
-import com.dunglv.customview.AddShiftAdapter;
 
 public class AddShiftActivity extends Activity {
 	AddShiftAdapter adapter;

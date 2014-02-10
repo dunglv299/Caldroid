@@ -952,26 +952,29 @@ containing a value of this type.
         public static final int abs__textfield_searchview_right_holo_dark=0x7f02006d;
         public static final int abs__textfield_searchview_right_holo_light=0x7f02006e;
         public static final int abs__toast_frame=0x7f02006f;
-        public static final int calendar_next_arrow=0x7f020070;
-        public static final int calendar_prev_arrow=0x7f020071;
-        public static final int cell_bg=0x7f020072;
-        public static final int continute_btn=0x7f020073;
-        public static final int disable_cell=0x7f020074;
-        public static final int ic_actionbar=0x7f020075;
-        public static final int ic_app=0x7f020076;
-        public static final int ic_calendar=0x7f020077;
-        public static final int ic_clock=0x7f020078;
-        public static final int ic_drawer=0x7f020079;
-        public static final int ic_launcher=0x7f02007a;
-        public static final int left_arrow=0x7f02007b;
-        public static final int list_item_bg_pressed=0x7f02007c;
-        public static final int list_item_bg_selected=0x7f02007d;
-        public static final int list_selector=0x7f02007e;
-        public static final int next_btn=0x7f02007f;
-        public static final int red_border=0x7f020080;
-        public static final int red_border_gray_bg=0x7f020081;
-        public static final int right_arrow=0x7f020082;
-        public static final int today_bg=0x7f020083;
+        public static final int border_view=0x7f020070;
+        public static final int button_bg=0x7f020071;
+        public static final int calendar_next_arrow=0x7f020072;
+        public static final int calendar_prev_arrow=0x7f020073;
+        public static final int cell_bg=0x7f020074;
+        public static final int continute_btn=0x7f020075;
+        public static final int disable_cell=0x7f020076;
+        public static final int ic_actionbar=0x7f020077;
+        public static final int ic_app=0x7f020078;
+        public static final int ic_calendar=0x7f020079;
+        public static final int ic_clock=0x7f02007a;
+        public static final int ic_drawer=0x7f02007b;
+        public static final int ic_launcher=0x7f02007c;
+        public static final int left_arrow=0x7f02007d;
+        public static final int list_item_bg_pressed=0x7f02007e;
+        public static final int list_item_bg_selected=0x7f02007f;
+        public static final int list_selector=0x7f020080;
+        public static final int next_btn=0x7f020081;
+        public static final int red_border=0x7f020082;
+        public static final int red_border_gray_bg=0x7f020083;
+        public static final int right_arrow=0x7f020084;
+        public static final int rotaname_bg=0x7f020085;
+        public static final int today_bg=0x7f020086;
     }
     public static final class id {
         public static final int abs__action_bar=0x7f040020;
@@ -1014,34 +1017,40 @@ containing a value of this type.
         public static final int abs__title=0x7f04001b;
         public static final int abs__up=0x7f04000b;
         public static final int button_layout=0x7f040035;
-        public static final int calendar1=0x7f040034;
-        public static final int calendar_gridview=0x7f040040;
-        public static final int calendar_left_arrow=0x7f04003a;
-        public static final int calendar_month_year_textview=0x7f04003b;
-        public static final int calendar_right_arrow=0x7f04003c;
-        public static final int calendar_title_view=0x7f040039;
-        public static final int calendar_tv=0x7f04003f;
-        public static final int checkbox=0x7f040041;
+        public static final int calendar_gridview=0x7f040043;
+        public static final int calendar_left_arrow=0x7f04003d;
+        public static final int calendar_month_year_textview=0x7f04003e;
+        public static final int calendar_right_arrow=0x7f04003f;
+        public static final int calendar_title_view=0x7f04003c;
+        public static final int calendar_tv=0x7f040042;
+        public static final int checkbox=0x7f040047;
+        public static final int continue_btn=0x7f040039;
         public static final int disableHome=0x7f040009;
         public static final int drawer_layout=0x7f040033;
         public static final int edit_query=0x7f040026;
-        public static final int endDate_btn=0x7f040044;
+        public static final int endDate_btn=0x7f04004a;
         public static final int homeAsUp=0x7f040006;
         public static final int icon=0x7f040037;
         public static final int listMode=0x7f040002;
+        public static final int list_rota=0x7f04003a;
         public static final int list_slidermenu=0x7f040036;
         public static final int list_weekday=0x7f040032;
-        public static final int months_infinite_pager=0x7f04003e;
+        public static final int main_content=0x7f040034;
+        public static final int months_infinite_pager=0x7f040041;
+        public static final int newRota_btn=0x7f04003b;
         public static final int normal=0x7f040001;
+        public static final int rectangleView=0x7f040044;
+        public static final int rota_date=0x7f040046;
+        public static final int rota_name=0x7f040045;
         public static final int showCustom=0x7f040008;
         public static final int showHome=0x7f040005;
         public static final int showTitle=0x7f040007;
-        public static final int startDate_btn=0x7f040043;
+        public static final int startDate_btn=0x7f040049;
         public static final int tabMode=0x7f040003;
         public static final int title=0x7f040038;
         public static final int useLogo=0x7f040004;
-        public static final int weekday=0x7f040042;
-        public static final int weekday_gridview=0x7f04003d;
+        public static final int weekday=0x7f040048;
+        public static final int weekday_gridview=0x7f040040;
         public static final int wrap_content=0x7f040000;
     }
     public static final class integer {
@@ -1072,12 +1081,15 @@ containing a value of this type.
         public static final int activity_add_shift=0x7f030015;
         public static final int activity_main=0x7f030016;
         public static final int drawer_single_item=0x7f030017;
-        public static final int lib_calendar_view=0x7f030018;
-        public static final int lib_date_cell=0x7f030019;
-        public static final int lib_date_grid_fragment=0x7f03001a;
-        public static final int sherlock_spinner_dropdown_item=0x7f03001b;
-        public static final int sherlock_spinner_item=0x7f03001c;
-        public static final int single_weekday=0x7f03001d;
+        public static final int fragment_new_rota=0x7f030018;
+        public static final int fragment_rota_list=0x7f030019;
+        public static final int lib_calendar_view=0x7f03001a;
+        public static final int lib_date_cell=0x7f03001b;
+        public static final int lib_date_grid_fragment=0x7f03001c;
+        public static final int sherlock_spinner_dropdown_item=0x7f03001d;
+        public static final int sherlock_spinner_item=0x7f03001e;
+        public static final int single_rota_layout=0x7f03001f;
+        public static final int single_weekday=0x7f030020;
     }
     public static final class string {
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
@@ -1120,7 +1132,11 @@ containing a value of this type.
          */
         public static final int abs__shareactionprovider_share_with_application=0x7f090007;
         public static final int app_name=0x7f09000d;
+        public static final int continue_btn=0x7f090012;
         public static final int customize=0x7f09000e;
+        /**  Manage shift 
+         */
+        public static final int new_rota=0x7f090011;
         public static final int show_dialog=0x7f09000f;
         public static final int undo=0x7f090010;
     }

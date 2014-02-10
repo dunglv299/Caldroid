@@ -16,5 +16,8 @@
         <item>@drawable/ic_clock</item>
         <item>@drawable/ic_calendar</item>
     </array>
+    <!-- Manage shift -->
+    <string name="new_rota">New Rota</string>
+    <string name="continue_btn">Continue</string>
 
 </resources>
