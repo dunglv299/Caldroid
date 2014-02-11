@@ -5,5 +5,7 @@
     <!-- add rota screen -->
     <dimen name="textview_marginLeft">10dp</dimen>
     <dimen name="textview_marginTop">17dp</dimen>
+    <dimen name="next_textSize">12sp</dimen>
+    <dimen name="item_rota_margin_top">12sp</dimen>
 
 </resources>

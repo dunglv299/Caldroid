@@ -18,14 +18,14 @@
             android:layout_alignBaseline="@+id/startDate_btn"
             android:layout_alignBottom="@+id/startDate_btn"
             android:layout_alignParentLeft="true"
-            android:layout_marginLeft="31dp"
+            android:layout_marginLeft="25dp"
             android:text="MON" />
 
         <Button
             android:id="@+id/startDate_btn"
             android:layout_width="98dp"
             android:layout_height="35dp"
-            android:layout_marginLeft="58dp"
+            android:layout_marginLeft="28dp"
             android:layout_toRightOf="@+id/weekday"
             android:background="@color/white" />
 
@@ -57,12 +57,13 @@
 
         <EditText
             android:id="@+id/hour_edittext"
-            android:layout_width="wrap_content"
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/worktime_tv"
             android:layout_alignLeft="@+id/endDate_btn"
+            android:layout_marginTop="40dp"
             android:layout_toRightOf="@+id/worktime_tv"
-            android:inputType="numberDecimal" />
+            android:inputType="numberSigned"
+            android:maxLength="2" />
 
         <TextView
             android:layout_width="wrap_content"

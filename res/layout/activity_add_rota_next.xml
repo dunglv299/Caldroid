@@ -1,0 +1,599 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/add_shift_background" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/button_layout"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/week_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="20dp"
+            android:text="WEEK 1"
+            android:textColor="@color/caldroid_cyan"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:background="@color/caldroid_cyan" />
+
+        <ScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        android:id="@+id/weekday"
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@+id/startDate_btn"
+                        android:layout_alignBottom="@+id/startDate_btn"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginLeft="25dp"
+                        android:text="MON" />
+
+                    <Button
+                        android:id="@+id/startDate_btn"
+                        android:layout_width="98dp"
+                        android:layout_height="35dp"
+                        android:layout_marginLeft="28dp"
+                        android:layout_toRightOf="@+id/weekday"
+                        android:background="@color/white" />
+
+                    <TextView
+                        android:id="@+id/textview1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@+id/startDate_btn"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toRightOf="@+id/startDate_btn"
+                        android:text="--" />
+
+                    <Button
+                        android:id="@+id/endDate_btn"
+                        android:layout_width="98dp"
+                        android:layout_height="35dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toRightOf="@+id/textview1"
+                        android:background="@color/white" />
+
+                    <TextView
+                        android:id="@+id/worktime_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignLeft="@+id/startDate_btn"
+                        android:layout_below="@+id/startDate_btn"
+                        android:layout_marginTop="15dp"
+                        android:text="@string/work_time" />
+
+                    <EditText
+                        android:id="@+id/hour_edittext"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignLeft="@+id/endDate_btn"
+                        android:layout_marginTop="40dp"
+                        android:layout_toRightOf="@+id/worktime_tv"
+                        android:inputType="numberSigned"
+                        android:maxLength="2" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/worktime_tv"
+                        android:layout_toRightOf="@+id/hour_edittext"
+                        android:text="@string/hours" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_alignParentBottom="true"
+                        android:background="@color/gray_line" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/item_rota_margin_top" >
+
+                    <TextView
+                        android:id="@+id/weekday"
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@+id/startDate_btn"
+                        android:layout_alignBottom="@+id/startDate_btn"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginLeft="25dp"
+                        android:text="TUE" />
+
+                    <Button
+                        android:id="@+id/startDate_btn"
+                        android:layout_width="98dp"
+                        android:layout_height="35dp"
+                        android:layout_marginLeft="28dp"
+                        android:layout_toRightOf="@+id/weekday"
+                        android:background="@color/white" />
+
+                    <TextView
+                        android:id="@+id/textview1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@+id/startDate_btn"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toRightOf="@+id/startDate_btn"
+                        android:text="--" />
+
+                    <Button
+                        android:id="@+id/endDate_btn"
+                        android:layout_width="98dp"
+                        android:layout_height="35dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toRightOf="@+id/textview1"
+                        android:background="@color/white" />
+
+                    <TextView
+                        android:id="@+id/worktime_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignLeft="@+id/startDate_btn"
+                        android:layout_below="@+id/startDate_btn"
+                        android:layout_marginTop="15dp"
+                        android:text="@string/work_time" />
+
+                    <EditText
+                        android:id="@+id/hour_edittext"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignLeft="@+id/endDate_btn"
+                        android:layout_marginTop="40dp"
+                        android:layout_toRightOf="@+id/worktime_tv"
+                        android:inputType="numberSigned"
+                        android:maxLength="2" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/worktime_tv"
+                        android:layout_toRightOf="@+id/hour_edittext"
+                        android:text="@string/hours" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_alignParentBottom="true"
+                        android:background="@color/gray_line" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/item_rota_margin_top" >
+
+                    <TextView
+                        android:id="@+id/weekday"
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@+id/startDate_btn"
+                        android:layout_alignBottom="@+id/startDate_btn"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginLeft="25dp"
+                        android:text="WED" />
+
+                    <Button
+                        android:id="@+id/startDate_btn"
+                        android:layout_width="98dp"
+                        android:layout_height="35dp"
+                        android:layout_marginLeft="28dp"
+                        android:layout_toRightOf="@+id/weekday"
+                        android:background="@color/white" />
+
+                    <TextView
+                        android:id="@+id/textview1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@+id/startDate_btn"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toRightOf="@+id/startDate_btn"
+                        android:text="--" />
+
+                    <Button
+                        android:id="@+id/endDate_btn"
+                        android:layout_width="98dp"
+                        android:layout_height="35dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toRightOf="@+id/textview1"
+                        android:background="@color/white" />
+
+                    <TextView
+                        android:id="@+id/worktime_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignLeft="@+id/startDate_btn"
+                        android:layout_below="@+id/startDate_btn"
+                        android:layout_marginTop="15dp"
+                        android:text="@string/work_time" />
+
+                    <EditText
+                        android:id="@+id/hour_edittext"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignLeft="@+id/endDate_btn"
+                        android:layout_marginTop="40dp"
+                        android:layout_toRightOf="@+id/worktime_tv"
+                        android:inputType="numberSigned"
+                        android:maxLength="2" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/worktime_tv"
+                        android:layout_toRightOf="@+id/hour_edittext"
+                        android:text="@string/hours" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_alignParentBottom="true"
+                        android:background="@color/gray_line" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/item_rota_margin_top" >
+
+                    <TextView
+                        android:id="@+id/weekday"
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@+id/startDate_btn"
+                        android:layout_alignBottom="@+id/startDate_btn"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginLeft="25dp"
+                        android:text="THU" />
+
+                    <Button
+                        android:id="@+id/startDate_btn"
+                        android:layout_width="98dp"
+                        android:layout_height="35dp"
+                        android:layout_marginLeft="28dp"
+                        android:layout_toRightOf="@+id/weekday"
+                        android:background="@color/white" />
+
+                    <TextView
+                        android:id="@+id/textview1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@+id/startDate_btn"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toRightOf="@+id/startDate_btn"
+                        android:text="--" />
+
+                    <Button
+                        android:id="@+id/endDate_btn"
+                        android:layout_width="98dp"
+                        android:layout_height="35dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toRightOf="@+id/textview1"
+                        android:background="@color/white" />
+
+                    <TextView
+                        android:id="@+id/worktime_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignLeft="@+id/startDate_btn"
+                        android:layout_below="@+id/startDate_btn"
+                        android:layout_marginTop="15dp"
+                        android:text="@string/work_time" />
+
+                    <EditText
+                        android:id="@+id/hour_edittext"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignLeft="@+id/endDate_btn"
+                        android:layout_marginTop="40dp"
+                        android:layout_toRightOf="@+id/worktime_tv"
+                        android:inputType="numberSigned"
+                        android:maxLength="2" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/worktime_tv"
+                        android:layout_toRightOf="@+id/hour_edittext"
+                        android:text="@string/hours" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_alignParentBottom="true"
+                        android:background="@color/gray_line" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/item_rota_margin_top" >
+
+                    <TextView
+                        android:id="@+id/weekday"
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@+id/startDate_btn"
+                        android:layout_alignBottom="@+id/startDate_btn"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginLeft="25dp"
+                        android:text="FRI" />
+
+                    <Button
+                        android:id="@+id/startDate_btn"
+                        android:layout_width="98dp"
+                        android:layout_height="35dp"
+                        android:layout_marginLeft="28dp"
+                        android:layout_toRightOf="@+id/weekday"
+                        android:background="@color/white" />
+
+                    <TextView
+                        android:id="@+id/textview1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@+id/startDate_btn"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toRightOf="@+id/startDate_btn"
+                        android:text="--" />
+
+                    <Button
+                        android:id="@+id/endDate_btn"
+                        android:layout_width="98dp"
+                        android:layout_height="35dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toRightOf="@+id/textview1"
+                        android:background="@color/white" />
+
+                    <TextView
+                        android:id="@+id/worktime_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignLeft="@+id/startDate_btn"
+                        android:layout_below="@+id/startDate_btn"
+                        android:layout_marginTop="15dp"
+                        android:text="Work Time" />
+
+                    <EditText
+                        android:id="@+id/hour_edittext"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignLeft="@+id/endDate_btn"
+                        android:layout_marginTop="40dp"
+                        android:layout_toRightOf="@+id/worktime_tv"
+                        android:inputType="numberSigned"
+                        android:maxLength="2" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/worktime_tv"
+                        android:layout_toRightOf="@+id/hour_edittext"
+                        android:text="@string/hours" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_alignParentBottom="true"
+                        android:background="@color/gray_line" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/item_rota_margin_top" >
+
+                    <TextView
+                        android:id="@+id/weekday"
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@+id/startDate_btn"
+                        android:layout_alignBottom="@+id/startDate_btn"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginLeft="25dp"
+                        android:text="SAT" />
+
+                    <Button
+                        android:id="@+id/startDate_btn"
+                        android:layout_width="98dp"
+                        android:layout_height="35dp"
+                        android:layout_marginLeft="28dp"
+                        android:layout_toRightOf="@+id/weekday"
+                        android:background="@color/white" />
+
+                    <TextView
+                        android:id="@+id/textview1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@+id/startDate_btn"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toRightOf="@+id/startDate_btn"
+                        android:text="--" />
+
+                    <Button
+                        android:id="@+id/endDate_btn"
+                        android:layout_width="98dp"
+                        android:layout_height="35dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toRightOf="@+id/textview1"
+                        android:background="@color/white" />
+
+                    <TextView
+                        android:id="@+id/worktime_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignLeft="@+id/startDate_btn"
+                        android:layout_below="@+id/startDate_btn"
+                        android:layout_marginTop="15dp"
+                        android:text="@string/work_time" />
+
+                    <EditText
+                        android:id="@+id/hour_edittext"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignLeft="@+id/endDate_btn"
+                        android:layout_marginTop="40dp"
+                        android:layout_toRightOf="@+id/worktime_tv"
+                        android:inputType="numberSigned"
+                        android:maxLength="2" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/worktime_tv"
+                        android:layout_toRightOf="@+id/hour_edittext"
+                        android:text="@string/hours" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_alignParentBottom="true"
+                        android:background="@color/gray_line" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/item_rota_margin_top" >
+
+                    <TextView
+                        android:id="@+id/weekday"
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@+id/startDate_btn"
+                        android:layout_alignBottom="@+id/startDate_btn"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginLeft="25dp"
+                        android:text="SUN" />
+
+                    <Button
+                        android:id="@+id/startDate_btn"
+                        android:layout_width="98dp"
+                        android:layout_height="35dp"
+                        android:layout_marginLeft="28dp"
+                        android:layout_toRightOf="@+id/weekday"
+                        android:background="@color/white" />
+
+                    <TextView
+                        android:id="@+id/textview1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@+id/startDate_btn"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toRightOf="@+id/startDate_btn"
+                        android:text="--" />
+
+                    <Button
+                        android:id="@+id/endDate_btn"
+                        android:layout_width="98dp"
+                        android:layout_height="35dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toRightOf="@+id/textview1"
+                        android:background="@color/white" />
+
+                    <TextView
+                        android:id="@+id/worktime_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignLeft="@+id/startDate_btn"
+                        android:layout_below="@+id/startDate_btn"
+                        android:layout_marginTop="15dp"
+                        android:text="@string/work_time" />
+
+                    <EditText
+                        android:id="@+id/hour_edittext"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignLeft="@+id/endDate_btn"
+                        android:layout_marginTop="40dp"
+                        android:layout_toRightOf="@+id/worktime_tv"
+                        android:inputType="numberSigned"
+                        android:maxLength="2" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/worktime_tv"
+                        android:layout_toRightOf="@+id/hour_edittext"
+                        android:text="@string/hours" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_alignParentBottom="true"
+                        android:background="@color/gray_line" />
+                </RelativeLayout>
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/button_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="11dp"
+        android:layout_marginTop="10dp" >
+
+        <Button
+            android:id="@+id/next_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="17dp"
+            android:background="@color/green"
+            android:text="@string/next"
+            android:textColor="@color/white"
+            android:textSize="@dimen/next_textSize" />
+
+        <Button
+            android:id="@+id/copy_to_next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/next_btn"
+            android:background="@color/green"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:text="@string/copy_to_next"
+            android:textColor="@color/white"
+            android:textSize="@dimen/next_textSize" />
+
+        <Button
+            android:id="@+id/make_all_week_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="17dp"
+            android:background="@color/green"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:text="@string/make_all_week"
+            android:textColor="@color/white"
+            android:textSize="@dimen/next_textSize" />
+    </RelativeLayout>
+
+</RelativeLayout>

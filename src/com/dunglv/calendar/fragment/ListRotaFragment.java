@@ -52,7 +52,7 @@ public class ListRotaFragment extends BaseFragment implements OnClickListener {
 		adapter = new ListRotaAdapter(getActivity(), listRota);
 		mListView.setAdapter(adapter);
 		mListView.setDividerHeight(0);
-		addNewRota();
+		// addNewRota();
 	}
 
 	public void initDao() {

@@ -840,6 +840,8 @@ containing a value of this type.
         /**  Minimum width of the search view text entry area. 
          */
         public static final int abs__search_view_text_min_width=0x7f07000b;
+        public static final int item_rota_margin_top=0x7f070013;
+        public static final int next_textSize=0x7f070012;
         public static final int normal_textSize=0x7f07000f;
         /**  add rota screen 
          */
@@ -1022,49 +1024,48 @@ containing a value of this type.
         public static final int abs__title=0x7f04001b;
         public static final int abs__up=0x7f04000b;
         public static final int addRota_frame=0x7f040032;
-        public static final int button_layout=0x7f040035;
-        public static final int calendar_gridview=0x7f040049;
-        public static final int calendar_left_arrow=0x7f040043;
-        public static final int calendar_month_year_textview=0x7f040044;
-        public static final int calendar_right_arrow=0x7f040045;
-        public static final int calendar_title_view=0x7f040042;
-        public static final int calendar_tv=0x7f040048;
-        public static final int color_spinner=0x7f040039;
-        public static final int continue_btn=0x7f04003a;
-        public static final int copy_to_next=0x7f04003e;
+        public static final int button_layout=0x7f040033;
+        public static final int calendar_gridview=0x7f04004e;
+        public static final int calendar_left_arrow=0x7f040048;
+        public static final int calendar_month_year_textview=0x7f040049;
+        public static final int calendar_right_arrow=0x7f04004a;
+        public static final int calendar_title_view=0x7f040047;
+        public static final int calendar_tv=0x7f04004d;
+        public static final int color_spinner=0x7f040043;
+        public static final int continue_btn=0x7f040044;
+        public static final int copy_to_next=0x7f04003c;
         public static final int disableHome=0x7f040009;
-        public static final int drawer_layout=0x7f040033;
+        public static final int drawer_layout=0x7f04003e;
         public static final int edit_query=0x7f040026;
-        public static final int endDate_btn=0x7f040051;
+        public static final int endDate_btn=0x7f040038;
         public static final int homeAsUp=0x7f040006;
-        public static final int hour_edittext=0x7f040053;
-        public static final int icon=0x7f040037;
+        public static final int hour_edittext=0x7f04003a;
+        public static final int icon=0x7f040041;
         public static final int listMode=0x7f040002;
-        public static final int list_rota=0x7f040040;
-        public static final int list_slidermenu=0x7f040036;
-        public static final int list_weekday=0x7f04003c;
-        public static final int main_content=0x7f040034;
-        public static final int make_all_week_btn=0x7f04003f;
-        public static final int months_infinite_pager=0x7f040047;
-        public static final int newRota_btn=0x7f040041;
-        public static final int next_btn=0x7f04003d;
+        public static final int list_rota=0x7f040045;
+        public static final int list_slidermenu=0x7f040040;
+        public static final int main_content=0x7f04003f;
+        public static final int make_all_week_btn=0x7f04003d;
+        public static final int months_infinite_pager=0x7f04004c;
+        public static final int newRota_btn=0x7f040046;
+        public static final int next_btn=0x7f04003b;
         public static final int normal=0x7f040001;
-        public static final int rectangleView=0x7f04004a;
-        public static final int rota_date=0x7f04004c;
-        public static final int rota_name=0x7f04004b;
+        public static final int rectangleView=0x7f04004f;
+        public static final int rota_date=0x7f040051;
+        public static final int rota_name=0x7f040050;
         public static final int showCustom=0x7f040008;
         public static final int showHome=0x7f040005;
         public static final int showTitle=0x7f040007;
-        public static final int startDate_btn=0x7f04004f;
+        public static final int startDate_btn=0x7f040036;
         public static final int tabMode=0x7f040003;
-        public static final int text_spinner=0x7f04004d;
-        public static final int textview1=0x7f040050;
-        public static final int title=0x7f040038;
+        public static final int text_spinner=0x7f040052;
+        public static final int textview1=0x7f040037;
+        public static final int title=0x7f040042;
         public static final int useLogo=0x7f040004;
-        public static final int week_number=0x7f04003b;
-        public static final int weekday=0x7f04004e;
-        public static final int weekday_gridview=0x7f040046;
-        public static final int worktime_tv=0x7f040052;
+        public static final int week_number=0x7f040034;
+        public static final int weekday=0x7f040035;
+        public static final int weekday_gridview=0x7f04004b;
+        public static final int worktime_tv=0x7f040039;
         public static final int wrap_content=0x7f040000;
     }
     public static final class integer {
@@ -1093,10 +1094,10 @@ containing a value of this type.
         public static final int abs__search_view=0x7f030013;
         public static final int abs__simple_dropdown_hint=0x7f030014;
         public static final int activity_add_rota=0x7f030015;
-        public static final int activity_main=0x7f030016;
-        public static final int drawer_single_item=0x7f030017;
-        public static final int fragment_add_rota=0x7f030018;
-        public static final int fragment_add_rota_next=0x7f030019;
+        public static final int activity_add_rota_next=0x7f030016;
+        public static final int activity_main=0x7f030017;
+        public static final int drawer_single_item=0x7f030018;
+        public static final int fragment_add_rota=0x7f030019;
         public static final int fragment_rota_list=0x7f03001a;
         public static final int lib_calendar_view=0x7f03001b;
         public static final int lib_date_cell=0x7f03001c;
@@ -1166,6 +1167,7 @@ containing a value of this type.
         public static final int rota_name_hint=0x7f090014;
         public static final int show_dialog=0x7f09000f;
         public static final int undo=0x7f090010;
+        public static final int work_time=0x7f09001e;
     }
     public static final class style {
         public static final int ActionBar=0x7f0a005b;

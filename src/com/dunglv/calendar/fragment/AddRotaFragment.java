@@ -1,6 +1,7 @@
 package com.dunglv.calendar.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,6 +17,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.dunglv.calendar.R;
+import com.dunglv.calendar.activity.AddRotaNextActivity;
 
 public class AddRotaFragment extends BaseFragment implements OnClickListener {
 	String[] colorArray;
@@ -46,7 +48,8 @@ public class AddRotaFragment extends BaseFragment implements OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.continue_btn:
-			replaceFragment(new AddRotaNextFragment(), false);
+			Intent intent = new Intent(getActivity(), AddRotaNextActivity.class);
+			startActivity(intent);
 			break;
 
 		default:

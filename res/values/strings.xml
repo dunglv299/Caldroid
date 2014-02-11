@@ -30,6 +30,7 @@
     <string name="next">NEXT</string>
     <string name="copy_to_next">COPY TO NEXT</string>
     <string name="make_all_week">MAKE ALL WEEKS</string>
+    <string name="work_time">Work Time</string>
 
     <array name="color_spinner">
         <item>Black</item>
