@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="normal_textSize">17sp</dimen>
+    <!-- add rota screen -->
+    <dimen name="textview_marginLeft">10dp</dimen>
+    <dimen name="textview_marginTop">17dp</dimen>
+
+</resources>

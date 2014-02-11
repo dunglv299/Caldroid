@@ -27,6 +27,10 @@
             android:name="com.dunglv.calendar.activity.AddShiftActivity"
             android:screenOrientation="portrait" >
         </activity>
+        <activity
+            android:name="com.dunglv.calendar.activity.AddRotaActivity"
+            android:screenOrientation="portrait" >
+        </activity>
     </application>
 
 </manifest>

@@ -1,25 +1,9 @@
 package com.dunglv.calendar.entity;
 
 public class ItemAddShift {
-	private boolean isEnable;
 	private String weekDay;
 	private long startTime;
 	private long endTime;
-
-	/**
-	 * @return the isEnable
-	 */
-	public boolean isEnable() {
-		return isEnable;
-	}
-
-	/**
-	 * @param isEnable
-	 *            the isEnable to set
-	 */
-	public void setEnable(boolean isEnable) {
-		this.isEnable = isEnable;
-	}
 
 	/**
 	 * @return the weekDay

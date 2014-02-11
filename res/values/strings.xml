@@ -18,6 +18,31 @@
     </array>
     <!-- Manage shift -->
     <string name="new_rota">New Rota</string>
-    <string name="continue_btn">Continue</string>
+    <string name="continue_btn">CONTINUE</string>
+    <string name="name">Name</string>
+    <string name="rota_name_hint">Input rota name</string>
+    <string name="how_many_week">How many weeks</string>
+    <string name="how_many_week_hint">Input number of weeks</string>
+    <string name="repeat_rota_for">Repeat Rota for</string>
+    <string name="repeat_rota_for_hint">Input number of times</string>
+    <string name="color">Color</string>
+    <string name="hours">hours</string>
+    <string name="next">NEXT</string>
+    <string name="copy_to_next">COPY TO NEXT</string>
+    <string name="make_all_week">MAKE ALL WEEKS</string>
+
+    <array name="color_spinner">
+        <item>Black</item>
+        <item>Red</item>
+        <item>Green</item>
+        <item>Blue</item>
+        <item>White</item>
+        <item>Gray</item>
+        <item>Cyan</item>
+        <item>Magenta</item>
+        <item>Yellow</item>
+        <item>Lightgray</item>
+        <item>Darkgray</item>
+    </array>
 
 </resources>

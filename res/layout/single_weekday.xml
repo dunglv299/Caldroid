@@ -4,40 +4,72 @@
     android:layout_height="100dp"
     android:background="@color/add_shift_background"
     android:gravity="center_vertical"
-    android:minHeight="60dp"
-    android:orientation="horizontal" >
+    android:minHeight="100dp"
+    android:orientation="vertical" >
 
-    <CheckBox
-        android:id="@+id/checkbox"
+    <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp" />
+        android:layout_height="wrap_content" >
 
-    <TextView
-        android:id="@+id/weekday"
-        android:layout_width="40dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:text="MON" />
+        <TextView
+            android:id="@+id/weekday"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/startDate_btn"
+            android:layout_alignBottom="@+id/startDate_btn"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="31dp"
+            android:text="MON" />
 
-    <Button
-        android:id="@+id/startDate_btn"
-        android:layout_width="98dp"
-        android:layout_height="35dp"
-        android:layout_marginLeft="15dp"
-        android:background="@color/white" />
+        <Button
+            android:id="@+id/startDate_btn"
+            android:layout_width="98dp"
+            android:layout_height="35dp"
+            android:layout_marginLeft="58dp"
+            android:layout_toRightOf="@+id/weekday"
+            android:background="@color/white" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:text="--" />
+        <TextView
+            android:id="@+id/textview1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/startDate_btn"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/startDate_btn"
+            android:text="--" />
 
-    <Button
-        android:id="@+id/endDate_btn"
-        android:layout_width="98dp"
-        android:layout_height="35dp"
-        android:layout_marginLeft="10dp"
-        android:background="@color/white" />
+        <Button
+            android:id="@+id/endDate_btn"
+            android:layout_width="98dp"
+            android:layout_height="35dp"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/textview1"
+            android:background="@color/white" />
+
+        <TextView
+            android:id="@+id/worktime_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/startDate_btn"
+            android:layout_below="@+id/startDate_btn"
+            android:layout_marginTop="15dp"
+            android:text="Work Time" />
+
+        <EditText
+            android:id="@+id/hour_edittext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/worktime_tv"
+            android:layout_alignLeft="@+id/endDate_btn"
+            android:layout_toRightOf="@+id/worktime_tv"
+            android:inputType="numberDecimal" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/worktime_tv"
+            android:layout_toRightOf="@+id/hour_edittext"
+            android:text="hours" />
+    </RelativeLayout>
 
 </LinearLayout>

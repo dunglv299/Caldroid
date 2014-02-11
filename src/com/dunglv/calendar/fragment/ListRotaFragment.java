@@ -3,6 +3,7 @@ package com.dunglv.calendar.fragment;
 import java.util.Calendar;
 import java.util.List;
 
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +15,7 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.dunglv.calendar.R;
+import com.dunglv.calendar.activity.AddRotaActivity;
 import com.dunglv.calendar.adapter.ListRotaAdapter;
 import com.dunglv.calendar.dao.DaoMaster;
 import com.dunglv.calendar.dao.DaoMaster.DevOpenHelper;
@@ -73,7 +75,8 @@ public class ListRotaFragment extends BaseFragment implements OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.newRota_btn:
-			replaceFragment(new NewRotaFragment(), true);
+			Intent i = new Intent(getActivity(), AddRotaActivity.class);
+			startActivity(i);
 			break;
 
 		default:
