@@ -48,6 +48,7 @@ public class AddRotaActivity extends FragmentActivity implements
 		newRotaBtn.setOnClickListener(this);
 		mNameEd = (EditText) findViewById(R.id.rota_name);
 		mWeekEd = (EditText) findViewById(R.id.week_number);
+		mWeekEd.setText("3");
 		mRepeatTimeEd = (EditText) findViewById(R.id.time_number);
 	}
 

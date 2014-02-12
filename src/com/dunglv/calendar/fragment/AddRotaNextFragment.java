@@ -23,6 +23,7 @@ public class AddRotaNextFragment extends BaseFragment implements
 	Button btnCopyNext;
 	Button btnMakeAll;
 	TextView tvWeekNumber;
+	private boolean isNextPress;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,6 +50,7 @@ public class AddRotaNextFragment extends BaseFragment implements
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		sharedPreferences = new MySharedPreferences(getActivity());
+		isNextPress = false;
 		weekCount = sharedPreferences.getInt(Utils.WEEK_REPEAT);
 		currentWeek = sharedPreferences.getInt(Utils.CURRENT_WEEK);
 		if (currentWeek == weekCount) {
@@ -56,7 +58,6 @@ public class AddRotaNextFragment extends BaseFragment implements
 		}
 		Log.e("" + currentWeek, "" + weekCount);
 		tvWeekNumber.setText("WEEK " + currentWeek);
-
 	}
 
 	@Override
@@ -71,6 +72,7 @@ public class AddRotaNextFragment extends BaseFragment implements
 			}
 			replaceFragment(R.id.frame_add_next, new AddRotaNextFragment(),
 					true);
+			isNextPress = true;
 			break;
 		case R.id.copy_to_next:
 
@@ -83,4 +85,13 @@ public class AddRotaNextFragment extends BaseFragment implements
 		}
 	}
 
+	@Override
+	public void onStop() {
+		super.onStop();
+		Log.e(TAG, isNextPress+"");
+		if (!isNextPress) {
+			currentWeek--;
+			sharedPreferences.putInt(Utils.CURRENT_WEEK, currentWeek);
+		}
+	}
 }

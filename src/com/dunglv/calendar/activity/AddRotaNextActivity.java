@@ -41,13 +41,4 @@ public class AddRotaNextActivity extends FragmentActivity {
 		sharedPreferences.putInt(Utils.CURRENT_WEEK, 0);
 		sharedPreferences.putInt(Utils.WEEK_REPEAT, 1);
 	}
-
-	@Override
-	public void onBackPressed() {
-		super.onBackPressed();
-		int currentWeek = sharedPreferences.getInt(Utils.CURRENT_WEEK);
-		currentWeek--;
-		sharedPreferences.putInt(Utils.CURRENT_WEEK, currentWeek);
-		Log.e(TAG, "onBackPressed");
-	}
 }
