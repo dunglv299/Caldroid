@@ -31,6 +31,8 @@ public class RotaDao extends AbstractDao<Rota, Long> {
         public final static Property TimeRepeat = new Property(5, Boolean.class, "timeRepeat", false, "TIME_REPEAT");
     };
 
+    private DaoSession daoSession;
+
 
     public RotaDao(DaoConfig config) {
         super(config);
@@ -38,6 +40,7 @@ public class RotaDao extends AbstractDao<Rota, Long> {
     
     public RotaDao(DaoConfig config, DaoSession daoSession) {
         super(config, daoSession);
+        this.daoSession = daoSession;
     }
 
     /** Creates the underlying database table. */
@@ -92,6 +95,12 @@ public class RotaDao extends AbstractDao<Rota, Long> {
         if (timeRepeat != null) {
             stmt.bindLong(6, timeRepeat ? 1l: 0l);
         }
+    }
+
+    @Override
+    protected void attachEntity(Rota entity) {
+        super.attachEntity(entity);
+        entity.__setDaoSession(daoSession);
     }
 
     /** @inheritdoc */

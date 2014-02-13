@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 
 import com.dunglv.calendar.R;
 import com.dunglv.calendar.fragment.AddRotaNextFragment;
@@ -41,4 +40,5 @@ public class AddRotaNextActivity extends FragmentActivity {
 		sharedPreferences.putInt(Utils.CURRENT_WEEK, 0);
 		sharedPreferences.putInt(Utils.WEEK_REPEAT, 1);
 	}
+
 }

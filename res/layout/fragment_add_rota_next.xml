@@ -45,14 +45,14 @@
                         android:id="@+id/weekday"
                         android:layout_width="40dp"
                         android:layout_height="wrap_content"
-                        android:layout_alignBaseline="@+id/startDate_btn"
-                        android:layout_alignBottom="@+id/startDate_btn"
+                        android:layout_alignBaseline="@+id/startDate_btn1"
+                        android:layout_alignBottom="@+id/startDate_btn1"
                         android:layout_alignParentLeft="true"
                         android:layout_marginLeft="25dp"
                         android:text="MON" />
 
                     <Button
-                        android:id="@+id/startDate_btn"
+                        android:id="@+id/startDate_btn1"
                         android:layout_width="98dp"
                         android:layout_height="35dp"
                         android:layout_marginLeft="28dp"
@@ -63,13 +63,13 @@
                         android:id="@+id/textview1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignBaseline="@+id/startDate_btn"
+                        android:layout_alignBaseline="@+id/startDate_btn1"
                         android:layout_marginLeft="10dp"
-                        android:layout_toRightOf="@+id/startDate_btn"
+                        android:layout_toRightOf="@+id/startDate_btn1"
                         android:text="--" />
 
                     <Button
-                        android:id="@+id/endDate_btn"
+                        android:id="@+id/endDate_btn1"
                         android:layout_width="98dp"
                         android:layout_height="35dp"
                         android:layout_marginLeft="10dp"
@@ -80,8 +80,8 @@
                         android:id="@+id/worktime_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignLeft="@+id/startDate_btn"
-                        android:layout_below="@+id/startDate_btn"
+                        android:layout_alignLeft="@+id/startDate_btn1"
+                        android:layout_below="@+id/startDate_btn1"
                         android:layout_marginTop="15dp"
                         android:text="@string/work_time" />
 
@@ -89,7 +89,7 @@
                         android:id="@+id/hour_edittext"
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
-                        android:layout_alignLeft="@+id/endDate_btn"
+                        android:layout_alignLeft="@+id/endDate_btn1"
                         android:layout_marginTop="40dp"
                         android:layout_toRightOf="@+id/worktime_tv"
                         android:inputType="numberDecimal"
@@ -118,14 +118,14 @@
                         android:id="@+id/weekday"
                         android:layout_width="40dp"
                         android:layout_height="wrap_content"
-                        android:layout_alignBaseline="@+id/startDate_btn"
-                        android:layout_alignBottom="@+id/startDate_btn"
+                        android:layout_alignBaseline="@+id/startDate_btn2"
+                        android:layout_alignBottom="@+id/startDate_btn2"
                         android:layout_alignParentLeft="true"
                         android:layout_marginLeft="25dp"
                         android:text="TUE" />
 
                     <Button
-                        android:id="@+id/startDate_btn"
+                        android:id="@+id/startDate_btn2"
                         android:layout_width="98dp"
                         android:layout_height="35dp"
                         android:layout_marginLeft="28dp"
@@ -133,46 +133,46 @@
                         android:background="@color/white" />
 
                     <TextView
-                        android:id="@+id/textview1"
+                        android:id="@+id/textview2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignBaseline="@+id/startDate_btn"
+                        android:layout_alignBaseline="@+id/startDate_btn2"
                         android:layout_marginLeft="10dp"
-                        android:layout_toRightOf="@+id/startDate_btn"
+                        android:layout_toRightOf="@+id/startDate_btn2"
                         android:text="--" />
 
                     <Button
-                        android:id="@+id/endDate_btn"
+                        android:id="@+id/endDate_btn2"
                         android:layout_width="98dp"
                         android:layout_height="35dp"
                         android:layout_marginLeft="10dp"
-                        android:layout_toRightOf="@+id/textview1"
+                        android:layout_toRightOf="@+id/textview2"
                         android:background="@color/white" />
 
                     <TextView
-                        android:id="@+id/worktime_tv"
+                        android:id="@+id/worktime_tv2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignLeft="@+id/startDate_btn"
-                        android:layout_below="@+id/startDate_btn"
+                        android:layout_alignLeft="@+id/startDate_btn2"
+                        android:layout_below="@+id/startDate_btn2"
                         android:layout_marginTop="15dp"
                         android:text="@string/work_time" />
 
                     <EditText
-                        android:id="@+id/hour_edittext"
+                        android:id="@+id/hour_edittext2"
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
-                        android:layout_alignLeft="@+id/endDate_btn"
+                        android:layout_alignLeft="@+id/endDate_btn2"
                         android:layout_marginTop="40dp"
-                        android:layout_toRightOf="@+id/worktime_tv"
+                        android:layout_toRightOf="@+id/worktime_tv2"
                         android:inputType="numberDecimal"
                         android:maxLength="2" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignBottom="@+id/worktime_tv"
-                        android:layout_toRightOf="@+id/hour_edittext"
+                        android:layout_alignBottom="@+id/worktime_tv2"
+                        android:layout_toRightOf="@+id/hour_edittext2"
                         android:text="@string/hours" />
 
                     <View
@@ -188,64 +188,64 @@
                     android:layout_marginTop="@dimen/item_rota_margin_top" >
 
                     <TextView
-                        android:id="@+id/weekday"
+                        android:id="@+id/weekday3"
                         android:layout_width="40dp"
                         android:layout_height="wrap_content"
-                        android:layout_alignBaseline="@+id/startDate_btn"
-                        android:layout_alignBottom="@+id/startDate_btn"
+                        android:layout_alignBaseline="@+id/startDate_btn3"
+                        android:layout_alignBottom="@+id/startDate_btn3"
                         android:layout_alignParentLeft="true"
                         android:layout_marginLeft="25dp"
                         android:text="WED" />
 
                     <Button
-                        android:id="@+id/startDate_btn"
+                        android:id="@+id/startDate_btn3"
                         android:layout_width="98dp"
                         android:layout_height="35dp"
                         android:layout_marginLeft="28dp"
-                        android:layout_toRightOf="@+id/weekday"
+                        android:layout_toRightOf="@+id/weekday3"
                         android:background="@color/white" />
 
                     <TextView
-                        android:id="@+id/textview1"
+                        android:id="@+id/textview3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignBaseline="@+id/startDate_btn"
+                        android:layout_alignBaseline="@+id/startDate_btn3"
                         android:layout_marginLeft="10dp"
-                        android:layout_toRightOf="@+id/startDate_btn"
+                        android:layout_toRightOf="@+id/startDate_btn3"
                         android:text="--" />
 
                     <Button
-                        android:id="@+id/endDate_btn"
+                        android:id="@+id/endDate_btn3"
                         android:layout_width="98dp"
                         android:layout_height="35dp"
                         android:layout_marginLeft="10dp"
-                        android:layout_toRightOf="@+id/textview1"
+                        android:layout_toRightOf="@+id/textview3"
                         android:background="@color/white" />
 
                     <TextView
-                        android:id="@+id/worktime_tv"
+                        android:id="@+id/worktime_tv3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignLeft="@+id/startDate_btn"
-                        android:layout_below="@+id/startDate_btn"
+                        android:layout_alignLeft="@+id/startDate_btn3"
+                        android:layout_below="@+id/startDate_btn3"
                         android:layout_marginTop="15dp"
                         android:text="@string/work_time" />
 
                     <EditText
-                        android:id="@+id/hour_edittext"
+                        android:id="@+id/hour_edittext3"
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
-                        android:layout_alignLeft="@+id/endDate_btn"
+                        android:layout_alignLeft="@+id/endDate_btn3"
                         android:layout_marginTop="40dp"
-                        android:layout_toRightOf="@+id/worktime_tv"
+                        android:layout_toRightOf="@+id/worktime_tv3"
                         android:inputType="numberDecimal"
                         android:maxLength="2" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignBottom="@+id/worktime_tv"
-                        android:layout_toRightOf="@+id/hour_edittext"
+                        android:layout_alignBottom="@+id/worktime_tv3"
+                        android:layout_toRightOf="@+id/hour_edittext3"
                         android:text="@string/hours" />
 
                     <View
@@ -261,64 +261,64 @@
                     android:layout_marginTop="@dimen/item_rota_margin_top" >
 
                     <TextView
-                        android:id="@+id/weekday"
+                        android:id="@+id/weekday4"
                         android:layout_width="40dp"
                         android:layout_height="wrap_content"
-                        android:layout_alignBaseline="@+id/startDate_btn"
-                        android:layout_alignBottom="@+id/startDate_btn"
+                        android:layout_alignBaseline="@+id/startDate_btn4"
+                        android:layout_alignBottom="@+id/startDate_btn4"
                         android:layout_alignParentLeft="true"
                         android:layout_marginLeft="25dp"
                         android:text="THU" />
 
                     <Button
-                        android:id="@+id/startDate_btn"
+                        android:id="@+id/startDate_btn4"
                         android:layout_width="98dp"
                         android:layout_height="35dp"
                         android:layout_marginLeft="28dp"
-                        android:layout_toRightOf="@+id/weekday"
+                        android:layout_toRightOf="@+id/weekday4"
                         android:background="@color/white" />
 
                     <TextView
-                        android:id="@+id/textview1"
+                        android:id="@+id/textview4"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignBaseline="@+id/startDate_btn"
+                        android:layout_alignBaseline="@+id/startDate_btn4"
                         android:layout_marginLeft="10dp"
-                        android:layout_toRightOf="@+id/startDate_btn"
+                        android:layout_toRightOf="@+id/startDate_btn4"
                         android:text="--" />
 
                     <Button
-                        android:id="@+id/endDate_btn"
+                        android:id="@+id/endDate_btn4"
                         android:layout_width="98dp"
                         android:layout_height="35dp"
                         android:layout_marginLeft="10dp"
-                        android:layout_toRightOf="@+id/textview1"
+                        android:layout_toRightOf="@+id/textview4"
                         android:background="@color/white" />
 
                     <TextView
-                        android:id="@+id/worktime_tv"
+                        android:id="@+id/worktime_tv4"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignLeft="@+id/startDate_btn"
-                        android:layout_below="@+id/startDate_btn"
+                        android:layout_alignLeft="@+id/startDate_btn4"
+                        android:layout_below="@+id/startDate_btn4"
                         android:layout_marginTop="15dp"
                         android:text="@string/work_time" />
 
                     <EditText
-                        android:id="@+id/hour_edittext"
+                        android:id="@+id/hour_edittext4"
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
-                        android:layout_alignLeft="@+id/endDate_btn"
+                        android:layout_alignLeft="@+id/endDate_btn4"
                         android:layout_marginTop="40dp"
-                        android:layout_toRightOf="@+id/worktime_tv"
+                        android:layout_toRightOf="@+id/worktime_tv4"
                         android:inputType="numberDecimal"
                         android:maxLength="2" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignBottom="@+id/worktime_tv"
-                        android:layout_toRightOf="@+id/hour_edittext"
+                        android:layout_alignBottom="@+id/worktime_tv4"
+                        android:layout_toRightOf="@+id/hour_edittext4"
                         android:text="@string/hours" />
 
                     <View
@@ -334,64 +334,64 @@
                     android:layout_marginTop="@dimen/item_rota_margin_top" >
 
                     <TextView
-                        android:id="@+id/weekday"
+                        android:id="@+id/weekday5"
                         android:layout_width="40dp"
                         android:layout_height="wrap_content"
-                        android:layout_alignBaseline="@+id/startDate_btn"
-                        android:layout_alignBottom="@+id/startDate_btn"
+                        android:layout_alignBaseline="@+id/startDate_btn5"
+                        android:layout_alignBottom="@+id/startDate_btn5"
                         android:layout_alignParentLeft="true"
                         android:layout_marginLeft="25dp"
                         android:text="FRI" />
 
                     <Button
-                        android:id="@+id/startDate_btn"
+                        android:id="@+id/startDate_btn5"
                         android:layout_width="98dp"
                         android:layout_height="35dp"
                         android:layout_marginLeft="28dp"
-                        android:layout_toRightOf="@+id/weekday"
+                        android:layout_toRightOf="@+id/weekday5"
                         android:background="@color/white" />
 
                     <TextView
-                        android:id="@+id/textview1"
+                        android:id="@+id/textview5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignBaseline="@+id/startDate_btn"
+                        android:layout_alignBaseline="@+id/startDate_btn5"
                         android:layout_marginLeft="10dp"
-                        android:layout_toRightOf="@+id/startDate_btn"
+                        android:layout_toRightOf="@+id/startDate_btn5"
                         android:text="--" />
 
                     <Button
-                        android:id="@+id/endDate_btn"
+                        android:id="@+id/endDate_btn5"
                         android:layout_width="98dp"
                         android:layout_height="35dp"
                         android:layout_marginLeft="10dp"
-                        android:layout_toRightOf="@+id/textview1"
+                        android:layout_toRightOf="@+id/textview5"
                         android:background="@color/white" />
 
                     <TextView
-                        android:id="@+id/worktime_tv"
+                        android:id="@+id/worktime_tv5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignLeft="@+id/startDate_btn"
-                        android:layout_below="@+id/startDate_btn"
+                        android:layout_alignLeft="@+id/startDate_btn5"
+                        android:layout_below="@+id/startDate_btn5"
                         android:layout_marginTop="15dp"
-                        android:text="Work Time" />
+                        android:text="@string/work_time" />
 
                     <EditText
-                        android:id="@+id/hour_edittext"
+                        android:id="@+id/hour_edittext5"
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
-                        android:layout_alignLeft="@+id/endDate_btn"
+                        android:layout_alignLeft="@+id/endDate_btn5"
                         android:layout_marginTop="40dp"
-                        android:layout_toRightOf="@+id/worktime_tv"
+                        android:layout_toRightOf="@+id/worktime_tv5"
                         android:inputType="numberDecimal"
                         android:maxLength="2" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignBottom="@+id/worktime_tv"
-                        android:layout_toRightOf="@+id/hour_edittext"
+                        android:layout_alignBottom="@+id/worktime_tv5"
+                        android:layout_toRightOf="@+id/hour_edittext5"
                         android:text="@string/hours" />
 
                     <View
@@ -407,64 +407,64 @@
                     android:layout_marginTop="@dimen/item_rota_margin_top" >
 
                     <TextView
-                        android:id="@+id/weekday"
+                        android:id="@+id/weekday6"
                         android:layout_width="40dp"
                         android:layout_height="wrap_content"
-                        android:layout_alignBaseline="@+id/startDate_btn"
-                        android:layout_alignBottom="@+id/startDate_btn"
+                        android:layout_alignBaseline="@+id/startDate_btn6"
+                        android:layout_alignBottom="@+id/startDate_btn6"
                         android:layout_alignParentLeft="true"
                         android:layout_marginLeft="25dp"
                         android:text="SAT" />
 
                     <Button
-                        android:id="@+id/startDate_btn"
+                        android:id="@+id/startDate_btn6"
                         android:layout_width="98dp"
                         android:layout_height="35dp"
                         android:layout_marginLeft="28dp"
-                        android:layout_toRightOf="@+id/weekday"
+                        android:layout_toRightOf="@+id/weekday6"
                         android:background="@color/white" />
 
                     <TextView
-                        android:id="@+id/textview1"
+                        android:id="@+id/textview6"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignBaseline="@+id/startDate_btn"
+                        android:layout_alignBaseline="@+id/startDate_btn6"
                         android:layout_marginLeft="10dp"
-                        android:layout_toRightOf="@+id/startDate_btn"
+                        android:layout_toRightOf="@+id/startDate_btn6"
                         android:text="--" />
 
                     <Button
-                        android:id="@+id/endDate_btn"
+                        android:id="@+id/endDate_btn6"
                         android:layout_width="98dp"
                         android:layout_height="35dp"
                         android:layout_marginLeft="10dp"
-                        android:layout_toRightOf="@+id/textview1"
+                        android:layout_toRightOf="@+id/textview6"
                         android:background="@color/white" />
 
                     <TextView
-                        android:id="@+id/worktime_tv"
+                        android:id="@+id/worktime_tv6"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignLeft="@+id/startDate_btn"
-                        android:layout_below="@+id/startDate_btn"
+                        android:layout_alignLeft="@+id/startDate_btn6"
+                        android:layout_below="@+id/startDate_btn6"
                         android:layout_marginTop="15dp"
                         android:text="@string/work_time" />
 
                     <EditText
-                        android:id="@+id/hour_edittext"
+                        android:id="@+id/hour_edittext6"
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
-                        android:layout_alignLeft="@+id/endDate_btn"
+                        android:layout_alignLeft="@+id/endDate_btn6"
                         android:layout_marginTop="40dp"
-                        android:layout_toRightOf="@+id/worktime_tv"
+                        android:layout_toRightOf="@+id/worktime_tv6"
                         android:inputType="numberDecimal"
                         android:maxLength="2" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignBottom="@+id/worktime_tv"
-                        android:layout_toRightOf="@+id/hour_edittext"
+                        android:layout_alignBottom="@+id/worktime_tv6"
+                        android:layout_toRightOf="@+id/hour_edittext6"
                         android:text="@string/hours" />
 
                     <View
@@ -480,64 +480,64 @@
                     android:layout_marginTop="@dimen/item_rota_margin_top" >
 
                     <TextView
-                        android:id="@+id/weekday"
+                        android:id="@+id/weekday7"
                         android:layout_width="40dp"
                         android:layout_height="wrap_content"
-                        android:layout_alignBaseline="@+id/startDate_btn"
-                        android:layout_alignBottom="@+id/startDate_btn"
+                        android:layout_alignBaseline="@+id/startDate_btn7"
+                        android:layout_alignBottom="@+id/startDate_btn7"
                         android:layout_alignParentLeft="true"
                         android:layout_marginLeft="25dp"
                         android:text="SUN" />
 
                     <Button
-                        android:id="@+id/startDate_btn"
+                        android:id="@+id/startDate_btn7"
                         android:layout_width="98dp"
                         android:layout_height="35dp"
                         android:layout_marginLeft="28dp"
-                        android:layout_toRightOf="@+id/weekday"
+                        android:layout_toRightOf="@+id/weekday7"
                         android:background="@color/white" />
 
                     <TextView
-                        android:id="@+id/textview1"
+                        android:id="@+id/textview7"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignBaseline="@+id/startDate_btn"
+                        android:layout_alignBaseline="@+id/startDate_btn7"
                         android:layout_marginLeft="10dp"
-                        android:layout_toRightOf="@+id/startDate_btn"
+                        android:layout_toRightOf="@+id/startDate_btn7"
                         android:text="--" />
 
                     <Button
-                        android:id="@+id/endDate_btn"
+                        android:id="@+id/endDate_btn7"
                         android:layout_width="98dp"
                         android:layout_height="35dp"
                         android:layout_marginLeft="10dp"
-                        android:layout_toRightOf="@+id/textview1"
+                        android:layout_toRightOf="@+id/textview7"
                         android:background="@color/white" />
 
                     <TextView
-                        android:id="@+id/worktime_tv"
+                        android:id="@+id/worktime_tv7"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignLeft="@+id/startDate_btn"
-                        android:layout_below="@+id/startDate_btn"
+                        android:layout_alignLeft="@+id/startDate_btn7"
+                        android:layout_below="@+id/startDate_btn7"
                         android:layout_marginTop="15dp"
                         android:text="@string/work_time" />
 
                     <EditText
-                        android:id="@+id/hour_edittext"
+                        android:id="@+id/hour_edittext7"
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
-                        android:layout_alignLeft="@+id/endDate_btn"
+                        android:layout_alignLeft="@+id/endDate_btn7"
                         android:layout_marginTop="40dp"
-                        android:layout_toRightOf="@+id/worktime_tv"
+                        android:layout_toRightOf="@+id/worktime_tv7"
                         android:inputType="numberDecimal"
                         android:maxLength="2" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignBottom="@+id/worktime_tv"
-                        android:layout_toRightOf="@+id/hour_edittext"
+                        android:layout_alignBottom="@+id/worktime_tv7"
+                        android:layout_toRightOf="@+id/hour_edittext7"
                         android:text="@string/hours" />
 
                     <View
