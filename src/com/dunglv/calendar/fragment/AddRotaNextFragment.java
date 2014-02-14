@@ -133,13 +133,10 @@ public class AddRotaNextFragment extends BaseFragment implements
 		for (int i = 0; i < LENGTH; i++) {
 			String s1 = timeArray[i].substring(0, 13);
 			String s2 = timeArray[i].substring(13, 26);
-			if (s1.equals(TIME_ZERO) || s2.equals(TIME_ZERO)) {
-				startBtn[i].setText("");
-				endBtn[i].setText("");
-			} else {
-				startBtn[i].setText(Utils.convertStringToTime(s1));
-				endBtn[i].setText(Utils.convertStringToTime(s2));
-			}
+			startTime[i] = Long.parseLong(s1);
+			endTime[i] = Long.parseLong(s2);
+			setTextButton(startBtn[i], s1);
+			setTextButton(endBtn[i], s2);
 			String s3 = timeArray[i].substring(26);
 			if (s3.equals("0")) {
 				hourEditText[i].setText("");
@@ -147,6 +144,14 @@ public class AddRotaNextFragment extends BaseFragment implements
 				hourEditText[i].setText(s3);
 			}
 
+		}
+	}
+
+	private void setTextButton(Button button, String s) {
+		if (s.equals(TIME_ZERO)) {
+			button.setText("");
+		} else {
+			button.setText(Utils.convertStringToTime(s));
 		}
 	}
 
@@ -189,7 +194,7 @@ public class AddRotaNextFragment extends BaseFragment implements
 		if (currentWeek == weekCount) {
 			btnNext.setText("Done");
 		}
-		Log.e("" + currentWeek, "" + weekCount);
+		Log.e("currentWeek: " + currentWeek, "" + weekCount);
 		tvWeekNumber.setText("WEEK " + currentWeek);
 		initData();
 	}
@@ -235,8 +240,8 @@ public class AddRotaNextFragment extends BaseFragment implements
 	}
 
 	@Override
-	public void onStop() {
-		super.onStop();
+	public void onDestroy() {
+		super.onDestroy();
 		onBackPress();
 	}
 
