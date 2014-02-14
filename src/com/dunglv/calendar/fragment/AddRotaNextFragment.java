@@ -14,6 +14,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -65,6 +66,9 @@ public class AddRotaNextFragment extends BaseFragment implements
 	private SQLiteDatabase db;
 	private WeekTimeDao weekTimeDao;
 	private List<WeekTime> listWeekTimes;
+	private WeekTime weekTime;
+	Button saveBtn;
+	RelativeLayout btnLayout;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -81,9 +85,12 @@ public class AddRotaNextFragment extends BaseFragment implements
 		btnNext = (Button) v.findViewById(R.id.next_btn);
 		btnCopyNext = (Button) v.findViewById(R.id.copy_to_next);
 		btnMakeAll = (Button) v.findViewById(R.id.make_all_week_btn);
+		saveBtn = (Button) v.findViewById(R.id.save_btn);
+		btnLayout = (RelativeLayout) v.findViewById(R.id.button_layout);
 		btnNext.setOnClickListener(this);
 		btnCopyNext.setOnClickListener(this);
 		btnMakeAll.setOnClickListener(this);
+		saveBtn.setOnClickListener(this);
 		tvWeekNumber = (TextView) v.findViewById(R.id.week_number);
 
 		// Action pick start time
@@ -114,6 +121,7 @@ public class AddRotaNextFragment extends BaseFragment implements
 		for (int i = 0; i < LENGTH; i++) {
 			hourEditText[i] = (EditText) v.findViewById(hourIdArray[i]);
 		}
+
 	}
 
 	private void initData() {
@@ -192,7 +200,8 @@ public class AddRotaNextFragment extends BaseFragment implements
 		weekCount = sharedPreferences.getInt(Utils.WEEK_REPEAT);
 		currentWeek = sharedPreferences.getInt(Utils.CURRENT_WEEK);
 		if (currentWeek == weekCount) {
-			btnNext.setText("Done");
+			btnLayout.setVisibility(View.GONE);
+			saveBtn.setVisibility(View.VISIBLE);
 		}
 		Log.e("currentWeek: " + currentWeek, "" + weekCount);
 		tvWeekNumber.setText("WEEK " + currentWeek);
@@ -206,22 +215,27 @@ public class AddRotaNextFragment extends BaseFragment implements
 			onNextPress();
 			break;
 		case R.id.copy_to_next:
-
+			copyToNext();
 			break;
 		case R.id.make_all_week_btn:
 
+			break;
+		case R.id.save_btn:
+			onNextPress();
 			break;
 		default:
 			break;
 		}
 	}
 
+	/**
+	 * Press next action
+	 */
 	private void onNextPress() {
 		if (listWeekTimes.size() > 0) {
 			weekTimeDao.delete(listWeekTimes.get(0));
 		}
 		insertWeekTime();
-
 		currentWeek++;
 		sharedPreferences.putInt(Utils.CURRENT_WEEK, currentWeek);
 		if (currentWeek > weekCount) {
@@ -232,11 +246,34 @@ public class AddRotaNextFragment extends BaseFragment implements
 		isNextPress = true;
 	}
 
+	/**
+	 * back action
+	 */
 	private void onBackPress() {
 		if (!isNextPress) {
 			currentWeek--;
 			sharedPreferences.putInt(Utils.CURRENT_WEEK, currentWeek);
 		}
+	}
+
+	/**
+	 * Copy to next action
+	 */
+	private void copyToNext() {
+		onNextPress();
+		// Delete and insert next record in DB
+		List<WeekTime> listNext = weekTimeDao.queryBuilder()
+				.where(Properties.WeekId.eq(currentWeek)).list();
+		if (listNext.size() > 0) {
+			WeekTime nextWeekTime = listNext.get(0);
+			weekTimeDao.delete(nextWeekTime);
+		}
+		if (currentWeek <= 3) {
+			weekTime = collectData();
+			weekTime.setWeekId(currentWeek);
+			weekTimeDao.insert(weekTime);
+		}
+
 	}
 
 	@Override
@@ -264,8 +301,7 @@ public class AddRotaNextFragment extends BaseFragment implements
 			if (startTime[i] == 0 && endTime[i] == 0) {
 				timeArray[i] = TIME_ZERO + TIME_ZERO;
 			} else if (startTime[i] == 0) {
-				timeArray[i] = TIME_ZERO + String.valueOf(endTime[i])
-						+ String.valueOf(hourWorking[i]);
+				timeArray[i] = TIME_ZERO + String.valueOf(endTime[i]);
 			} else if (endTime[i] == 0) {
 				timeArray[i] = String.valueOf(startTime[i]) + TIME_ZERO;
 			} else {
@@ -278,7 +314,7 @@ public class AddRotaNextFragment extends BaseFragment implements
 
 	private WeekTime collectData() {
 		parseTime();
-		WeekTime weekTime = new WeekTime();
+		weekTime = new WeekTime();
 		weekTime.setWeekId(currentWeek);
 		weekTime.setRotaId(1);
 		weekTime.setMonday(timeArray[0]);
