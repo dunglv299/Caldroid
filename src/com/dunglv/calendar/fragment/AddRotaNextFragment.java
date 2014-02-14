@@ -122,7 +122,6 @@ public class AddRotaNextFragment extends BaseFragment implements
 		for (int i = 0; i < LENGTH; i++) {
 			hourEditText[i] = (EditText) v.findViewById(hourIdArray[i]);
 		}
-
 	}
 
 	private void initData() {
@@ -132,7 +131,7 @@ public class AddRotaNextFragment extends BaseFragment implements
 			return;
 		}
 		// Init when exists data
-		WeekTime weekTime = listWeekTimes.get(0);
+		weekTime = listWeekTimes.get(0);
 		timeArray[0] = weekTime.getMonday();
 		timeArray[1] = weekTime.getTuesday();
 		timeArray[2] = weekTime.getWednesday();
@@ -198,6 +197,7 @@ public class AddRotaNextFragment extends BaseFragment implements
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
+		Log.e(TAG, "onActivityCreated");
 		sharedPreferences = new MySharedPreferences(getActivity());
 		isNextPress = false;
 		weekCount = sharedPreferences.getInt(Utils.WEEK_REPEAT);
@@ -206,7 +206,6 @@ public class AddRotaNextFragment extends BaseFragment implements
 			btnLayout.setVisibility(View.GONE);
 			saveBtn.setVisibility(View.VISIBLE);
 		}
-		Log.e("currentWeek: " + currentWeek, "" + weekCount);
 		tvWeekNumber.setText("WEEK " + currentWeek);
 		initData();
 	}
@@ -221,7 +220,7 @@ public class AddRotaNextFragment extends BaseFragment implements
 			copyToNext();
 			break;
 		case R.id.make_all_week_btn:
-
+			onMakeAllWeek();
 			break;
 		case R.id.save_btn:
 			onNextPress();
@@ -229,12 +228,34 @@ public class AddRotaNextFragment extends BaseFragment implements
 		default:
 			break;
 		}
+
+	}
+
+	/**
+	 * back action
+	 */
+	private void onBackPress() {
+		if (!isNextPress) {
+			Log.e(TAG, currentWeek + "");
+			currentWeek--;
+			sharedPreferences.putInt(Utils.CURRENT_WEEK, currentWeek);
+		}
 	}
 
 	/**
 	 * Press next action
 	 */
 	private void onNextPress() {
+		Log.e("currentWeek: " + currentWeek, "" + weekCount);
+
+		// Get weektime ID for replace
+		listWeekTimes = weekTimeDao.queryBuilder()
+				.where(Properties.WeekId.eq(currentWeek)).list();
+		if (listWeekTimes.size() > 0) {
+			weekTime = listWeekTimes.get(0);
+			weekTimeId = weekTime.getId();// End get weekTime id
+		}
+		// Collect data
 		weekTime = collectData();
 		// Week time id = 0 mean record don't exits DB and insert new record
 		// If record is exists. Replaced
@@ -243,6 +264,7 @@ public class AddRotaNextFragment extends BaseFragment implements
 			weekTime.setId(null);
 		}
 		weekTimeDao.insertOrReplace(weekTime);
+		Log.e(TAG, "insert id next : " + currentWeek);
 		currentWeek++;
 		sharedPreferences.putInt(Utils.CURRENT_WEEK, currentWeek);
 		if (currentWeek > weekCount) {
@@ -254,23 +276,13 @@ public class AddRotaNextFragment extends BaseFragment implements
 	}
 
 	/**
-	 * back action
-	 */
-	private void onBackPress() {
-		if (!isNextPress) {
-			currentWeek--;
-			sharedPreferences.putInt(Utils.CURRENT_WEEK, currentWeek);
-		}
-	}
-
-	/**
 	 * Copy to next action
 	 */
 	private void copyToNext() {
 		onNextPress();
 		List<WeekTime> listNext = weekTimeDao.queryBuilder()
 				.where(Properties.WeekId.eq(currentWeek)).list();
-		if (currentWeek <= 3) {
+		if (currentWeek <= weekCount) {
 			weekTime = collectData();
 			if (listNext.size() > 0) {
 				WeekTime nextWeekTime = listNext.get(0);
@@ -278,6 +290,35 @@ public class AddRotaNextFragment extends BaseFragment implements
 			}
 			weekTime.setWeekId(currentWeek);
 			weekTimeDao.insertOrReplace(weekTime);
+			Log.e(TAG, "insert id copy: " + currentWeek);
+		}
+	}
+
+	/**
+	 * make all week action
+	 */
+	private void onMakeAllWeek() {
+		List<WeekTime> listDelete = weekTimeDao.queryBuilder()
+				.where(Properties.WeekId.between(currentWeek, weekCount))
+				.list();
+		weekTimeDao.deleteInTx(listDelete);
+		Log.e(TAG, "delete size: " + listDelete.size());
+		for (int i = currentWeek; i <= weekCount; i++) {
+			Log.e(TAG, "i " + i);
+			Log.e(TAG, "weekCount " + weekCount);
+			// copyToNext();
+			weekTime = collectData();
+			weekTime.setWeekId(i);
+			weekTimeDao.insert(weekTime);
+			isNextPress = true;
+
+			if (i == weekCount) {
+				sharedPreferences.putInt(Utils.CURRENT_WEEK, i);
+			}
+			if (i > currentWeek) {
+				replaceFragment(R.id.frame_add_next, new AddRotaNextFragment(),
+						true);
+			}
 		}
 	}
 
