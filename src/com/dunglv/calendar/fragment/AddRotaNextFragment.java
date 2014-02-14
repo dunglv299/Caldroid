@@ -69,6 +69,7 @@ public class AddRotaNextFragment extends BaseFragment implements
 	private WeekTime weekTime;
 	Button saveBtn;
 	RelativeLayout btnLayout;
+	private long weekTimeId;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -130,6 +131,7 @@ public class AddRotaNextFragment extends BaseFragment implements
 		if (listWeekTimes.size() == 0) {
 			return;
 		}
+		// Init when exists data
 		WeekTime weekTime = listWeekTimes.get(0);
 		timeArray[0] = weekTime.getMonday();
 		timeArray[1] = weekTime.getTuesday();
@@ -138,6 +140,7 @@ public class AddRotaNextFragment extends BaseFragment implements
 		timeArray[4] = weekTime.getFriday();
 		timeArray[5] = weekTime.getSaturday();
 		timeArray[6] = weekTime.getSunday();
+		weekTimeId = weekTime.getId();
 		for (int i = 0; i < LENGTH; i++) {
 			String s1 = timeArray[i].substring(0, 13);
 			String s2 = timeArray[i].substring(13, 26);
@@ -232,10 +235,14 @@ public class AddRotaNextFragment extends BaseFragment implements
 	 * Press next action
 	 */
 	private void onNextPress() {
-		if (listWeekTimes.size() > 0) {
-			weekTimeDao.delete(listWeekTimes.get(0));
+		weekTime = collectData();
+		// Week time id = 0 mean record don't exits DB and insert new record
+		// If record is exists. Replaced
+		weekTime.setId(weekTimeId);
+		if (weekTimeId == 0) {
+			weekTime.setId(null);
 		}
-		insertWeekTime();
+		weekTimeDao.insertOrReplace(weekTime);
 		currentWeek++;
 		sharedPreferences.putInt(Utils.CURRENT_WEEK, currentWeek);
 		if (currentWeek > weekCount) {
@@ -261,19 +268,17 @@ public class AddRotaNextFragment extends BaseFragment implements
 	 */
 	private void copyToNext() {
 		onNextPress();
-		// Delete and insert next record in DB
 		List<WeekTime> listNext = weekTimeDao.queryBuilder()
 				.where(Properties.WeekId.eq(currentWeek)).list();
-		if (listNext.size() > 0) {
-			WeekTime nextWeekTime = listNext.get(0);
-			weekTimeDao.delete(nextWeekTime);
-		}
 		if (currentWeek <= 3) {
 			weekTime = collectData();
+			if (listNext.size() > 0) {
+				WeekTime nextWeekTime = listNext.get(0);
+				weekTime.setId(nextWeekTime.getId());
+			}
 			weekTime.setWeekId(currentWeek);
-			weekTimeDao.insert(weekTime);
+			weekTimeDao.insertOrReplace(weekTime);
 		}
-
 	}
 
 	@Override
@@ -325,17 +330,6 @@ public class AddRotaNextFragment extends BaseFragment implements
 		weekTime.setSaturday(timeArray[5]);
 		weekTime.setSunday(timeArray[6]);
 		return weekTime;
-	}
-
-	/**
-	 * Save data to DB
-	 */
-	private void insertWeekTime() {
-		weekTimeDao.insertOrReplace(collectData());
-	}
-
-	private void updateWeekTime() {
-		weekTimeDao.update(collectData());
 	}
 
 }
