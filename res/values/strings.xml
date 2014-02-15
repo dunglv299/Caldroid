@@ -19,6 +19,7 @@
     <!-- Manage shift -->
     <string name="new_rota">New Rota</string>
     <string name="continue_btn">CONTINUE</string>
+    <string name="save_btn">SAVE</string>
     <string name="name">Name</string>
     <string name="rota_name_hint">Input rota name</string>
     <string name="how_many_week">How many weeks</string>

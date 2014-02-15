@@ -1,6 +1,5 @@
 package com.dunglv.calendar.fragment;
 
-import java.util.Calendar;
 import java.util.List;
 
 import android.content.Intent;
@@ -11,17 +10,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ListView;
 
 import com.dunglv.calendar.R;
 import com.dunglv.calendar.activity.AddRotaActivity;
+import com.dunglv.calendar.activity.EditRotaActivity;
 import com.dunglv.calendar.adapter.ListRotaAdapter;
 import com.dunglv.calendar.dao.DaoMaster;
 import com.dunglv.calendar.dao.DaoMaster.DevOpenHelper;
 import com.dunglv.calendar.dao.DaoSession;
 import com.dunglv.calendar.dao.Rota;
 import com.dunglv.calendar.dao.RotaDao;
+import com.dunglv.calendar.dao.RotaDao.Properties;
+import com.dunglv.calendar.util.Utils;
 
 public class ListRotaFragment extends BaseFragment implements OnClickListener {
 	private ListRotaAdapter adapter;
@@ -48,16 +52,28 @@ public class ListRotaFragment extends BaseFragment implements OnClickListener {
 		super.onActivityCreated(savedInstanceState);
 		initDao();
 		listRota = rotaDao.loadAll();
-		Log.e("size", listRota.size() + "");
 		adapter = new ListRotaAdapter(getActivity(), listRota);
 		mListView.setAdapter(adapter);
 		mListView.setDividerHeight(0);
+		mListView.setOnItemClickListener(new OnItemClickListener() {
+			public void onItemClick(AdapterView<?> myAdapter, View myView,
+					int position, long rowId) {
+				Rota rota = (Rota) (mListView.getItemAtPosition(position));
+				Bundle bundle = new Bundle();
+				bundle.putLong(Utils.ROTA_ID, rota.getId());
+				Intent intent = new Intent(getActivity(),
+						EditRotaActivity.class);
+				intent.putExtras(bundle);
+				startActivity(intent);
+			}
+		});
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
 		refresh();
+		Log.e("onResume", "onResume");
 	}
 
 	public void initDao() {
@@ -86,7 +102,8 @@ public class ListRotaFragment extends BaseFragment implements OnClickListener {
 	 * Refresh listview
 	 */
 	private void refresh() {
-		listRota = rotaDao.loadAll();
+		listRota = rotaDao.queryBuilder().orderDesc(Properties.DateStarted)
+				.list();
 		adapter.refresh(listRota);
 	}
 }

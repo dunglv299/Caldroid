@@ -28,6 +28,10 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
+            android:name="com.dunglv.calendar.activity.EditRotaActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
             android:name="com.dunglv.calendar.activity.AddRotaNextActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" >
