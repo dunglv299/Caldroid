@@ -3,8 +3,10 @@ package com.dunglv.calendar.fragment;
 import java.util.Calendar;
 import java.util.List;
 
+import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.util.Log;
@@ -220,7 +222,7 @@ public class AddRotaNextFragment extends BaseFragment implements
 			copyToNext();
 			break;
 		case R.id.make_all_week_btn:
-			onMakeAllWeek();
+			new MakeAllWeekAsyntask().execute();
 			break;
 		case R.id.save_btn:
 			onNextPress();
@@ -320,6 +322,33 @@ public class AddRotaNextFragment extends BaseFragment implements
 						true);
 			}
 		}
+	}
+
+	private class MakeAllWeekAsyntask extends AsyncTask<Void, Void, Void> {
+		private ProgressDialog dialog;
+
+		public MakeAllWeekAsyntask() {
+			dialog = new ProgressDialog(getActivity());
+		}
+
+		protected void onPreExecute() {
+			this.dialog.setMessage("Please wait...");
+			this.dialog.show();
+		}
+
+		@Override
+		protected Void doInBackground(Void... arg0) {
+			onMakeAllWeek();
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(Void result) {
+			if (dialog.isShowing()) {
+				dialog.dismiss();
+			}
+		}
+
 	}
 
 	@Override
