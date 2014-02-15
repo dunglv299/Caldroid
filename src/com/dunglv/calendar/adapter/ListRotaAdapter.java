@@ -65,10 +65,16 @@ public class ListRotaAdapter extends BaseAdapter {
 		}
 		// Bind that data efficiently!
 		Rota rota = listRota.get(position);
-		viewHolder.mRotaName.setText(rota.getName());
+		if (rota.getName().isEmpty()) {
+			viewHolder.mRotaName.setText("Untitled");
+		} else {
+			viewHolder.mRotaName.setText(rota.getName());
+		}
+
 		viewHolder.mRotaStartDate.setText(new SimpleDateFormat("dd/MM/yyyy",
 				Locale.US).format(new Date(rota.getDateStarted())));
-		viewHolder.mRectangle.setBackgroundColor(Color.parseColor("blue"));
+		viewHolder.mRectangle.setBackgroundColor(Color.parseColor(rota
+				.getColor()));
 
 		return view;
 	}

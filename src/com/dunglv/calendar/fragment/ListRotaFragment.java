@@ -52,7 +52,12 @@ public class ListRotaFragment extends BaseFragment implements OnClickListener {
 		adapter = new ListRotaAdapter(getActivity(), listRota);
 		mListView.setAdapter(adapter);
 		mListView.setDividerHeight(0);
-		// addNewRota();
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		refresh();
 	}
 
 	public void initDao() {
@@ -62,13 +67,6 @@ public class ListRotaFragment extends BaseFragment implements OnClickListener {
 		daoMaster = new DaoMaster(db);
 		daoSession = daoMaster.newSession();
 		rotaDao = daoSession.getRotaDao();
-	}
-
-	public void addNewRota() {
-		Rota rota = new Rota();
-		rota.setName("Rota Name 1");
-		rota.setDateStarted(Calendar.getInstance().getTimeInMillis());
-		rotaDao.insert(rota);
 	}
 
 	@Override

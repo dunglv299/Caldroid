@@ -28,7 +28,7 @@ public class RotaDao extends AbstractDao<Rota, Long> {
         public final static Property DateStarted = new Property(2, Long.class, "dateStarted", false, "DATE_STARTED");
         public final static Property Color = new Property(3, String.class, "color", false, "COLOR");
         public final static Property WeekReapeat = new Property(4, Integer.class, "weekReapeat", false, "WEEK_REAPEAT");
-        public final static Property TimeRepeat = new Property(5, Boolean.class, "timeRepeat", false, "TIME_REPEAT");
+        public final static Property TimeRepeat = new Property(5, Integer.class, "timeRepeat", false, "TIME_REPEAT");
     };
 
     private DaoSession daoSession;
@@ -91,9 +91,9 @@ public class RotaDao extends AbstractDao<Rota, Long> {
             stmt.bindLong(5, weekReapeat);
         }
  
-        Boolean timeRepeat = entity.getTimeRepeat();
+        Integer timeRepeat = entity.getTimeRepeat();
         if (timeRepeat != null) {
-            stmt.bindLong(6, timeRepeat ? 1l: 0l);
+            stmt.bindLong(6, timeRepeat);
         }
     }
 
@@ -118,7 +118,7 @@ public class RotaDao extends AbstractDao<Rota, Long> {
             cursor.isNull(offset + 2) ? null : cursor.getLong(offset + 2), // dateStarted
             cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // color
             cursor.isNull(offset + 4) ? null : cursor.getInt(offset + 4), // weekReapeat
-            cursor.isNull(offset + 5) ? null : cursor.getShort(offset + 5) != 0 // timeRepeat
+            cursor.isNull(offset + 5) ? null : cursor.getInt(offset + 5) // timeRepeat
         );
         return entity;
     }
@@ -131,7 +131,7 @@ public class RotaDao extends AbstractDao<Rota, Long> {
         entity.setDateStarted(cursor.isNull(offset + 2) ? null : cursor.getLong(offset + 2));
         entity.setColor(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
         entity.setWeekReapeat(cursor.isNull(offset + 4) ? null : cursor.getInt(offset + 4));
-        entity.setTimeRepeat(cursor.isNull(offset + 5) ? null : cursor.getShort(offset + 5) != 0);
+        entity.setTimeRepeat(cursor.isNull(offset + 5) ? null : cursor.getInt(offset + 5));
      }
     
     /** @inheritdoc */

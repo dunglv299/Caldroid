@@ -15,7 +15,7 @@ public class Rota {
     private Long dateStarted;
     private String color;
     private Integer weekReapeat;
-    private Boolean timeRepeat;
+    private Integer timeRepeat;
 
     /** Used to resolve relations */
     private transient DaoSession daoSession;
@@ -32,7 +32,7 @@ public class Rota {
         this.id = id;
     }
 
-    public Rota(Long id, String name, Long dateStarted, String color, Integer weekReapeat, Boolean timeRepeat) {
+    public Rota(Long id, String name, Long dateStarted, String color, Integer weekReapeat, Integer timeRepeat) {
         this.id = id;
         this.name = name;
         this.dateStarted = dateStarted;
@@ -87,11 +87,11 @@ public class Rota {
         this.weekReapeat = weekReapeat;
     }
 
-    public Boolean getTimeRepeat() {
+    public Integer getTimeRepeat() {
         return timeRepeat;
     }
 
-    public void setTimeRepeat(Boolean timeRepeat) {
+    public void setTimeRepeat(Integer timeRepeat) {
         this.timeRepeat = timeRepeat;
     }
 

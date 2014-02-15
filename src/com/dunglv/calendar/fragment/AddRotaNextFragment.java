@@ -3,8 +3,10 @@ package com.dunglv.calendar.fragment;
 import java.util.Calendar;
 import java.util.List;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -21,6 +23,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.dunglv.calendar.R;
+import com.dunglv.calendar.activity.AddRotaNextActivity;
 import com.dunglv.calendar.dao.DaoMaster;
 import com.dunglv.calendar.dao.DaoMaster.DevOpenHelper;
 import com.dunglv.calendar.dao.DaoSession;
@@ -127,8 +130,7 @@ public class AddRotaNextFragment extends BaseFragment implements
 	}
 
 	private void initData() {
-		listWeekTimes = weekTimeDao.queryBuilder()
-				.where(Properties.WeekId.eq(currentWeek)).list();
+		listWeekTimes = getListWeekTimeDao();
 		if (listWeekTimes.size() == 0) {
 			return;
 		}
@@ -225,6 +227,8 @@ public class AddRotaNextFragment extends BaseFragment implements
 			new MakeAllWeekAsyntask().execute();
 			break;
 		case R.id.save_btn:
+			Intent returnIntent = new Intent();
+			getActivity().setResult(Activity.RESULT_OK, returnIntent);
 			onNextPress();
 			break;
 		default:
@@ -238,7 +242,6 @@ public class AddRotaNextFragment extends BaseFragment implements
 	 */
 	private void onBackPress() {
 		if (!isNextPress) {
-			Log.e(TAG, currentWeek + "");
 			currentWeek--;
 			sharedPreferences.putInt(Utils.CURRENT_WEEK, currentWeek);
 		}
@@ -251,8 +254,7 @@ public class AddRotaNextFragment extends BaseFragment implements
 		Log.e("currentWeek: " + currentWeek, "" + weekCount);
 
 		// Get weektime ID for replace
-		listWeekTimes = weekTimeDao.queryBuilder()
-				.where(Properties.WeekId.eq(currentWeek)).list();
+		listWeekTimes = getListWeekTimeDao();
 		if (listWeekTimes.size() > 0) {
 			weekTime = listWeekTimes.get(0);
 			weekTimeId = weekTime.getId();// End get weekTime id
@@ -266,7 +268,6 @@ public class AddRotaNextFragment extends BaseFragment implements
 			weekTime.setId(null);
 		}
 		weekTimeDao.insertOrReplace(weekTime);
-		Log.e(TAG, "insert id next : " + currentWeek);
 		currentWeek++;
 		sharedPreferences.putInt(Utils.CURRENT_WEEK, currentWeek);
 		if (currentWeek > weekCount) {
@@ -282,8 +283,7 @@ public class AddRotaNextFragment extends BaseFragment implements
 	 */
 	private void copyToNext() {
 		onNextPress();
-		List<WeekTime> listNext = weekTimeDao.queryBuilder()
-				.where(Properties.WeekId.eq(currentWeek)).list();
+		List<WeekTime> listNext = getListWeekTimeDao();
 		if (currentWeek <= weekCount) {
 			weekTime = collectData();
 			if (listNext.size() > 0) {
@@ -292,8 +292,17 @@ public class AddRotaNextFragment extends BaseFragment implements
 			}
 			weekTime.setWeekId(currentWeek);
 			weekTimeDao.insertOrReplace(weekTime);
-			Log.e(TAG, "insert id copy: " + currentWeek);
 		}
+	}
+
+	private List<WeekTime> getListWeekTimeDao() {
+		List<WeekTime> listWeekTimes = weekTimeDao
+				.queryBuilder()
+				.where(Properties.WeekId.eq(currentWeek),
+						Properties.RotaId
+								.eq(((AddRotaNextActivity) getActivity())
+										.getRotaId())).list();
+		return listWeekTimes;
 	}
 
 	/**
@@ -304,11 +313,7 @@ public class AddRotaNextFragment extends BaseFragment implements
 				.where(Properties.WeekId.between(currentWeek, weekCount))
 				.list();
 		weekTimeDao.deleteInTx(listDelete);
-		Log.e(TAG, "delete size: " + listDelete.size());
 		for (int i = currentWeek; i <= weekCount; i++) {
-			Log.e(TAG, "i " + i);
-			Log.e(TAG, "weekCount " + weekCount);
-			// copyToNext();
 			weekTime = collectData();
 			weekTime.setWeekId(i);
 			weekTimeDao.insert(weekTime);
@@ -391,7 +396,7 @@ public class AddRotaNextFragment extends BaseFragment implements
 		parseTime();
 		weekTime = new WeekTime();
 		weekTime.setWeekId(currentWeek);
-		weekTime.setRotaId(1);
+		weekTime.setRotaId(((AddRotaNextActivity) getActivity()).getRotaId());
 		weekTime.setMonday(timeArray[0]);
 		weekTime.setTuesday(timeArray[1]);
 		weekTime.setWednesday(timeArray[2]);
@@ -401,5 +406,4 @@ public class AddRotaNextFragment extends BaseFragment implements
 		weekTime.setSunday(timeArray[6]);
 		return weekTime;
 	}
-
 }

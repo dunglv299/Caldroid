@@ -92,7 +92,7 @@
                         android:layout_alignLeft="@+id/endDate_btn1"
                         android:layout_marginTop="40dp"
                         android:layout_toRightOf="@+id/worktime_tv"
-                        android:inputType="numberDecimal"
+                        android:inputType="number"
                         android:maxLength="2" />
 
                     <TextView
@@ -165,7 +165,7 @@
                         android:layout_alignLeft="@+id/endDate_btn2"
                         android:layout_marginTop="40dp"
                         android:layout_toRightOf="@+id/worktime_tv2"
-                        android:inputType="numberDecimal"
+                        android:inputType="number"
                         android:maxLength="2" />
 
                     <TextView
@@ -238,7 +238,7 @@
                         android:layout_alignLeft="@+id/endDate_btn3"
                         android:layout_marginTop="40dp"
                         android:layout_toRightOf="@+id/worktime_tv3"
-                        android:inputType="numberDecimal"
+                        android:inputType="number"
                         android:maxLength="2" />
 
                     <TextView
@@ -311,7 +311,7 @@
                         android:layout_alignLeft="@+id/endDate_btn4"
                         android:layout_marginTop="40dp"
                         android:layout_toRightOf="@+id/worktime_tv4"
-                        android:inputType="numberDecimal"
+                        android:inputType="number"
                         android:maxLength="2" />
 
                     <TextView
@@ -384,7 +384,7 @@
                         android:layout_alignLeft="@+id/endDate_btn5"
                         android:layout_marginTop="40dp"
                         android:layout_toRightOf="@+id/worktime_tv5"
-                        android:inputType="numberDecimal"
+                        android:inputType="number"
                         android:maxLength="2" />
 
                     <TextView
@@ -457,7 +457,7 @@
                         android:layout_alignLeft="@+id/endDate_btn6"
                         android:layout_marginTop="40dp"
                         android:layout_toRightOf="@+id/worktime_tv6"
-                        android:inputType="numberDecimal"
+                        android:inputType="number"
                         android:maxLength="2" />
 
                     <TextView
@@ -530,7 +530,7 @@
                         android:layout_alignLeft="@+id/endDate_btn7"
                         android:layout_marginTop="40dp"
                         android:layout_toRightOf="@+id/worktime_tv7"
-                        android:inputType="numberDecimal"
+                        android:inputType="number"
                         android:maxLength="2" />
 
                     <TextView
