@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Shift Planner</string>
+    <string name="app_name">Rota Planner</string>
     <string name="customize">Customize</string>
     <string name="show_dialog">Show Dialog</string>
     <string name="undo">Undo</string>
     <!-- Nav Drawer Menu Items -->
     <string-array name="nav_drawer_items">
-        <item>Manage shift</item>
+        <item>Manage rota</item>
         <item>View calendar</item>
     </string-array>
     <!-- Nav Drawer List Item Icons -->

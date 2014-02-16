@@ -8,6 +8,7 @@ import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
@@ -41,8 +42,7 @@ public class NavigationActivity extends SherlockFragmentActivity {
 	private ArrayList<ItemNavDrawer> navDrawerItems;
 	private NavDrawerListAdapter adapter;
 	private ActionBar actionBar;
-	private CalendarViewFragment calendarViewFragment;
-	private ListRotaFragment listRotaFragment;
+	private Fragment[] fragments = new Fragment[2];
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +50,9 @@ public class NavigationActivity extends SherlockFragmentActivity {
 		// requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_main);
 		initNavigationDrawer();
-		displayView(0);
+		fragments[0] = new ListRotaFragment();
+		fragments[1] = new CalendarViewFragment();
+		addFragment();
 	}
 
 	public void goToFragment(Fragment f) {
@@ -137,18 +139,38 @@ public class NavigationActivity extends SherlockFragmentActivity {
 		}
 	}
 
+	private void showFragment(Fragment fragment) {
+		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+		for (int i = 0; i < fragments.length; i++) {
+			if (fragment.getClass().getSimpleName()
+					.equals(fragments[i].getClass().getSimpleName())) {
+				ft.show(fragments[i]);
+			} else {
+				ft.hide(fragments[i]);
+			}
+		}
+		ft.commit();
+	}
+
+	private void addFragment() {
+		FragmentManager fm = getSupportFragmentManager();
+		FragmentTransaction ft = fm.beginTransaction();
+		for (int i = 0; i < fragments.length; i++) {
+			ft.add(R.id.main_content, fragments[i]);
+		}
+		ft.commit();
+	}
+
 	/**
 	 * Diplaying fragment view for selected nav drawer list item
 	 * */
 	private void displayView(int position) {
 		switch (position) {
 		case 0:
-			listRotaFragment = new ListRotaFragment();
-			goToFragment(listRotaFragment);
+			showFragment(fragments[0]);
 			break;
 		case 1:
-			calendarViewFragment = new CalendarViewFragment();
-			goToFragment(calendarViewFragment);
+			showFragment(fragments[1]);
 			break;
 		default:
 			break;
