@@ -4,6 +4,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.util.Log;
+import android.widget.EditText;
+
 public class Utils {
 	public static final String WEEK_REPEAT = "week";
 	public static final String CURRENT_WEEK = "current_week";
@@ -21,5 +26,21 @@ public class Utils {
 		Date dateObj = new Date(time);
 		SimpleDateFormat sdfAM = new SimpleDateFormat("h:mm a", Locale.US);
 		return sdfAM.format(dateObj);
+	}
+
+	public static void showAlert(Context context, String message) {
+		AlertDialog.Builder bld = new AlertDialog.Builder(context);
+		bld.setMessage(message);
+		bld.setNeutralButton("OK", null);
+		Log.d("alert", "Showing alert dialog: " + message);
+		bld.create().show();
+	}
+
+	public static void checkEmptyEditText(EditText editText, int number) {
+		if (number == 0) {
+			editText.setText("");
+		} else {
+			editText.setText(number + "");
+		}
 	}
 }

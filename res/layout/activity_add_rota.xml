@@ -60,6 +60,7 @@
                     android:id="@+id/week_number"
                     android:layout_width="45dp"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:inputType="number"
                     android:maxLength="2"
                     android:textColor="@color/caldroid_cyan" />
@@ -98,6 +99,7 @@
                     android:id="@+id/time_number"
                     android:layout_width="45dp"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:inputType="number"
                     android:maxLength="2"
                     android:textColor="@color/caldroid_cyan" />
@@ -161,22 +163,36 @@
 
         <Button
             android:id="@+id/continue_btn"
-            android:layout_width="0dp"
+            android:layout_width="130dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:background="@color/green"
+            android:gravity="center"
             android:text="@string/continue_btn"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:textSize="@dimen/next_textSize" />
 
         <Button
             android:id="@+id/save_btn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="5dp"
             android:layout_weight="1"
             android:background="@color/green"
             android:text="@string/save_btn"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:textSize="@dimen/next_textSize" />
+
+        <Button
+            android:id="@+id/delete_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_weight="1"
+            android:visibility="gone"
+            android:background="@color/green"
+            android:text="@string/delete_btn"
+            android:textColor="@color/white"
+            android:textSize="@dimen/next_textSize" />
     </LinearLayout>
 
 </RelativeLayout>

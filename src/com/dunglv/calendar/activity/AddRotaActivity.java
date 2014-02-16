@@ -2,6 +2,7 @@ package com.dunglv.calendar.activity;
 
 import android.view.View.OnClickListener;
 
+import com.dunglv.calendar.R;
 import com.dunglv.calendar.dao.Rota;
 import com.dunglv.calendar.util.Utils;
 
@@ -12,7 +13,6 @@ public class AddRotaActivity extends RotaActivity implements OnClickListener {
 	public void initView() {
 		super.initView();
 		setTitle("Edit Rota");
-		mWeekEd.setText("5");
 	}
 
 	@Override
@@ -24,6 +24,10 @@ public class AddRotaActivity extends RotaActivity implements OnClickListener {
 
 	@Override
 	public void onContinue() {
+		if (getRota().getWeekReapeat() == 0) {
+			Utils.showAlert(this, getString(R.string.alert_week));
+			return;
+		}
 		super.onContinue();
 		long rotaId = rotaDao.insertOrReplace(getRota());
 		sharedPreferences.putLong(Utils.ROTA_ID, rotaId);

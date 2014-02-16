@@ -102,6 +102,8 @@ public class ListRotaFragment extends BaseFragment implements OnClickListener {
 	 * Refresh listview
 	 */
 	private void refresh() {
+		daoSession = daoMaster.newSession();
+		rotaDao = daoSession.getRotaDao();
 		listRota = rotaDao.queryBuilder().orderDesc(Properties.DateStarted)
 				.list();
 		adapter.refresh(listRota);

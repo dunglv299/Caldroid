@@ -28,7 +28,8 @@ import com.dunglv.calendar.dao.RotaDao;
 import com.dunglv.calendar.util.MySharedPreferences;
 import com.dunglv.calendar.util.Utils;
 
-public abstract class RotaActivity extends FragmentActivity implements OnClickListener {
+public abstract class RotaActivity extends FragmentActivity implements
+		OnClickListener {
 	private static final String TAG = "RotaActivity";
 	public static final int REQUES_CODE_FINISH = 100;
 	private String colorRota;
@@ -37,17 +38,18 @@ public abstract class RotaActivity extends FragmentActivity implements OnClickLi
 	public EditText mNameEd;
 	public EditText mWeekEd;
 	public EditText mRepeatTimeEd;
-	private DaoMaster daoMaster;
-	private DaoSession daoSession;
+	public DaoMaster daoMaster;
+	public DaoSession daoSession;
 	private SQLiteDatabase db;
 	public RotaDao rotaDao;
 	public MySharedPreferences sharedPreferences;
+	public Button deleteBtn;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_add_rota);
-		initDao();
+		initRotaDao();
 		initView();
 		init();
 	}
@@ -58,6 +60,8 @@ public abstract class RotaActivity extends FragmentActivity implements OnClickLi
 		continueBtn.setOnClickListener(this);
 		Button saveBtn = (Button) findViewById(R.id.save_btn);
 		saveBtn.setOnClickListener(this);
+		deleteBtn = (Button) findViewById(R.id.delete_btn);
+		deleteBtn.setOnClickListener(this);
 		mNameEd = (EditText) findViewById(R.id.rota_name);
 		mWeekEd = (EditText) findViewById(R.id.week_number);
 		mRepeatTimeEd = (EditText) findViewById(R.id.time_number);
@@ -75,7 +79,6 @@ public abstract class RotaActivity extends FragmentActivity implements OnClickLi
 		switch (v.getId()) {
 		case R.id.continue_btn:
 			onContinue();
-
 			break;
 		case R.id.save_btn:
 			onSave();
@@ -134,7 +137,7 @@ public abstract class RotaActivity extends FragmentActivity implements OnClickLi
 		});
 	}
 
-	public void initDao() {
+	public void initRotaDao() {
 		DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, "rota-db",
 				null);
 		db = helper.getWritableDatabase();
@@ -164,8 +167,7 @@ public abstract class RotaActivity extends FragmentActivity implements OnClickLi
 		rota.setName(mNameEd.getText().toString());
 		rota.setWeekReapeat(Utils.convertStringToInt(mWeekEd.getText()
 				.toString()));
-		rota.setTimeRepeat(Utils.convertStringToInt(mRepeatTimeEd.getText()
-				.toString()));
+		rota.setTimeRepeat(mRepeatTimeEd.getText().toString());
 		return rota;
 	}
 

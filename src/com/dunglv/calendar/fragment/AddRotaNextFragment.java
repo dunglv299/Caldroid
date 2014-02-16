@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
@@ -309,9 +310,12 @@ public class AddRotaNextFragment extends BaseFragment implements
 	 * make all week action
 	 */
 	private void onMakeAllWeek() {
-		List<WeekTime> listDelete = weekTimeDao.queryBuilder()
-				.where(Properties.WeekId.between(currentWeek, weekCount))
-				.list();
+		List<WeekTime> listDelete = weekTimeDao
+				.queryBuilder()
+				.where(Properties.WeekId.between(currentWeek, weekCount),
+						Properties.RotaId
+								.eq(((AddRotaNextActivity) getActivity())
+										.getRotaId())).list();
 		weekTimeDao.deleteInTx(listDelete);
 		for (int i = currentWeek; i <= weekCount; i++) {
 			weekTime = collectData();
