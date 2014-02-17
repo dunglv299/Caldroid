@@ -12,7 +12,7 @@ public class AddRotaActivity extends RotaActivity implements OnClickListener {
 	@Override
 	public void initView() {
 		super.initView();
-		setTitle("Edit Rota");
+		setTitle("Add Rota");
 	}
 
 	@Override
