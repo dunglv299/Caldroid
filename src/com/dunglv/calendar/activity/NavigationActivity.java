@@ -6,6 +6,7 @@ import android.annotation.SuppressLint;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -42,7 +43,6 @@ public class NavigationActivity extends SherlockFragmentActivity {
 	private ArrayList<ItemNavDrawer> navDrawerItems;
 	private NavDrawerListAdapter adapter;
 	private ActionBar actionBar;
-	private Fragment[] fragments = new Fragment[2];
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -50,9 +50,6 @@ public class NavigationActivity extends SherlockFragmentActivity {
 		// requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_main);
 		initNavigationDrawer();
-		fragments[0] = new ListRotaFragment();
-		fragments[1] = new CalendarViewFragment();
-		addFragment();
 	}
 
 	public void goToFragment(Fragment f) {
@@ -115,6 +112,8 @@ public class NavigationActivity extends SherlockFragmentActivity {
 				actionBar.setTitle(mTitle);
 				// calling onPrepareOptionsMenu() to show action bar icons
 				supportInvalidateOptionsMenu();
+				// If mPendingRunnable is not null, then add to the message
+				// queue
 			}
 
 			public void onDrawerOpened(View drawerView) {
@@ -139,26 +138,10 @@ public class NavigationActivity extends SherlockFragmentActivity {
 		}
 	}
 
-	private void showFragment(Fragment fragment) {
-		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-		for (int i = 0; i < fragments.length; i++) {
-			if (fragment.getClass().getSimpleName()
-					.equals(fragments[i].getClass().getSimpleName())) {
-				ft.show(fragments[i]);
-			} else {
-				ft.hide(fragments[i]);
-			}
-		}
-		ft.commit();
-	}
-
-	private void addFragment() {
-		FragmentManager fm = getSupportFragmentManager();
-		FragmentTransaction ft = fm.beginTransaction();
-		for (int i = 0; i < fragments.length; i++) {
-			ft.add(R.id.main_content, fragments[i]);
-		}
-		ft.commit();
+	private void replaceFragment(Fragment f) {
+		FragmentManager fragmentManager = getSupportFragmentManager();
+		fragmentManager.beginTransaction().replace(R.id.main_content, f)
+				.commit();
 	}
 
 	/**
@@ -167,11 +150,21 @@ public class NavigationActivity extends SherlockFragmentActivity {
 	private void displayView(int position) {
 		switch (position) {
 		case 0:
-			showFragment(fragments[0]);
+			new Handler().postDelayed(new Runnable() {
+				@Override
+				public void run() {
+					replaceFragment(new ListRotaFragment());
+				}
+			}, 200);
+
 			break;
 		case 1:
-			showFragment(fragments[1]);
-			((CalendarViewFragment) fragments[1]).refresh();
+			new Handler().postDelayed(new Runnable() {
+				@Override
+				public void run() {
+					replaceFragment(new CalendarViewFragment());
+				}
+			}, 250);
 			break;
 		default:
 			break;

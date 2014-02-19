@@ -51,25 +51,6 @@ public class CalendarViewFragment extends CaldroidFragment {
 		return adapter;
 	}
 
-	/**
-	 * Refresh calendarview
-	 */
-	public void refresh() {
-		daoSession = daoMaster.newSession();
-		rotaDao = daoSession.getRotaDao();
-		listRota = rotaDao.loadAll();
-		adapter.refresh(listRota);
-		refreshView();
-//		Calendar cal = Calendar.getInstance();
-//		cal.add(Calendar.DATE, 2);
-//		Date fromDate = cal.getTime();
-//		// To Date
-//		cal = Calendar.getInstance();
-//		cal.add(Calendar.DATE, 3);
-//		Date toDate = cal.getTime();
-//		setSelectedDates(fromDate, toDate);
-	}
-
 	private void initData() {
 		Calendar cal = Calendar.getInstance();
 		// Min date is last 7 days

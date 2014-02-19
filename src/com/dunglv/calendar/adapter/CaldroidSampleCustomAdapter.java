@@ -2,7 +2,6 @@ package com.dunglv.calendar.adapter;
 
 import hirondelle.date4j.DateTime;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -10,7 +9,6 @@ import java.util.List;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,13 +21,13 @@ import com.dunglv.calendar.dao.Rota;
 
 public class CaldroidSampleCustomAdapter extends CaldroidGridAdapter {
 	private List<Rota> listRota;
+	private String color;
 
 	public CaldroidSampleCustomAdapter(Context context, int month, int year,
 			HashMap<String, Object> caldroidData,
 			HashMap<String, Object> extraData, List<Rota> listRota) {
 		super(context, month, year, caldroidData, extraData);
 		this.listRota = listRota;
-		Log.e("size", listRota.size() + "");
 	}
 
 	@Override
@@ -111,6 +109,7 @@ public class CaldroidSampleCustomAdapter extends CaldroidGridAdapter {
 		tv1.setText("" + dateTime.getDay());
 		if (checkDateTimeInList(dateTime)) {
 			tv2.setText("Hi");
+			tv2.setTextColor(Color.parseColor(color));
 		} else {
 			tv2.setText("");
 		}
@@ -123,19 +122,13 @@ public class CaldroidSampleCustomAdapter extends CaldroidGridAdapter {
 		return cellView;
 	}
 
-	public void refresh(List<Rota> listRota) {
-		this.listRota = new ArrayList<Rota>();
-//		this.listRota = listRota;
-		notifyDataSetChanged();
-	}
-
 	private boolean checkDateTimeInList(DateTime dateTime) {
 		for (Rota rota : listRota) {
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTimeInMillis(rota.getDateStarted());
 			if (dateTime.getDay() == calendar.get(Calendar.DAY_OF_MONTH)
 					&& dateTime.getMonth() - 1 == calendar.get(Calendar.MONTH)) {
-				Log.e("dateTime.getDay()", dateTime.getDay() + "");
+				color = rota.getColor();
 				return true;
 			}
 		}
