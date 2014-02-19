@@ -13,7 +13,6 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -24,12 +23,14 @@ import com.dunglv.calendar.dao.Rota;
 public class CaldroidSampleCustomAdapter extends CaldroidGridAdapter {
 	private List<Rota> listRota;
 	private List<String> listColors;
+	private float scale;
 
 	public CaldroidSampleCustomAdapter(Context context, int month, int year,
 			HashMap<String, Object> caldroidData,
 			HashMap<String, Object> extraData, List<Rota> listRota) {
 		super(context, month, year, caldroidData, extraData);
 		this.listRota = listRota;
+		scale = context.getResources().getDisplayMetrics().density;
 	}
 
 	@Override
@@ -80,15 +81,17 @@ public class CaldroidSampleCustomAdapter extends CaldroidGridAdapter {
 				if (i == 4) {
 					break;
 				}
-				ImageView imageView = new ImageView(context);
+				MyCircleView circleView = new MyCircleView(context,
+						Color.parseColor(listColors.get(i)));
+				int pixels = (int) (10 * scale + 0.5f);
 				LinearLayout.LayoutParams vp = new LinearLayout.LayoutParams(
-						30, 30);
-				vp.leftMargin = 5;
-				vp.rightMargin = 5;
-				imageView
-						.setBackgroundColor(Color.parseColor(listColors.get(i)));
-				imageView.setLayoutParams(vp);
-				linearLayout.addView(imageView);
+						pixels, pixels);
+				vp.leftMargin = (int) (1 * scale + 0.5f);
+				vp.rightMargin = (int) (1 * scale + 0.5f);
+				// imageView
+				// .setBackgroundColor(Color.parseColor(listColors.get(i)));
+				circleView.setLayoutParams(vp);
+				linearLayout.addView(circleView);
 			}
 		}
 
