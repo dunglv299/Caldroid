@@ -1,25 +1,73 @@
 package com.dunglv.calendar.fragment;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import com.caldroid.caldroidcustom.CaldroidFragment;
+import com.caldroid.caldroidcustom.CaldroidGridAdapter;
 import com.caldroid.caldroidcustom.CaldroidListener;
 import com.dunglv.calendar.R;
+import com.dunglv.calendar.adapter.CaldroidSampleCustomAdapter;
+import com.dunglv.calendar.dao.DaoMaster;
+import com.dunglv.calendar.dao.DaoMaster.DevOpenHelper;
+import com.dunglv.calendar.dao.DaoSession;
+import com.dunglv.calendar.dao.Rota;
+import com.dunglv.calendar.dao.RotaDao;
 
 public class CalendarViewFragment extends CaldroidFragment {
 	private CaldroidFragment caldroidFragment;
 	private SimpleDateFormat formatter;
 	View calendarTv;
+	public DaoMaster daoMaster;
+	public DaoSession daoSession;
+	private SQLiteDatabase db;
+	public RotaDao rotaDao;
+	private List<Rota> listRota;
+	CaldroidSampleCustomAdapter adapter;
 
-	public CalendarViewFragment() {
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
 		setUpCaldroidFragment();
+		initRotaDao();
+		listRota = new ArrayList<Rota>();
+		listRota = rotaDao.loadAll();
+	}
+
+	@Override
+	public CaldroidGridAdapter getNewDatesGridAdapter(int month, int year) {
+		adapter = new CaldroidSampleCustomAdapter(getActivity(), month, year,
+				getCaldroidData(), extraData, listRota);
+		return adapter;
+	}
+
+	/**
+	 * Refresh calendarview
+	 */
+	public void refresh() {
+		daoSession = daoMaster.newSession();
+		rotaDao = daoSession.getRotaDao();
+		listRota = rotaDao.loadAll();
+		adapter.refresh(listRota);
+		refreshView();
+//		Calendar cal = Calendar.getInstance();
+//		cal.add(Calendar.DATE, 2);
+//		Date fromDate = cal.getTime();
+//		// To Date
+//		cal = Calendar.getInstance();
+//		cal.add(Calendar.DATE, 3);
+//		Date toDate = cal.getTime();
+//		setSelectedDates(fromDate, toDate);
 	}
 
 	private void initData() {
@@ -43,9 +91,18 @@ public class CalendarViewFragment extends CaldroidFragment {
 		}
 	}
 
+	public void initRotaDao() {
+		DevOpenHelper helper = new DaoMaster.DevOpenHelper(getActivity(),
+				"rota-db", null);
+		db = helper.getWritableDatabase();
+		daoMaster = new DaoMaster(db);
+		daoSession = daoMaster.newSession();
+		rotaDao = daoSession.getRotaDao();
+	}
+
 	private void setUpCaldroidFragment() {
 		caldroidFragment = new CaldroidFragment();
-		formatter = new SimpleDateFormat("dd MMM yyyy");
+		formatter = new SimpleDateFormat("dd MMM yyyy", Locale.US);
 		Bundle args = new Bundle();
 		Calendar cal = Calendar.getInstance();
 		args.putInt(CaldroidFragment.MONTH, cal.get(Calendar.MONTH) + 1);

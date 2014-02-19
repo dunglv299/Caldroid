@@ -171,6 +171,7 @@ public class NavigationActivity extends SherlockFragmentActivity {
 			break;
 		case 1:
 			showFragment(fragments[1]);
+			((CalendarViewFragment) fragments[1]).refresh();
 			break;
 		default:
 			break;

@@ -73,7 +73,6 @@ public class ListRotaFragment extends BaseFragment implements OnClickListener {
 	public void onResume() {
 		super.onResume();
 		refresh();
-		Log.e("onResume", "onResume");
 	}
 
 	public void initDao() {
