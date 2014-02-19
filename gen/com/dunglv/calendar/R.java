@@ -1030,6 +1030,7 @@ containing a value of this type.
         public static final int calendar_right_arrow=0x7f040075;
         public static final int calendar_title_view=0x7f040072;
         public static final int calendar_tv=0x7f040078;
+        public static final int circular_image_view=0x7f040040;
         public static final int color_spinner=0x7f040035;
         public static final int continue_btn=0x7f040036;
         public static final int copy_to_next=0x7f04006e;
@@ -1093,7 +1094,6 @@ containing a value of this type.
         public static final int time_number=0x7f040034;
         public static final int title=0x7f040042;
         public static final int tv1=0x7f04003f;
-        public static final int tv2=0x7f040040;
         public static final int useLogo=0x7f040004;
         public static final int week_number=0x7f040033;
         public static final int weekday=0x7f040044;
