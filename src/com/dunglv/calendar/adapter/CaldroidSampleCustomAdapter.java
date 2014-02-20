@@ -17,21 +17,17 @@ import android.widget.TextView;
 
 import com.caldroid.caldroidcustom.CaldroidGridAdapter;
 import com.dunglv.calendar.R;
-import com.dunglv.calendar.dao.Rota;
 import com.dunglv.calendar.entity.RotaDay;
 
 public class CaldroidSampleCustomAdapter extends CaldroidGridAdapter {
-	private List<Rota> listRota;
 	private List<String> listColors;
 	private float scale;
 	private List<RotaDay> listRotaDay;
 
 	public CaldroidSampleCustomAdapter(Context context, int month, int year,
 			HashMap<String, Object> caldroidData,
-			HashMap<String, Object> extraData, List<Rota> listRota,
-			List<RotaDay> listRotaDay) {
+			HashMap<String, Object> extraData, List<RotaDay> listRotaDay) {
 		super(context, month, year, caldroidData, extraData);
-		this.listRota = listRota;
 		this.listRotaDay = listRotaDay;
 		scale = context.getResources().getDisplayMetrics().density;
 	}

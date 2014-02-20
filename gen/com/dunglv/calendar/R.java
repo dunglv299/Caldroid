@@ -966,22 +966,23 @@ containing a value of this type.
         public static final int calendar_next_arrow=0x7f020072;
         public static final int calendar_prev_arrow=0x7f020073;
         public static final int cell_bg=0x7f020074;
-        public static final int continute_btn=0x7f020075;
-        public static final int disable_cell=0x7f020076;
-        public static final int ic_actionbar=0x7f020077;
-        public static final int ic_app=0x7f020078;
-        public static final int ic_calendar=0x7f020079;
-        public static final int ic_clock=0x7f02007a;
-        public static final int ic_drawer=0x7f02007b;
-        public static final int ic_launcher=0x7f02007c;
-        public static final int left_arrow=0x7f02007d;
-        public static final int list_selector=0x7f02007e;
-        public static final int next_btn=0x7f02007f;
-        public static final int red_border=0x7f020080;
-        public static final int red_border_gray_bg=0x7f020081;
-        public static final int right_arrow=0x7f020082;
-        public static final int rotaname_bg=0x7f020083;
-        public static final int today_bg=0x7f020084;
+        public static final int circle=0x7f020075;
+        public static final int continute_btn=0x7f020076;
+        public static final int disable_cell=0x7f020077;
+        public static final int ic_actionbar=0x7f020078;
+        public static final int ic_app=0x7f020079;
+        public static final int ic_calendar=0x7f02007a;
+        public static final int ic_clock=0x7f02007b;
+        public static final int ic_drawer=0x7f02007c;
+        public static final int ic_launcher=0x7f02007d;
+        public static final int left_arrow=0x7f02007e;
+        public static final int list_selector=0x7f02007f;
+        public static final int next_btn=0x7f020080;
+        public static final int red_border=0x7f020081;
+        public static final int red_border_gray_bg=0x7f020082;
+        public static final int right_arrow=0x7f020083;
+        public static final int rotaname_bg=0x7f020084;
+        public static final int today_bg=0x7f020085;
     }
     public static final class id {
         public static final int abs__action_bar=0x7f040020;
@@ -1024,12 +1025,12 @@ containing a value of this type.
         public static final int abs__title=0x7f04001b;
         public static final int abs__up=0x7f04000b;
         public static final int button_layout=0x7f04003c;
-        public static final int calendar_gridview=0x7f040079;
+        public static final int calendar_gridview=0x7f04007a;
         public static final int calendar_left_arrow=0x7f040073;
         public static final int calendar_month_year_textview=0x7f040074;
         public static final int calendar_right_arrow=0x7f040075;
         public static final int calendar_title_view=0x7f040072;
-        public static final int calendar_tv=0x7f040078;
+        public static final int calendar_tv=0x7f040079;
         public static final int circular_image_view=0x7f040040;
         public static final int color_spinner=0x7f040035;
         public static final int continue_btn=0x7f040036;
@@ -1039,7 +1040,7 @@ containing a value of this type.
         public static final int disableHome=0x7f040009;
         public static final int drawer_layout=0x7f04003a;
         public static final int edit_query=0x7f040026;
-        public static final int endDate_btn=0x7f04007e;
+        public static final int endDate_btn=0x7f04007f;
         public static final int endDate_btn1=0x7f040047;
         public static final int endDate_btn2=0x7f04004c;
         public static final int endDate_btn3=0x7f040052;
@@ -1059,6 +1060,7 @@ containing a value of this type.
         public static final int icon=0x7f040041;
         public static final int layout1=0x7f040043;
         public static final int listMode=0x7f040002;
+        public static final int listRotaDate=0x7f040078;
         public static final int list_rota=0x7f040070;
         public static final int list_slidermenu=0x7f04003d;
         public static final int main_content=0x7f04003b;
@@ -1067,14 +1069,14 @@ containing a value of this type.
         public static final int newRota_btn=0x7f040071;
         public static final int next_btn=0x7f04006d;
         public static final int normal=0x7f040001;
-        public static final int rectangleView=0x7f04007a;
-        public static final int rota_date=0x7f04007b;
+        public static final int rectangleView=0x7f04007b;
+        public static final int rota_date=0x7f04007c;
         public static final int rota_name=0x7f040032;
         public static final int save_btn=0x7f040037;
         public static final int showCustom=0x7f040008;
         public static final int showHome=0x7f040005;
         public static final int showTitle=0x7f040007;
-        public static final int startDate_btn=0x7f04007d;
+        public static final int startDate_btn=0x7f04007e;
         public static final int startDate_btn1=0x7f040045;
         public static final int startDate_btn2=0x7f04004a;
         public static final int startDate_btn3=0x7f040050;
@@ -1083,7 +1085,7 @@ containing a value of this type.
         public static final int startDate_btn6=0x7f040062;
         public static final int startDate_btn7=0x7f040068;
         public static final int tabMode=0x7f040003;
-        public static final int text_spinner=0x7f04007c;
+        public static final int text_spinner=0x7f04007d;
         public static final int textview1=0x7f040046;
         public static final int textview2=0x7f04004b;
         public static final int textview3=0x7f040051;
@@ -1151,8 +1153,9 @@ containing a value of this type.
         public static final int sherlock_spinner_dropdown_item=0x7f030020;
         public static final int sherlock_spinner_item=0x7f030021;
         public static final int single_rota_layout=0x7f030022;
-        public static final int single_spinner_dropdown_item=0x7f030023;
-        public static final int single_weekday=0x7f030024;
+        public static final int single_rotaday_layout=0x7f030023;
+        public static final int single_spinner_dropdown_item=0x7f030024;
+        public static final int single_weekday=0x7f030025;
     }
     public static final class string {
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 

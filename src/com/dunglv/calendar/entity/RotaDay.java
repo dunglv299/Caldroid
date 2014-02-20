@@ -1,11 +1,16 @@
 package com.dunglv.calendar.entity;
 
+import java.util.Date;
+
+import com.dunglv.calendar.dao.Rota;
 
 public class RotaDay {
+	private Date dateTime;
 	private int day;
 	private int month;
 	private int year;
 	private String color;
+	private Rota rota;
 
 	/**
 	 * @return the day
@@ -65,6 +70,36 @@ public class RotaDay {
 	 */
 	public void setColor(String color) {
 		this.color = color;
+	}
+
+	/**
+	 * @return the dateTime
+	 */
+	public Date getDateTime() {
+		return dateTime;
+	}
+
+	/**
+	 * @param dateTime
+	 *            the dateTime to set
+	 */
+	public void setDateTime(Date dateTime) {
+		this.dateTime = dateTime;
+	}
+
+	/**
+	 * @return the rota
+	 */
+	public Rota getRota() {
+		return rota;
+	}
+
+	/**
+	 * @param rota
+	 *            the rota to set
+	 */
+	public void setRota(Rota rota) {
+		this.rota = rota;
 	}
 
 }

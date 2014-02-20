@@ -10,7 +10,10 @@ import java.util.Locale;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.caldroid.caldroidcustom.CaldroidFragment;
@@ -18,24 +21,28 @@ import com.caldroid.caldroidcustom.CaldroidGridAdapter;
 import com.caldroid.caldroidcustom.CaldroidListener;
 import com.dunglv.calendar.R;
 import com.dunglv.calendar.adapter.CaldroidSampleCustomAdapter;
+import com.dunglv.calendar.adapter.RotaDayAdapter;
 import com.dunglv.calendar.dao.DaoMaster;
 import com.dunglv.calendar.dao.DaoMaster.DevOpenHelper;
 import com.dunglv.calendar.dao.DaoSession;
 import com.dunglv.calendar.dao.Rota;
 import com.dunglv.calendar.dao.RotaDao;
 import com.dunglv.calendar.entity.RotaDay;
+import com.dunglv.calendar.util.Utils;
 
 public class CalendarViewFragment extends CaldroidFragment {
 	private CaldroidFragment caldroidFragment;
 	private SimpleDateFormat formatter;
-	View calendarTv;
+	// View calendarTv;
 	public DaoMaster daoMaster;
 	public DaoSession daoSession;
 	private SQLiteDatabase db;
 	public RotaDao rotaDao;
 	private List<Rota> listRota;
-	CaldroidSampleCustomAdapter adapter;
 	private List<RotaDay> listRotaDay;
+	private List<Rota> listRotaShow;
+	ListView mListView;
+	private RotaDayAdapter rotaDayAdapter;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -54,7 +61,9 @@ public class CalendarViewFragment extends CaldroidFragment {
 				rotaDay.setDay(calendar.get(Calendar.DAY_OF_MONTH));
 				rotaDay.setMonth(calendar.get(Calendar.MONTH) + 1);
 				rotaDay.setYear(calendar.get(Calendar.YEAR));
+				rotaDay.setDateTime(calendar.getTime());
 				rotaDay.setColor(rota.getColor());
+				rotaDay.setRota(rota);
 				listRotaDay.add(rotaDay);
 				calendar.add(Calendar.DATE, 1);
 			}
@@ -62,9 +71,18 @@ public class CalendarViewFragment extends CaldroidFragment {
 	}
 
 	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		View v = super.onCreateView(inflater, container, savedInstanceState);
+		mListView = (ListView) v.findViewById(R.id.listRotaDate);
+		return v;
+	}
+
+	@Override
 	public CaldroidGridAdapter getNewDatesGridAdapter(int month, int year) {
-		adapter = new CaldroidSampleCustomAdapter(getActivity(), month, year,
-				getCaldroidData(), extraData, listRota, listRotaDay);
+		CaldroidSampleCustomAdapter adapter = new CaldroidSampleCustomAdapter(
+				getActivity(), month, year, getCaldroidData(), extraData,
+				listRotaDay);
 		return adapter;
 	}
 
@@ -109,20 +127,29 @@ public class CalendarViewFragment extends CaldroidFragment {
 		args.putBoolean(CaldroidFragment.SIX_WEEKS_IN_CALENDAR, true);
 		args.putInt(CaldroidFragment.START_DAY_OF_WEEK, CaldroidFragment.SUNDAY); // Tuesday
 		caldroidFragment.setArguments(args);
-		caldroidFragment.setCaldroidListener(listener);
+		this.setCaldroidListener(listener);
 	}
 
 	// Setup listener
 	final CaldroidListener listener = new CaldroidListener() {
 
+		@SuppressWarnings("deprecation")
 		@Override
 		public void onSelectDate(Date date, View view) {
 			Log.e(TAG, formatter.format(date));
-			if (calendarTv != null) {
-				calendarTv.setBackgroundResource(R.color.caldroid_white);
+			listRotaShow = new ArrayList<Rota>();
+			for (RotaDay rotaDay : listRotaDay) {
+				if (Utils.isSameDay(rotaDay.getDateTime(), date)) {
+					listRotaShow.add(rotaDay.getRota());
+				}
 			}
-			calendarTv = (View) view.findViewById(R.id.calendar_tv);
-			calendarTv.setBackgroundResource(R.drawable.today_bg);
+			rotaDayAdapter = new RotaDayAdapter(getActivity(), listRotaShow);
+			mListView.setAdapter(rotaDayAdapter);
+			// if (calendarTv != null) {
+			// calendarTv.setBackgroundResource(R.color.caldroid_white);
+			// }
+			// calendarTv = (View) view.findViewById(R.id.calendar_tv);
+			// calendarTv.setBackgroundResource(R.drawable.today_bg);
 		}
 
 		@Override
