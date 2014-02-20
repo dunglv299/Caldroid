@@ -110,7 +110,9 @@ public abstract class RotaActivity extends FragmentActivity implements
 
 				TextView tv = (TextView) v.findViewById(R.id.text_spinner);
 				tv.setText(colorArray[position]);
-				tv.setTextColor(Color.parseColor(colorArray[position]));
+				tv.setTextColor(Color.parseColor("#" + colorArray[position]));
+				tv.setBackgroundColor(Color.parseColor("#"
+						+ colorArray[position]));
 				return v;
 			}
 
@@ -122,9 +124,10 @@ public abstract class RotaActivity extends FragmentActivity implements
 					View selectedItemView, int position, long id) {
 				TextView selectedText = (TextView) parentView.getChildAt(0);
 				if (selectedText != null) {
-					selectedText.setTextColor(Color.parseColor(colorSpinner
-							.getSelectedItem().toString()));
-					colorRota = selectedText.getText().toString();
+					selectedText.setTextColor(Color.parseColor("#"
+							+ colorSpinner.getSelectedItem().toString()));
+					colorRota = "#" + selectedText.getText().toString();
+					colorSpinner.setBackgroundColor(Color.parseColor(colorRota));
 				}
 
 			}

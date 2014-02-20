@@ -20,7 +20,8 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="9dp"
-            android:text="Rota Name 1" />
+            android:text="Rota Name 1"
+            android:textSize="17sp" />
 
         <TextView
             android:id="@+id/rota_date"
@@ -29,7 +30,8 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="9dp"
-            android:text="11/02/2014" />
+            android:text="11/02/2014"
+            android:textSize="17sp" />
     </RelativeLayout>
 
     <View

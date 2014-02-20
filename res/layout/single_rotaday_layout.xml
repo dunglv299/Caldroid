@@ -11,8 +11,9 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginLeft="20dp"
+        android:textColor="#333333"
         android:text="Rota Name 1"
-        android:textSize="17sp" />
+        android:textSize="19sp" />
 
     <View
         android:id="@+id/rectangleView"

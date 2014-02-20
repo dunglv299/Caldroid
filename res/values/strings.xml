@@ -36,17 +36,16 @@
     <string name="alert_week">Number of week must be greater than 0</string>
 
     <array name="color_spinner">
-        <item>Black</item>
-        <item>Red</item>
-        <item>Green</item>
-        <item>Blue</item>
-        <item>White</item>
-        <item>Gray</item>
-        <item>Cyan</item>
-        <item>Magenta</item>
-        <item>Yellow</item>
-        <item>Lightgray</item>
-        <item>Darkgray</item>
+        <item>f6cd6c</item>
+        <item>5b93cb</item>
+        <item>a864a8</item>
+        <item>7ab977</item>
+        <item>a67c52</item>
+        <item>f7941d</item>
+        <item>44d5ce</item>
+        <item>fa565c</item>
+        <item>8393ca</item>
+        <item>7d7d7d</item>
     </array>
 
 </resources>
