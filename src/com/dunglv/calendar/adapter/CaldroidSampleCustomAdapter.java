@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.caldroid.caldroidcustom.CaldroidFragment;
 import com.caldroid.caldroidcustom.CaldroidGridAdapter;
 import com.dunglv.calendar.R;
 import com.dunglv.calendar.entity.RotaDay;
@@ -37,17 +38,12 @@ public class CaldroidSampleCustomAdapter extends CaldroidGridAdapter {
 		LayoutInflater inflater = (LayoutInflater) context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View cellView = convertView;
-
 		// For reuse
 		if (convertView == null) {
 			cellView = inflater.inflate(R.layout.custom_cell_calendar, null);
 		}
 
 		TextView dayTextView = (TextView) cellView.findViewById(R.id.tv1);
-		// View colorView = cellView.findViewById(R.id.circular_image_view);
-
-		dayTextView.setTextColor(Color.BLACK);
-
 		// Get dateTime of this cell
 		DateTime dateTime = this.datetimeList.get(position);
 		Resources resources = context.getResources();
@@ -55,14 +51,35 @@ public class CaldroidSampleCustomAdapter extends CaldroidGridAdapter {
 		// Set color of the dates in previous / next month
 		if (dateTime.getMonth() != month) {
 			dayTextView.setTextColor(resources
-					.getColor(R.color.caldroid_darker_gray));
+					.getColor(R.color.caldroid_lighter_gray));
 		}
 
-		// Customize for today
-		if (dateTime.equals(getToday())) {
-			cellView.setBackgroundResource(R.drawable.red_border);
+		boolean shouldResetSelectedView = false;
+
+		// Customize for selected dates
+		if (selectedDates != null && selectedDates.indexOf(dateTime) != -1) {
+			if (CaldroidFragment.selectedBackgroundDrawable != -1) {
+				cellView.setBackgroundResource(CaldroidFragment.selectedBackgroundDrawable);
+			} else {
+				cellView.setBackgroundResource(R.drawable.blue_border);
+			}
+
+			dayTextView.setTextColor(CaldroidFragment.selectedTextColor);
+
 		} else {
-			cellView.setBackgroundResource(R.drawable.cell_bg);
+			shouldResetSelectedView = true;
+		}
+
+		if (shouldResetSelectedView) {
+			// Customize for today
+			if (dateTime.equals(getToday())) {
+				dayTextView.setTextColor(resources
+						.getColor(R.color.today_color));
+				cellView.setBackgroundColor(resources
+						.getColor(R.color.today_background));
+			} else {
+				cellView.setBackgroundResource(R.drawable.cell_bg);
+			}
 		}
 		dayTextView.setText("" + dateTime.getDay());
 		LinearLayout linearLayout = (LinearLayout) cellView
@@ -76,7 +93,7 @@ public class CaldroidSampleCustomAdapter extends CaldroidGridAdapter {
 				}
 				MyCircleView circleView = new MyCircleView(context,
 						Color.parseColor(listColors.get(i)));
-				int pixels = (int) (10 * scale + 0.5f);
+				int pixels = (int) (8 * scale + 0.5f);
 				LinearLayout.LayoutParams vp = new LinearLayout.LayoutParams(
 						pixels, pixels);
 				vp.leftMargin = (int) (1 * scale + 0.5f);

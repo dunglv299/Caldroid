@@ -9,9 +9,8 @@
         <shape android:shape="rectangle" >
             <stroke
                 android:width="2dp"
-                android:color="#FFC6292D" />
-
-            <solid android:color="#FFDDDDDD" />
+                android:color="@color/caldroid_sky" />
+			<solid android:color="@color/white"/>
         </shape>
     </item>
 

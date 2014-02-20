@@ -33,7 +33,7 @@ import com.dunglv.calendar.util.Utils;
 public class CalendarViewFragment extends CaldroidFragment {
 	private CaldroidFragment caldroidFragment;
 	private SimpleDateFormat formatter;
-	// View calendarTv;
+	View calendarTv;
 	public DaoMaster daoMaster;
 	public DaoSession daoSession;
 	private SQLiteDatabase db;
@@ -47,15 +47,24 @@ public class CalendarViewFragment extends CaldroidFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setUpCaldroidFragment();
 		initRotaDao();
+		initData();
 		listRota = new ArrayList<Rota>();
 		listRota = rotaDao.loadAll();
 		listRotaDay = new ArrayList<RotaDay>();
 		for (Rota rota : listRota) {
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTimeInMillis(rota.getDateStarted());
-			int repeatDay = rota.getWeekReapeat() * 7;
+			int repeatDay;
+			int time = 0;
+			if (!rota.getTimeRepeat().isEmpty()) {
+				time = Integer.parseInt(rota.getTimeRepeat());
+			}
+			if (time == 0) {
+				repeatDay = rota.getWeekReapeat() * 7;
+			} else {
+				repeatDay = rota.getWeekReapeat() * 7 * time;
+			}
 			for (int i = 0; i < repeatDay; i++) {
 				RotaDay rotaDay = new RotaDay();
 				rotaDay.setDay(calendar.get(Calendar.DAY_OF_MONTH));
@@ -74,6 +83,7 @@ public class CalendarViewFragment extends CaldroidFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View v = super.onCreateView(inflater, container, savedInstanceState);
+		setUpCaldroidFragment();
 		mListView = (ListView) v.findViewById(R.id.listRotaDate);
 		return v;
 	}
@@ -117,23 +127,13 @@ public class CalendarViewFragment extends CaldroidFragment {
 	}
 
 	private void setUpCaldroidFragment() {
-		caldroidFragment = new CaldroidFragment();
 		formatter = new SimpleDateFormat("dd MMM yyyy", Locale.US);
-		Bundle args = new Bundle();
-		Calendar cal = Calendar.getInstance();
-		args.putInt(CaldroidFragment.MONTH, cal.get(Calendar.MONTH) + 1);
-		args.putInt(CaldroidFragment.YEAR, cal.get(Calendar.YEAR));
-		args.putBoolean(CaldroidFragment.ENABLE_SWIPE, true);
-		args.putBoolean(CaldroidFragment.SIX_WEEKS_IN_CALENDAR, true);
-		args.putInt(CaldroidFragment.START_DAY_OF_WEEK, CaldroidFragment.SUNDAY); // Tuesday
-		caldroidFragment.setArguments(args);
-		this.setCaldroidListener(listener);
+		setCaldroidListener(listener);
 	}
 
 	// Setup listener
 	final CaldroidListener listener = new CaldroidListener() {
 
-		@SuppressWarnings("deprecation")
 		@Override
 		public void onSelectDate(Date date, View view) {
 			Log.e(TAG, formatter.format(date));
@@ -143,13 +143,11 @@ public class CalendarViewFragment extends CaldroidFragment {
 					listRotaShow.add(rotaDay.getRota());
 				}
 			}
+			setSelectedDates(date, date);
+			refreshView();
 			rotaDayAdapter = new RotaDayAdapter(getActivity(), listRotaShow);
 			mListView.setAdapter(rotaDayAdapter);
-			// if (calendarTv != null) {
-			// calendarTv.setBackgroundResource(R.color.caldroid_white);
-			// }
-			// calendarTv = (View) view.findViewById(R.id.calendar_tv);
-			// calendarTv.setBackgroundResource(R.drawable.today_bg);
+
 		}
 
 		@Override
@@ -160,14 +158,14 @@ public class CalendarViewFragment extends CaldroidFragment {
 
 		@Override
 		public void onLongClickDate(Date date, View view) {
-			Toast.makeText(getActivity(),
-					"Long click " + formatter.format(date), Toast.LENGTH_SHORT)
-					.show();
+			// Toast.makeText(getActivity(),
+			// "Long click " + formatter.format(date), Toast.LENGTH_SHORT)
+			// .show();
 		}
 
 		@Override
 		public void onCaldroidViewCreated() {
-			if (caldroidFragment.getLeftArrowButton() != null) {
+			if (getLeftArrowButton() != null) {
 				Log.e(TAG, "Caldroid view is created");
 			}
 		}

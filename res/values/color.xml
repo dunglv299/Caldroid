@@ -13,7 +13,7 @@
     <!-- A dark Holo shade of blue -->
     <color name="caldroid_holo_blue_dark">#ff0099cc</color>
     <!-- A really bright Holo shade of blue -->
-    <color name="caldroid_sky">#FFA3E8F7</color>
+    <color name="caldroid_sky">#33b5e5</color>
     <color name="caldroid_weekday_color">#4d5155</color>
     <color name="caldroid_cyan">#33b5e5</color>
     <color name="white">#FFFFFF</color>
@@ -39,5 +39,7 @@
     <color name="list_divider">#ffffff</color>
     <color name="add_shift_background">#eeeeee</color>
     <color name="gray_line">#d0d0d0</color>
+    <color name="today_color">#33b5e5</color>
+    <color name="today_background">#eaf7fc</color>
 
 </resources>
