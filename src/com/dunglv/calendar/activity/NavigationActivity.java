@@ -28,7 +28,6 @@ import com.dunglv.calendar.fragment.ListRotaFragment;
 
 @SuppressLint("SimpleDateFormat")
 public class NavigationActivity extends SherlockFragmentActivity {
-	private static final String TAG = "CaldroidSampleActivity";
 	// nav drawer title
 	private CharSequence mDrawerTitle;
 	// used to store app title

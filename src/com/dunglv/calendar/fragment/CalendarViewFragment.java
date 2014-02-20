@@ -23,6 +23,7 @@ import com.dunglv.calendar.dao.DaoMaster.DevOpenHelper;
 import com.dunglv.calendar.dao.DaoSession;
 import com.dunglv.calendar.dao.Rota;
 import com.dunglv.calendar.dao.RotaDao;
+import com.dunglv.calendar.entity.RotaDay;
 
 public class CalendarViewFragment extends CaldroidFragment {
 	private CaldroidFragment caldroidFragment;
@@ -34,6 +35,7 @@ public class CalendarViewFragment extends CaldroidFragment {
 	public RotaDao rotaDao;
 	private List<Rota> listRota;
 	CaldroidSampleCustomAdapter adapter;
+	private List<RotaDay> listRotaDay;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -42,12 +44,27 @@ public class CalendarViewFragment extends CaldroidFragment {
 		initRotaDao();
 		listRota = new ArrayList<Rota>();
 		listRota = rotaDao.loadAll();
+		listRotaDay = new ArrayList<RotaDay>();
+		for (Rota rota : listRota) {
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTimeInMillis(rota.getDateStarted());
+			int repeatDay = rota.getWeekReapeat() * 7;
+			for (int i = 0; i < repeatDay; i++) {
+				RotaDay rotaDay = new RotaDay();
+				rotaDay.setDay(calendar.get(Calendar.DAY_OF_MONTH));
+				rotaDay.setMonth(calendar.get(Calendar.MONTH) + 1);
+				rotaDay.setYear(calendar.get(Calendar.YEAR));
+				rotaDay.setColor(rota.getColor());
+				listRotaDay.add(rotaDay);
+				calendar.add(Calendar.DATE, 1);
+			}
+		}
 	}
 
 	@Override
 	public CaldroidGridAdapter getNewDatesGridAdapter(int month, int year) {
 		adapter = new CaldroidSampleCustomAdapter(getActivity(), month, year,
-				getCaldroidData(), extraData, listRota);
+				getCaldroidData(), extraData, listRota, listRotaDay);
 		return adapter;
 	}
 
