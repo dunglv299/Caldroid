@@ -32,7 +32,8 @@ public class EditRotaActivity extends RotaActivity implements OnClickListener {
 		mNameEd.setText(rota.getName());
 		mWeekEd.setText(rota.getWeekReapeat() + "");
 		mRepeatTimeEd.setText(rota.getTimeRepeat());
-		int index = Arrays.asList(colorArray).indexOf(rota.getColor());
+		int index = Arrays.asList(colorArray).indexOf(
+				rota.getColor().replace("#", ""));
 		colorSpinner.setSelection(index);
 		dateStarted = rota.getDateStarted();
 	}

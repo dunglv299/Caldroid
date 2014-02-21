@@ -11,6 +11,8 @@ public class RotaDay {
 	private int year;
 	private String color;
 	private Rota rota;
+	private int timeRepeat;
+	private int weekId;
 
 	/**
 	 * @return the day
@@ -100,6 +102,36 @@ public class RotaDay {
 	 */
 	public void setRota(Rota rota) {
 		this.rota = rota;
+	}
+
+	/**
+	 * @return the timeRepeat
+	 */
+	public int getTimeRepeat() {
+		return timeRepeat;
+	}
+
+	/**
+	 * @param timeRepeat
+	 *            the timeRepeat to set
+	 */
+	public void setTimeRepeat(int timeRepeat) {
+		this.timeRepeat = timeRepeat;
+	}
+
+	/**
+	 * @return the weekId
+	 */
+	public int getWeekId() {
+		return weekId;
+	}
+
+	/**
+	 * @param weekId
+	 *            the weekId to set
+	 */
+	public void setWeekId(int weekId) {
+		this.weekId = weekId;
 	}
 
 }

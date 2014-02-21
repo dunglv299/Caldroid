@@ -1,27 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:minHeight="47dp"
-    android:orientation="vertical" >
+    android:gravity="center_vertical"
+    android:minHeight="47dp" >
 
     <TextView
         android:id="@+id/rota_name"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
         android:layout_marginLeft="20dp"
-        android:textColor="#333333"
+        android:layout_weight="1"
+        android:singleLine="true"
         android:text="Rota Name 1"
+        android:textColor="#333333"
         android:textSize="19sp" />
 
-    <View
-        android:id="@+id/rectangleView"
-        android:layout_width="16dp"
-        android:layout_height="16dp"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="30dp"
-        android:background="@drawable/circle" />
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.7" >
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/startTime_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:text="Start Time"
+            android:textColor="#333333"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/endTime_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/startTime_tv"
+            android:text="Start Time"
+            android:textColor="#333333"
+            android:textSize="17sp" />
+
+        <View
+            android:id="@+id/rectangleView"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="30dp"
+            android:background="@drawable/circle" />
+    </RelativeLayout>
+
+</LinearLayout>

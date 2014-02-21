@@ -696,10 +696,10 @@ containing a value of this type.
         public static final int abs__bright_foreground_disabled_holo_light=0x7f060005;
         public static final int abs__bright_foreground_holo_dark=0x7f060002;
         public static final int abs__bright_foreground_holo_light=0x7f060003;
-        public static final int abs__primary_text_disable_only_holo_dark=0x7f06002a;
-        public static final int abs__primary_text_disable_only_holo_light=0x7f06002b;
-        public static final int abs__primary_text_holo_dark=0x7f06002c;
-        public static final int abs__primary_text_holo_light=0x7f06002d;
+        public static final int abs__primary_text_disable_only_holo_dark=0x7f06002b;
+        public static final int abs__primary_text_disable_only_holo_light=0x7f06002c;
+        public static final int abs__primary_text_holo_dark=0x7f06002d;
+        public static final int abs__primary_text_holo_light=0x7f06002e;
         public static final int add_shift_background=0x7f060026;
         public static final int aqua=0x7f06001a;
         public static final int black=0x7f060020;
@@ -737,6 +737,7 @@ containing a value of this type.
         public static final int olive=0x7f060017;
         public static final int purple=0x7f060018;
         public static final int red=0x7f060014;
+        public static final int selected_date=0x7f06002a;
         public static final int silver=0x7f060015;
         public static final int teal=0x7f06001c;
         public static final int today_background=0x7f060029;
@@ -842,6 +843,7 @@ containing a value of this type.
         /**  Minimum width of the search view text entry area. 
          */
         public static final int abs__search_view_text_min_width=0x7f07000b;
+        public static final int day_height=0x7f070014;
         public static final int item_rota_margin_top=0x7f070013;
         public static final int next_textSize=0x7f070012;
         public static final int normal_textSize=0x7f07000f;
@@ -1042,7 +1044,7 @@ containing a value of this type.
         public static final int disableHome=0x7f040009;
         public static final int drawer_layout=0x7f04003a;
         public static final int edit_query=0x7f040026;
-        public static final int endDate_btn=0x7f04007f;
+        public static final int endDate_btn=0x7f040081;
         public static final int endDate_btn1=0x7f040047;
         public static final int endDate_btn2=0x7f04004c;
         public static final int endDate_btn3=0x7f040052;
@@ -1050,6 +1052,7 @@ containing a value of this type.
         public static final int endDate_btn5=0x7f04005e;
         public static final int endDate_btn6=0x7f040064;
         public static final int endDate_btn7=0x7f04006a;
+        public static final int endTime_tv=0x7f04007e;
         public static final int frame_add_next=0x7f040039;
         public static final int homeAsUp=0x7f040006;
         public static final int hour_edittext=0x7f040049;
@@ -1078,7 +1081,7 @@ containing a value of this type.
         public static final int showCustom=0x7f040008;
         public static final int showHome=0x7f040005;
         public static final int showTitle=0x7f040007;
-        public static final int startDate_btn=0x7f04007e;
+        public static final int startDate_btn=0x7f040080;
         public static final int startDate_btn1=0x7f040045;
         public static final int startDate_btn2=0x7f04004a;
         public static final int startDate_btn3=0x7f040050;
@@ -1086,8 +1089,9 @@ containing a value of this type.
         public static final int startDate_btn5=0x7f04005c;
         public static final int startDate_btn6=0x7f040062;
         public static final int startDate_btn7=0x7f040068;
+        public static final int startTime_tv=0x7f04007d;
         public static final int tabMode=0x7f040003;
-        public static final int text_spinner=0x7f04007d;
+        public static final int text_spinner=0x7f04007f;
         public static final int textview1=0x7f040046;
         public static final int textview2=0x7f04004b;
         public static final int textview3=0x7f040051;

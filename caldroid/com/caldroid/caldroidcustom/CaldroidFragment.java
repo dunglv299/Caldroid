@@ -106,7 +106,7 @@ public class CaldroidFragment extends DialogFragment {
 	 * To customize the selected background drawable and text color
 	 */
 	public static int selectedBackgroundDrawable = -1;
-	public static int selectedTextColor = Color.BLACK;
+	public static int selectedTextColor = Color.parseColor("#4d5155");
 
 	public final static int NUMBER_OF_PAGES = 4;
 
@@ -1068,7 +1068,8 @@ public class CaldroidFragment extends DialogFragment {
 		}
 
 		// Inflate layout
-		View view = inflater.inflate(R.layout.lib_calendar_view, container, false);
+		View view = inflater.inflate(R.layout.lib_calendar_view, container,
+				false);
 
 		// For the monthTitleTextView
 		monthTitleTextView = (TextView) view

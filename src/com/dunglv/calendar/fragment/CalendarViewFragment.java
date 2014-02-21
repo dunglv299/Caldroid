@@ -14,7 +14,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.caldroid.caldroidcustom.CaldroidFragment;
 import com.caldroid.caldroidcustom.CaldroidGridAdapter;
@@ -27,6 +26,9 @@ import com.dunglv.calendar.dao.DaoMaster.DevOpenHelper;
 import com.dunglv.calendar.dao.DaoSession;
 import com.dunglv.calendar.dao.Rota;
 import com.dunglv.calendar.dao.RotaDao;
+import com.dunglv.calendar.dao.WeekTime;
+import com.dunglv.calendar.dao.WeekTimeDao;
+import com.dunglv.calendar.dao.WeekTimeDao.Properties;
 import com.dunglv.calendar.entity.RotaDay;
 import com.dunglv.calendar.util.Utils;
 
@@ -34,13 +36,12 @@ public class CalendarViewFragment extends CaldroidFragment {
 	private CaldroidFragment caldroidFragment;
 	private SimpleDateFormat formatter;
 	View calendarTv;
-	public DaoMaster daoMaster;
-	public DaoSession daoSession;
-	private SQLiteDatabase db;
 	public RotaDao rotaDao;
+	public WeekTimeDao weekTimeDao;
 	private List<Rota> listRota;
 	private List<RotaDay> listRotaDay;
 	private List<Rota> listRotaShow;
+	private List<String> listDetailDay;
 	ListView mListView;
 	private RotaDayAdapter rotaDayAdapter;
 
@@ -48,6 +49,7 @@ public class CalendarViewFragment extends CaldroidFragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		initRotaDao();
+		initWeekTimeDao();
 		initData();
 		listRota = new ArrayList<Rota>();
 		listRota = rotaDao.loadAll();
@@ -57,14 +59,13 @@ public class CalendarViewFragment extends CaldroidFragment {
 			calendar.setTimeInMillis(rota.getDateStarted());
 			int repeatDay;
 			int time = 0;
-			if (!rota.getTimeRepeat().isEmpty()) {
+			if (!rota.getTimeRepeat().isEmpty()
+					&& !rota.getTimeRepeat().equals("0")) {
 				time = Integer.parseInt(rota.getTimeRepeat());
-			}
-			if (time == 0) {
-				repeatDay = rota.getWeekReapeat() * 7;
 			} else {
-				repeatDay = rota.getWeekReapeat() * 7 * time;
+				time = 1;
 			}
+			repeatDay = rota.getWeekReapeat() * 7 * time;
 			for (int i = 0; i < repeatDay; i++) {
 				RotaDay rotaDay = new RotaDay();
 				rotaDay.setDay(calendar.get(Calendar.DAY_OF_MONTH));
@@ -73,6 +74,14 @@ public class CalendarViewFragment extends CaldroidFragment {
 				rotaDay.setDateTime(calendar.getTime());
 				rotaDay.setColor(rota.getColor());
 				rotaDay.setRota(rota);
+				rotaDay.setTimeRepeat(time);
+				int weekId = (int) (i / 7) + 1;
+				if (weekId % time == 0) {
+					weekId = time;
+				} else {
+					weekId = weekId % time;
+				}
+				rotaDay.setWeekId(weekId);
 				listRotaDay.add(rotaDay);
 				calendar.add(Calendar.DATE, 1);
 			}
@@ -120,10 +129,19 @@ public class CalendarViewFragment extends CaldroidFragment {
 	public void initRotaDao() {
 		DevOpenHelper helper = new DaoMaster.DevOpenHelper(getActivity(),
 				"rota-db", null);
-		db = helper.getWritableDatabase();
-		daoMaster = new DaoMaster(db);
-		daoSession = daoMaster.newSession();
+		SQLiteDatabase db = helper.getWritableDatabase();
+		DaoMaster daoMaster = new DaoMaster(db);
+		DaoSession daoSession = daoMaster.newSession();
 		rotaDao = daoSession.getRotaDao();
+	}
+
+	public void initWeekTimeDao() {
+		DevOpenHelper helper = new DaoMaster.DevOpenHelper(getActivity(),
+				"weekTime-db", null);
+		SQLiteDatabase db = helper.getWritableDatabase();
+		DaoMaster daoMaster = new DaoMaster(db);
+		DaoSession daoSession = daoMaster.newSession();
+		weekTimeDao = daoSession.getWeekTimeDao();
 	}
 
 	private void setUpCaldroidFragment() {
@@ -138,16 +156,24 @@ public class CalendarViewFragment extends CaldroidFragment {
 		public void onSelectDate(Date date, View view) {
 			Log.e(TAG, formatter.format(date));
 			listRotaShow = new ArrayList<Rota>();
+			listDetailDay = new ArrayList<String>();
 			for (RotaDay rotaDay : listRotaDay) {
 				if (Utils.isSameDay(rotaDay.getDateTime(), date)) {
-					listRotaShow.add(rotaDay.getRota());
+					// Add rota to listRotaShow
+					Rota rota = rotaDay.getRota();
+					listRotaShow.add(rota);
+
+					// Add detail time to list
+					String detailTime = getDetailTime(date, rota.getId(),
+							rotaDay.getWeekId());
+					listDetailDay.add(detailTime);
 				}
 			}
+			rotaDayAdapter = new RotaDayAdapter(getActivity(), listRotaShow,
+					listDetailDay);
+			mListView.setAdapter(rotaDayAdapter);
 			setSelectedDates(date, date);
 			refreshView();
-			rotaDayAdapter = new RotaDayAdapter(getActivity(), listRotaShow);
-			mListView.setAdapter(rotaDayAdapter);
-
 		}
 
 		@Override
@@ -158,9 +184,6 @@ public class CalendarViewFragment extends CaldroidFragment {
 
 		@Override
 		public void onLongClickDate(Date date, View view) {
-			// Toast.makeText(getActivity(),
-			// "Long click " + formatter.format(date), Toast.LENGTH_SHORT)
-			// .show();
 		}
 
 		@Override
@@ -170,4 +193,41 @@ public class CalendarViewFragment extends CaldroidFragment {
 			}
 		}
 	};
+
+	private String getDetailTime(Date date, long rotaId, int weekId) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+		String detailTime = null;
+		WeekTime weekTime = getWeekTimeDao(rotaId, weekId);
+		if (weekTime != null) {
+			if (Calendar.MONDAY == dayOfWeek) {
+				detailTime = weekTime.getMonday();
+			} else if (Calendar.TUESDAY == dayOfWeek) {
+				detailTime = weekTime.getTuesday();
+			} else if (Calendar.WEDNESDAY == dayOfWeek) {
+				detailTime = weekTime.getWednesday();
+			} else if (Calendar.THURSDAY == dayOfWeek) {
+				detailTime = weekTime.getThursday();
+			} else if (Calendar.FRIDAY == dayOfWeek) {
+				detailTime = weekTime.getFriday();
+			} else if (Calendar.SATURDAY == dayOfWeek) {
+				detailTime = weekTime.getSaturday();
+			} else if (Calendar.SUNDAY == dayOfWeek) {
+				detailTime = weekTime.getSunday();
+			}
+		}
+		return detailTime;
+	}
+
+	private WeekTime getWeekTimeDao(long rotaId, int weekId) {
+		List<WeekTime> listWeekTime = weekTimeDao
+				.queryBuilder()
+				.where(Properties.WeekId.eq(weekId),
+						Properties.RotaId.eq(rotaId)).list();
+		if (listWeekTime != null && listWeekTime.size() > 0) {
+			return listWeekTime.get(0);
+		}
+		return null;
+	}
 }

@@ -7,5 +7,6 @@
     <dimen name="textview_marginTop">17dp</dimen>
     <dimen name="next_textSize">12sp</dimen>
     <dimen name="item_rota_margin_top">12sp</dimen>
+    <dimen name="day_height">12dp</dimen>
 
 </resources>

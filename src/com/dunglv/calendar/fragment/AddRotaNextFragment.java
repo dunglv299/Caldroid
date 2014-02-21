@@ -38,7 +38,7 @@ public class AddRotaNextFragment extends BaseFragment implements
 		OnClickListener {
 	private static final String TAG = "AddRotaNextFragment";
 	private static final int LENGTH = 7;
-	private static final String TIME_ZERO = "0000000000000";
+	public static final String TIME_ZERO = "0000000000000";
 	private int weekCount;
 	private int currentWeek = 1;
 	private MySharedPreferences sharedPreferences;

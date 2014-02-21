@@ -2,5 +2,6 @@
 <resources>
 
     <dimen name="next_textSize">14sp</dimen>
+    <dimen name="day_height">18dp</dimen>
 
 </resources>
