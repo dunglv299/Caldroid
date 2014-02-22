@@ -9,12 +9,14 @@
     <string-array name="nav_drawer_items">
         <item>Manage rota</item>
         <item>View calendar</item>
+        <item>Settings</item>
     </string-array>
     <!-- Nav Drawer List Item Icons -->
     <!-- Keep them in order as the titles are in -->
     <array name="nav_drawer_icons">
         <item>@drawable/ic_clock</item>
         <item>@drawable/ic_calendar</item>
+        <item>@drawable/ic_settings</item>
     </array>
     <!-- Manage shift -->
     <string name="new_rota">New Rota</string>
@@ -36,16 +38,36 @@
     <string name="alert_week">Number of week must be greater than 0</string>
 
     <array name="color_spinner">
-        <item>f6cd6c</item>
-        <item>5b93cb</item>
-        <item>a864a8</item>
-        <item>7ab977</item>
-        <item>a67c52</item>
-        <item>f7941d</item>
-        <item>44d5ce</item>
-        <item>fa565c</item>
-        <item>8393ca</item>
-        <item>7d7d7d</item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+    </array>
+
+    <!-- setting screen -->
+    <string name="google_sync">Google Sync</string>
+    <string name="reminder">Reminder</string>
+
+    <array name="reminder_spinner">
+        <item>1 minute</item>
+        <item>5 minutes</item>
+        <item>10 minutes</item>
+        <item>15 minutes</item>
+        <item>20 minutes</item>
+        <item>25 minutes</item>
+        <item>30 minutes</item>
+        <item>45 minutes</item>
+        <item>1 hour</item>
+        <item>2 hours</item>
+        <item>3 hours</item>
+        <item>12 hours</item>
+        <item>24 hours</item>
     </array>
 
 </resources>

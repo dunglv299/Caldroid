@@ -25,9 +25,10 @@ import com.dunglv.calendar.adapter.NavDrawerListAdapter;
 import com.dunglv.calendar.entity.ItemNavDrawer;
 import com.dunglv.calendar.fragment.CalendarViewFragment;
 import com.dunglv.calendar.fragment.ListRotaFragment;
+import com.dunglv.calendar.fragment.SettingFragment;
 
 @SuppressLint("SimpleDateFormat")
-public class NavigationActivity extends SherlockFragmentActivity {
+public class MainActivity extends SherlockFragmentActivity {
 	// nav drawer title
 	private CharSequence mDrawerTitle;
 	// used to store app title
@@ -49,7 +50,7 @@ public class NavigationActivity extends SherlockFragmentActivity {
 		// requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_main);
 		initNavigationDrawer();
-		displayView(1);
+		displayView(0);
 	}
 
 	public void goToFragment(Fragment f) {
@@ -81,9 +82,10 @@ public class NavigationActivity extends SherlockFragmentActivity {
 		// Home
 		navDrawerItems.add(new ItemNavDrawer(navMenuTitles[0], navMenuIcons
 				.getResourceId(0, -1)));
-		// Find People
 		navDrawerItems.add(new ItemNavDrawer(navMenuTitles[1], navMenuIcons
 				.getResourceId(1, -1)));
+		navDrawerItems.add(new ItemNavDrawer(navMenuTitles[2], navMenuIcons
+				.getResourceId(2, -1)));
 
 		// Recycle the typed array
 		navMenuIcons.recycle();
@@ -155,7 +157,7 @@ public class NavigationActivity extends SherlockFragmentActivity {
 				public void run() {
 					replaceFragment(new ListRotaFragment());
 				}
-			}, 200);
+			}, 250);
 
 			break;
 		case 1:
@@ -164,7 +166,10 @@ public class NavigationActivity extends SherlockFragmentActivity {
 				public void run() {
 					replaceFragment(new CalendarViewFragment());
 				}
-			}, 250);
+			}, 270);
+			break;
+		case 2:
+			replaceFragment(new SettingFragment());
 			break;
 		default:
 			break;

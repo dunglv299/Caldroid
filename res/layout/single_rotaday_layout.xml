@@ -9,7 +9,7 @@
         android:id="@+id/rota_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="10dp"
         android:layout_weight="1"
         android:singleLine="true"
         android:text="Rota Name 1"
@@ -19,14 +19,13 @@
     <RelativeLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1.7" >
+        android:layout_weight="1.6" >
 
         <TextView
             android:id="@+id/startTime_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
             android:text="Start Time"
             android:textColor="#333333"
             android:textSize="17sp" />
@@ -47,7 +46,7 @@
             android:layout_height="16dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="30dp"
+            android:layout_marginRight="20dp"
             android:background="@drawable/circle" />
     </RelativeLayout>
 

@@ -15,9 +15,12 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.dunglv.calendar.R;
 import com.dunglv.calendar.dao.DaoMaster;
@@ -29,12 +32,12 @@ import com.dunglv.calendar.util.MySharedPreferences;
 import com.dunglv.calendar.util.Utils;
 
 public abstract class RotaActivity extends FragmentActivity implements
-		OnClickListener {
+		OnClickListener, OnCheckedChangeListener {
 	private static final String TAG = "RotaActivity";
 	public static final int REQUES_CODE_FINISH = 100;
 	private String colorRota;
-	public String[] colorArray;
 	public Spinner colorSpinner;
+	public Spinner reminderSpinner;
 	public EditText mNameEd;
 	public EditText mWeekEd;
 	public EditText mRepeatTimeEd;
@@ -44,6 +47,13 @@ public abstract class RotaActivity extends FragmentActivity implements
 	public RotaDao rotaDao;
 	public MySharedPreferences sharedPreferences;
 	public Button deleteBtn;
+	public CheckBox mCheckBoxReminder;
+	public static int[] reminderArray = { 1, 5, 10, 15, 20, 25, 30, 45, 60,
+			120, 180, 12 * 60, 24 * 60 };
+	public static String[] colorsArray = { "#f6cd6c", "#5b93cb", "#a864a8",
+			"#7ab977", "#a67c52", "#f7941d", "#44d5ce", "#fa565c", "#8393ca",
+			"#7d7d7d" };
+	public int remindTime;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -65,13 +75,16 @@ public abstract class RotaActivity extends FragmentActivity implements
 		mNameEd = (EditText) findViewById(R.id.rota_name);
 		mWeekEd = (EditText) findViewById(R.id.week_number);
 		mRepeatTimeEd = (EditText) findViewById(R.id.time_number);
+		mCheckBoxReminder = (CheckBox) findViewById(R.id.checkbox);
+		mCheckBoxReminder.setOnCheckedChangeListener(this);
+		reminderSpinner = (Spinner) findViewById(R.id.reminder_spinner);
 	}
 
 	public void init() {
-		colorArray = getResources().getStringArray(R.array.color_spinner);
 		setCustomColorSpinner();
+		reminderSpinnerListener();
 		sharedPreferences = new MySharedPreferences(this);
-
+		setSpinnerEnabled(reminderSpinner, false);
 	}
 
 	@Override
@@ -88,9 +101,27 @@ public abstract class RotaActivity extends FragmentActivity implements
 		}
 	}
 
+	@Override
+	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+		switch (buttonView.getId()) {
+		case R.id.checkbox:
+			setSpinnerEnabled(reminderSpinner, isChecked);
+			break;
+
+		default:
+			break;
+		}
+	}
+
+	private void setSpinnerEnabled(Spinner spinner, boolean enabled) {
+		spinner.setEnabled(enabled);
+		spinner.setAlpha(enabled ? 1.0f : 0.4f);
+	}
+
 	public void setCustomColorSpinner() {
 		ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this,
-				android.R.layout.simple_spinner_dropdown_item, colorArray) {
+				android.R.layout.simple_spinner_dropdown_item, new String[] {
+						"", "", "", "", "", "", "", "", "", "" }) {
 
 			@Override
 			public boolean areAllItemsEnabled() {
@@ -108,11 +139,9 @@ public abstract class RotaActivity extends FragmentActivity implements
 					v = vi.inflate(R.layout.single_spinner_dropdown_item, null);
 				}
 
-				TextView tv = (TextView) v.findViewById(R.id.text_spinner);
-				tv.setText(colorArray[position]);
-				tv.setTextColor(Color.parseColor("#" + colorArray[position]));
-				tv.setBackgroundColor(Color.parseColor("#"
-						+ colorArray[position]));
+				View colorView = v.findViewById(R.id.text_spinner);
+				colorView.setBackgroundColor(Color
+						.parseColor(colorsArray[position]));
 				return v;
 			}
 
@@ -122,21 +151,30 @@ public abstract class RotaActivity extends FragmentActivity implements
 			@Override
 			public void onItemSelected(AdapterView<?> parentView,
 					View selectedItemView, int position, long id) {
-				TextView selectedText = (TextView) parentView.getChildAt(0);
-				if (selectedText != null) {
-					selectedText.setTextColor(Color.parseColor("#"
-							+ colorSpinner.getSelectedItem().toString()));
-					colorRota = "#" + selectedText.getText().toString();
-					colorSpinner.setBackgroundColor(Color.parseColor(colorRota));
-				}
-
+				colorRota = colorsArray[position];
+				colorSpinner.setBackgroundColor(Color.parseColor(colorRota));
 			}
 
 			@Override
 			public void onNothingSelected(AdapterView<?> parentView) {
-				// your code here
 			}
 
+		});
+	}
+
+	private void reminderSpinnerListener() {
+		reminderSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> parentView,
+					View selectedItemView, int position, long id) {
+				remindTime = reminderArray[position];
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+
+			}
 		});
 	}
 
@@ -171,6 +209,7 @@ public abstract class RotaActivity extends FragmentActivity implements
 		rota.setWeekReapeat(Utils.convertStringToInt(mWeekEd.getText()
 				.toString()));
 		rota.setTimeRepeat(mRepeatTimeEd.getText().toString());
+		rota.setReminderTime(mCheckBoxReminder.isChecked() ? remindTime : 0);
 		return rota;
 	}
 
