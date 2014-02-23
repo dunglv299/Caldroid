@@ -1,7 +1,11 @@
 package com.dunglv.calendar.fragment;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -27,6 +31,8 @@ import com.dunglv.calendar.activity.AddRotaNextActivity;
 import com.dunglv.calendar.dao.DaoMaster;
 import com.dunglv.calendar.dao.DaoMaster.DevOpenHelper;
 import com.dunglv.calendar.dao.DaoSession;
+import com.dunglv.calendar.dao.Rota;
+import com.dunglv.calendar.dao.RotaDao;
 import com.dunglv.calendar.dao.WeekTime;
 import com.dunglv.calendar.dao.WeekTimeDao;
 import com.dunglv.calendar.dao.WeekTimeDao.Properties;
@@ -46,6 +52,9 @@ public class AddRotaNextFragment extends BaseFragment implements
 	Button btnMakeAll;
 	TextView tvWeekNumber;
 	private boolean isNextPress;
+	private static final int[] weekDayIdArray = { R.id.weekday1, R.id.weekday2,
+			R.id.weekday3, R.id.weekday4, R.id.weekday5, R.id.weekday6,
+			R.id.weekday7 };
 	private static final int[] startIdArray = { R.id.startDate_btn1,
 			R.id.startDate_btn2, R.id.startDate_btn3, R.id.startDate_btn4,
 			R.id.startDate_btn5, R.id.startDate_btn6, R.id.startDate_btn7 };
@@ -57,6 +66,7 @@ public class AddRotaNextFragment extends BaseFragment implements
 	private static final int[] hourIdArray = { R.id.hour_edittext,
 			R.id.hour_edittext2, R.id.hour_edittext3, R.id.hour_edittext4,
 			R.id.hour_edittext5, R.id.hour_edittext6, R.id.hour_edittext7 };
+	private TextView[] weekDayTv = new TextView[LENGTH];
 	private Button[] startBtn = new Button[LENGTH];
 	private Button[] endBtn = new Button[LENGTH];
 	private EditText[] hourEditText = new EditText[LENGTH];
@@ -66,22 +76,29 @@ public class AddRotaNextFragment extends BaseFragment implements
 	private int[] hourWorking = new int[LENGTH];
 	private String[] timeArray = new String[LENGTH];
 
-	private DaoMaster daoMaster;
-	private DaoSession daoSession;
-	private SQLiteDatabase db;
 	private WeekTimeDao weekTimeDao;
+	private RotaDao rotaDao;
 	private List<WeekTime> listWeekTimes;
 	private WeekTime weekTime;
 	Button saveBtn;
 	RelativeLayout btnLayout;
 	private long weekTimeId;
+	private int startDayOfWeek;
+	private List<String> listDayOfWeek;
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		initRotaDao();
+		initWeekTimeDao();
+		listDayOfWeek = getListWeekDay(startDayOfWeek);
+	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.fragment_add_rota_next, container,
 				false);
-		initDao();
 		initView(v);
 		Log.e(TAG, "onCreateView");
 		return v;
@@ -99,9 +116,13 @@ public class AddRotaNextFragment extends BaseFragment implements
 		saveBtn.setOnClickListener(this);
 		tvWeekNumber = (TextView) v.findViewById(R.id.week_number);
 
-		// Action pick start time
 		for (int i = 0; i < LENGTH; i++) {
 			final int index = i;
+			// Init weekDay TextView
+			weekDayTv[index] = (TextView) v.findViewById(weekDayIdArray[index]);
+			weekDayTv[i].setText(listDayOfWeek.get(i));
+
+			// Action pick start time
 			startBtn[index] = (Button) v.findViewById(startIdArray[index]);
 			startBtn[index].setOnClickListener(new View.OnClickListener() {
 
@@ -110,10 +131,7 @@ public class AddRotaNextFragment extends BaseFragment implements
 					showTimePicker(startBtn[index], true, index);
 				}
 			});
-		}
-		// Action pick end time
-		for (int i = 0; i < LENGTH; i++) {
-			final int index = i;
+			// Action pick end time
 			endBtn[index] = (Button) v.findViewById(endIdArray[index]);
 			endBtn[index].setOnClickListener(new View.OnClickListener() {
 
@@ -122,9 +140,7 @@ public class AddRotaNextFragment extends BaseFragment implements
 					showTimePicker(endBtn[index], false, index);
 				}
 			});
-		}
-		// Init editText and get data
-		for (int i = 0; i < LENGTH; i++) {
+			// Init editText and get data
 			hourEditText[i] = (EditText) v.findViewById(hourIdArray[i]);
 		}
 	}
@@ -136,13 +152,14 @@ public class AddRotaNextFragment extends BaseFragment implements
 		}
 		// Init when exists data
 		weekTime = listWeekTimes.get(0);
-		timeArray[0] = weekTime.getMonday();
-		timeArray[1] = weekTime.getTuesday();
-		timeArray[2] = weekTime.getWednesday();
-		timeArray[3] = weekTime.getThursday();
-		timeArray[4] = weekTime.getFriday();
-		timeArray[5] = weekTime.getSaturday();
-		timeArray[6] = weekTime.getSunday();
+		// TODO index cua tung day trong list
+		timeArray[listDayOfWeek.indexOf("MON")] = weekTime.getMonday();
+		timeArray[listDayOfWeek.indexOf("TUE")] = weekTime.getTuesday();
+		timeArray[listDayOfWeek.indexOf("WED")] = weekTime.getWednesday();
+		timeArray[listDayOfWeek.indexOf("THU")] = weekTime.getThursday();
+		timeArray[listDayOfWeek.indexOf("FRI")] = weekTime.getFriday();
+		timeArray[listDayOfWeek.indexOf("SAT")] = weekTime.getSaturday();
+		timeArray[listDayOfWeek.indexOf("SUN")] = weekTime.getSunday();
 		weekTimeId = weekTime.getId();
 		for (int i = 0; i < LENGTH; i++) {
 			String s1 = timeArray[i].substring(0, 13);
@@ -365,12 +382,27 @@ public class AddRotaNextFragment extends BaseFragment implements
 		onBackPress();
 	}
 
-	public void initDao() {
+	public void initRotaDao() {
+		DevOpenHelper helper = new DaoMaster.DevOpenHelper(getActivity(),
+				"rota-db", null);
+		SQLiteDatabase db = helper.getWritableDatabase();
+		DaoMaster daoMaster = new DaoMaster(db);
+		DaoSession daoSession = daoMaster.newSession();
+		rotaDao = daoSession.getRotaDao();
+		Rota rota = rotaDao
+				.queryBuilder()
+				.where(com.dunglv.calendar.dao.RotaDao.Properties.Id
+						.eq(((AddRotaNextActivity) getActivity()).getRotaId()))
+				.list().get(0);
+		startDayOfWeek = rota.getStartDayOfWeek();
+	}
+
+	public void initWeekTimeDao() {
 		DevOpenHelper helper = new DaoMaster.DevOpenHelper(getActivity(),
 				"weekTime-db", null);
-		db = helper.getWritableDatabase();
-		daoMaster = new DaoMaster(db);
-		daoSession = daoMaster.newSession();
+		SQLiteDatabase db = helper.getWritableDatabase();
+		DaoMaster daoMaster = new DaoMaster(db);
+		DaoSession daoSession = daoMaster.newSession();
 		weekTimeDao = daoSession.getWeekTimeDao();
 	}
 
@@ -378,6 +410,7 @@ public class AddRotaNextFragment extends BaseFragment implements
 	 * Parse time to save to DB
 	 */
 	private void parseTime() {
+
 		for (int i = 0; i < LENGTH; i++) {
 			hourWorking[i] = Utils.convertStringToInt(hourEditText[i].getText()
 					.toString());
@@ -400,13 +433,29 @@ public class AddRotaNextFragment extends BaseFragment implements
 		weekTime = new WeekTime();
 		weekTime.setWeekId(currentWeek);
 		weekTime.setRotaId(((AddRotaNextActivity) getActivity()).getRotaId());
-		weekTime.setMonday(timeArray[0]);
-		weekTime.setTuesday(timeArray[1]);
-		weekTime.setWednesday(timeArray[2]);
-		weekTime.setThursday(timeArray[3]);
-		weekTime.setFriday(timeArray[4]);
-		weekTime.setSaturday(timeArray[5]);
-		weekTime.setSunday(timeArray[6]);
+		// TODO thay bang index of monday
+		weekTime.setMonday(timeArray[listDayOfWeek.indexOf("MON")]);
+		weekTime.setTuesday(timeArray[listDayOfWeek.indexOf("TUE")]);
+		weekTime.setWednesday(timeArray[listDayOfWeek.indexOf("WED")]);
+		weekTime.setThursday(timeArray[listDayOfWeek.indexOf("THU")]);
+		weekTime.setFriday(timeArray[listDayOfWeek.indexOf("FRI")]);
+		weekTime.setSaturday(timeArray[listDayOfWeek.indexOf("SAT")]);
+		weekTime.setSunday(timeArray[listDayOfWeek.indexOf("SUN")]);
 		return weekTime;
+	}
+
+	private List<String> getListWeekDay(int startDayOfWeek) {
+		List<String> list = new ArrayList<String>();
+		SimpleDateFormat fmt = new SimpleDateFormat("EEE", Locale.getDefault());
+		// 17 Feb 2013 is Sunday
+		Calendar cal = Calendar.getInstance();
+		cal.set(2013, 2, 17);
+		cal.add(Calendar.DAY_OF_WEEK, startDayOfWeek - Calendar.SUNDAY);
+		for (int i = 0; i < 7; i++) {
+			Date date = cal.getTime();
+			list.add(fmt.format(date).toUpperCase());
+			cal.add(Calendar.DAY_OF_WEEK, 1);
+		}
+		return list;
 	}
 }

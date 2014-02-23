@@ -30,6 +30,7 @@ public class RotaDao extends AbstractDao<Rota, Long> {
         public final static Property WeekReapeat = new Property(4, Integer.class, "weekReapeat", false, "WEEK_REAPEAT");
         public final static Property TimeRepeat = new Property(5, String.class, "timeRepeat", false, "TIME_REPEAT");
         public final static Property ReminderTime = new Property(6, Integer.class, "reminderTime", false, "REMINDER_TIME");
+        public final static Property StartDayOfWeek = new Property(7, Integer.class, "startDayOfWeek", false, "START_DAY_OF_WEEK");
     };
 
     private DaoSession daoSession;
@@ -54,7 +55,8 @@ public class RotaDao extends AbstractDao<Rota, Long> {
                 "'COLOR' TEXT," + // 3: color
                 "'WEEK_REAPEAT' INTEGER," + // 4: weekReapeat
                 "'TIME_REPEAT' TEXT," + // 5: timeRepeat
-                "'REMINDER_TIME' INTEGER);"); // 6: reminderTime
+                "'REMINDER_TIME' INTEGER," + // 6: reminderTime
+                "'START_DAY_OF_WEEK' INTEGER);"); // 7: startDayOfWeek
     }
 
     /** Drops the underlying database table. */
@@ -102,6 +104,11 @@ public class RotaDao extends AbstractDao<Rota, Long> {
         if (reminderTime != null) {
             stmt.bindLong(7, reminderTime);
         }
+ 
+        Integer startDayOfWeek = entity.getStartDayOfWeek();
+        if (startDayOfWeek != null) {
+            stmt.bindLong(8, startDayOfWeek);
+        }
     }
 
     @Override
@@ -126,7 +133,8 @@ public class RotaDao extends AbstractDao<Rota, Long> {
             cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // color
             cursor.isNull(offset + 4) ? null : cursor.getInt(offset + 4), // weekReapeat
             cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // timeRepeat
-            cursor.isNull(offset + 6) ? null : cursor.getInt(offset + 6) // reminderTime
+            cursor.isNull(offset + 6) ? null : cursor.getInt(offset + 6), // reminderTime
+            cursor.isNull(offset + 7) ? null : cursor.getInt(offset + 7) // startDayOfWeek
         );
         return entity;
     }
@@ -141,6 +149,7 @@ public class RotaDao extends AbstractDao<Rota, Long> {
         entity.setWeekReapeat(cursor.isNull(offset + 4) ? null : cursor.getInt(offset + 4));
         entity.setTimeRepeat(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
         entity.setReminderTime(cursor.isNull(offset + 6) ? null : cursor.getInt(offset + 6));
+        entity.setStartDayOfWeek(cursor.isNull(offset + 7) ? null : cursor.getInt(offset + 7));
      }
     
     /** @inheritdoc */

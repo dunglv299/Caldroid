@@ -17,6 +17,7 @@ public class Rota {
     private Integer weekReapeat;
     private String timeRepeat;
     private Integer reminderTime;
+    private Integer startDayOfWeek;
 
     /** Used to resolve relations */
     private transient DaoSession daoSession;
@@ -33,7 +34,7 @@ public class Rota {
         this.id = id;
     }
 
-    public Rota(Long id, String name, Long dateStarted, String color, Integer weekReapeat, String timeRepeat, Integer reminderTime) {
+    public Rota(Long id, String name, Long dateStarted, String color, Integer weekReapeat, String timeRepeat, Integer reminderTime, Integer startDayOfWeek) {
         this.id = id;
         this.name = name;
         this.dateStarted = dateStarted;
@@ -41,6 +42,7 @@ public class Rota {
         this.weekReapeat = weekReapeat;
         this.timeRepeat = timeRepeat;
         this.reminderTime = reminderTime;
+        this.startDayOfWeek = startDayOfWeek;
     }
 
     /** called by internal mechanisms, do not call yourself. */
@@ -103,6 +105,14 @@ public class Rota {
 
     public void setReminderTime(Integer reminderTime) {
         this.reminderTime = reminderTime;
+    }
+
+    public Integer getStartDayOfWeek() {
+        return startDayOfWeek;
+    }
+
+    public void setStartDayOfWeek(Integer startDayOfWeek) {
+        this.startDayOfWeek = startDayOfWeek;
     }
 
     /** To-many relationship, resolved on first access (and after reset). Changes to to-many relations are not persisted, make changes to the target entity. */

@@ -47,8 +47,10 @@ public class EditRotaActivity extends RotaActivity implements OnClickListener {
 		}
 		// Start date btn
 		startDate = rota.getDateStarted();
-		startDateBtn
-				.setText(Utils.convertLongToTime("dd/MM/yyyy", startDate));
+		startDateBtn.setText(Utils.convertLongToTime("dd/MM/yyyy", startDate));
+
+		// Start day of week
+		startDayOfWeek = rota.getStartDayOfWeek();
 	}
 
 	@Override
@@ -63,6 +65,7 @@ public class EditRotaActivity extends RotaActivity implements OnClickListener {
 		rota = super.getRota();
 		rota.setId(rotaId);
 		rota.setDateStarted(startDate);
+		rota.setStartDayOfWeek(startDayOfWeek);
 		return rota;
 	}
 

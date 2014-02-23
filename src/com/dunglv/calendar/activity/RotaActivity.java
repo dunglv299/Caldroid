@@ -62,6 +62,7 @@ public abstract class RotaActivity extends FragmentActivity implements
 			"#7d7d7d" };
 	public int remindTime;
 	public long startDate;
+	public int startDayOfWeek;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +98,10 @@ public abstract class RotaActivity extends FragmentActivity implements
 		setSpinnerEnabled(reminderSpinner, false);
 		startDateBtn.setText(new SimpleDateFormat("dd/MM/yyyy", Locale.US)
 				.format(new Date()));
+
+		Calendar mCalendar = Calendar.getInstance();
+		startDate = mCalendar.getTimeInMillis();
+		startDayOfWeek = mCalendar.get(Calendar.DAY_OF_WEEK);
 	}
 
 	@Override
@@ -133,7 +138,7 @@ public abstract class RotaActivity extends FragmentActivity implements
 						button.setText(DateFormat.format("dd/MM/yyyy",
 								mCalendar));
 						startDate = mCalendar.getTimeInMillis();
-
+						startDayOfWeek = mCalendar.get(Calendar.DAY_OF_WEEK);
 					}
 				}, c.get(Calendar.YEAR), c.get(Calendar.MONTH),
 				c.get(Calendar.DAY_OF_MONTH));
@@ -250,6 +255,7 @@ public abstract class RotaActivity extends FragmentActivity implements
 		rota.setTimeRepeat(mRepeatTimeEd.getText().toString());
 		rota.setReminderTime(mCheckBoxReminder.isChecked() ? remindTime : 0);
 		rota.setDateStarted(startDate);
+		rota.setStartDayOfWeek(startDayOfWeek);
 		return rota;
 	}
 
