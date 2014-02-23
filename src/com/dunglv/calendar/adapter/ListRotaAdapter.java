@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Locale;
 
 import android.app.Activity;
-import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,12 +19,10 @@ import com.dunglv.calendar.dao.Rota;
 public class ListRotaAdapter extends BaseAdapter {
 	private List<Rota> listRota;
 	private LayoutInflater mInflator;
-	private Context context;
 
 	public ListRotaAdapter(Activity a, List<Rota> listRota) {
 		mInflator = a.getLayoutInflater();
 		this.listRota = listRota;
-		this.context = a;
 	}
 
 	@Override

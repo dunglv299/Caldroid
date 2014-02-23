@@ -11,7 +11,6 @@ import com.dunglv.calendar.util.MySharedPreferences;
 import com.dunglv.calendar.util.Utils;
 
 public class AddRotaNextActivity extends FragmentActivity {
-	private static final String TAG = "AddRotaNextActivity";
 	private MySharedPreferences sharedPreferences;
 	private long rotaId;
 

@@ -8,5 +8,11 @@
     <dimen name="next_textSize">12sp</dimen>
     <dimen name="item_rota_margin_top">12sp</dimen>
     <dimen name="day_height">12dp</dimen>
+    <dimen name="row_height">60dp</dimen>
+
+    <!-- add rota next -->
+
+    <dimen name="select_time_button_width">98dp</dimen>
+    <dimen name="select_time_button_height">35dp</dimen>
 
 </resources>

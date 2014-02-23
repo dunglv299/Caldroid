@@ -4,7 +4,6 @@ import java.util.Calendar;
 import java.util.List;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;

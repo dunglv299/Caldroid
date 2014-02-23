@@ -55,4 +55,8 @@ public class Utils {
 						.get(Calendar.DAY_OF_YEAR);
 		return sameDay;
 	}
+
+	public static String convertLongToTime(String template, long time) {
+		return new SimpleDateFormat(template, Locale.US).format(new Date(time));
+	}
 }

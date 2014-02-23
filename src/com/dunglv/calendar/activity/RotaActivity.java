@@ -1,11 +1,18 @@
 package com.dunglv.calendar.activity;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,8 +25,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Spinner;
 
 import com.dunglv.calendar.R;
@@ -46,14 +53,15 @@ public abstract class RotaActivity extends FragmentActivity implements
 	private SQLiteDatabase db;
 	public RotaDao rotaDao;
 	public MySharedPreferences sharedPreferences;
-	public Button deleteBtn;
+	public Button deleteBtn, startDateBtn;
 	public CheckBox mCheckBoxReminder;
-	public static int[] reminderArray = { 1, 5, 10, 15, 20, 25, 30, 45, 60,
+	public static Integer[] reminderArray = { 1, 5, 10, 15, 20, 25, 30, 45, 60,
 			120, 180, 12 * 60, 24 * 60 };
 	public static String[] colorsArray = { "#f6cd6c", "#5b93cb", "#a864a8",
 			"#7ab977", "#a67c52", "#f7941d", "#44d5ce", "#fa565c", "#8393ca",
 			"#7d7d7d" };
 	public int remindTime;
+	public long startDate;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +86,8 @@ public abstract class RotaActivity extends FragmentActivity implements
 		mCheckBoxReminder = (CheckBox) findViewById(R.id.checkbox);
 		mCheckBoxReminder.setOnCheckedChangeListener(this);
 		reminderSpinner = (Spinner) findViewById(R.id.reminder_spinner);
+		startDateBtn = (Button) findViewById(R.id.start_date_btn);
+		startDateBtn.setOnClickListener(this);
 	}
 
 	public void init() {
@@ -85,6 +95,8 @@ public abstract class RotaActivity extends FragmentActivity implements
 		reminderSpinnerListener();
 		sharedPreferences = new MySharedPreferences(this);
 		setSpinnerEnabled(reminderSpinner, false);
+		startDateBtn.setText(new SimpleDateFormat("dd/MM/yyyy", Locale.US)
+				.format(new Date()));
 	}
 
 	@Override
@@ -96,9 +108,36 @@ public abstract class RotaActivity extends FragmentActivity implements
 		case R.id.save_btn:
 			onSave();
 			break;
+		case R.id.start_date_btn:
+			showDatePicker(startDateBtn);
+			break;
 		default:
 			break;
 		}
+	}
+
+	/**
+	 * Show time picker dialog
+	 */
+	private void showDatePicker(final Button button) {
+		Calendar c = Calendar.getInstance();
+		final DatePickerDialog dateDialog = new DatePickerDialog(this,
+				new DatePickerDialog.OnDateSetListener() {
+					@Override
+					public void onDateSet(DatePicker view, int year,
+							int monthOfYear, int dayOfMonth) {
+						Calendar mCalendar = Calendar.getInstance();
+						mCalendar.set(Calendar.YEAR, year);
+						mCalendar.set(Calendar.MONTH, monthOfYear);
+						mCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+						button.setText(DateFormat.format("dd/MM/yyyy",
+								mCalendar));
+						startDate = mCalendar.getTimeInMillis();
+
+					}
+				}, c.get(Calendar.YEAR), c.get(Calendar.MONTH),
+				c.get(Calendar.DAY_OF_MONTH));
+		dateDialog.show();
 	}
 
 	@Override
@@ -210,6 +249,7 @@ public abstract class RotaActivity extends FragmentActivity implements
 				.toString()));
 		rota.setTimeRepeat(mRepeatTimeEd.getText().toString());
 		rota.setReminderTime(mCheckBoxReminder.isChecked() ? remindTime : 0);
+		rota.setDateStarted(startDate);
 		return rota;
 	}
 

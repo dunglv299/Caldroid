@@ -5,193 +5,231 @@
     android:background="@color/add_shift_background"
     android:orientation="vertical" >
 
-    <LinearLayout
+    <ScrollView
+        android:id="@+id/layout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingTop="26dp" >
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/textview_marginLeft"
-                android:text="@string/name"
-                android:textSize="@dimen/normal_textSize" />
-
-            <EditText
-                android:id="@+id/rota_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="@string/rota_name_hint"
-                android:textColor="@color/caldroid_cyan" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="@dimen/textview_marginTop"
-                android:background="@color/gray_line" />
-        </LinearLayout>
+        android:layout_above="@+id/layout2" >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingTop="@dimen/textview_marginTop" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/textview_marginLeft"
-                android:text="@string/how_many_week"
-                android:textSize="@dimen/normal_textSize" />
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="26dp" >
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" >
-
-                <EditText
-                    android:id="@+id/week_number"
-                    android:layout_width="45dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:inputType="number"
-                    android:maxLength="2"
-                    android:textColor="@color/caldroid_cyan" />
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="weeks" />
+                    android:layout_marginLeft="@dimen/textview_marginLeft"
+                    android:text="@string/name"
+                    android:textSize="@dimen/normal_textSize" />
+
+                <EditText
+                    android:id="@+id/rota_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/rota_name_hint"
+                    android:singleLine="true"
+                    android:textColor="@color/caldroid_cyan" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="@dimen/textview_marginTop"
+                    android:background="@color/gray_line" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="@dimen/textview_marginTop" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/textview_marginLeft"
+                    android:text="@string/how_many_week"
+                    android:textSize="@dimen/normal_textSize" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+
+                    <EditText
+                        android:id="@+id/week_number"
+                        android:layout_width="45dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:inputType="number"
+                        android:maxLength="2"
+                        android:textColor="@color/caldroid_cyan" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="weeks" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="@dimen/textview_marginTop"
+                    android:background="@color/gray_line" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="@dimen/textview_marginTop" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/textview_marginLeft"
+                    android:text="@string/repeat_rota_for"
+                    android:textSize="@dimen/normal_textSize" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+
+                    <EditText
+                        android:id="@+id/time_number"
+                        android:layout_width="45dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:inputType="number"
+                        android:maxLength="2"
+                        android:textColor="@color/caldroid_cyan" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="times" />
+                </LinearLayout>
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginTop="@dimen/textview_marginTop"
                 android:background="@color/gray_line" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingTop="@dimen/textview_marginTop" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/textview_marginLeft"
-                android:text="@string/repeat_rota_for"
-                android:textSize="@dimen/normal_textSize" />
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" >
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/row_height"
+                android:gravity="center_vertical"
+                android:orientation="vertical" >
 
-                <EditText
-                    android:id="@+id/time_number"
-                    android:layout_width="45dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:inputType="number"
-                    android:maxLength="2"
-                    android:textColor="@color/caldroid_cyan" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="times" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/textview_marginLeft"
+                        android:text="@string/color"
+                        android:textSize="@dimen/normal_textSize" />
+
+                    <Spinner
+                        android:id="@+id/color_spinner"
+                        android:layout_width="70dp"
+                        android:layout_height="30dp"
+                        android:layout_alignParentRight="true"
+                        android:entries="@array/color_spinner" />
+                </RelativeLayout>
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginTop="@dimen/textview_marginTop"
                 android:background="@color/gray_line" />
-        </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingTop="@dimen/textview_marginTop" >
-
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
+                android:layout_height="@dimen/row_height"
+                android:gravity="center_vertical"
+                android:orientation="vertical" >
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/textview_marginLeft"
-                    android:text="@string/color"
-                    android:textSize="@dimen/normal_textSize" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
 
-                <Spinner
-                    android:id="@+id/color_spinner"
-                    android:layout_width="70dp"
-                    android:layout_height="30dp"
-                    android:layout_alignParentRight="true"
-                    android:entries="@array/color_spinner" />
-            </RelativeLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/textview_marginLeft"
+                        android:text="@string/reminder"
+                        android:textSize="@dimen/normal_textSize" />
+
+                    <CheckBox
+                        android:id="@+id/checkbox"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/reminder_spinner" />
+
+                    <Spinner
+                        android:id="@+id/reminder_spinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:entries="@array/reminder_spinner" />
+                </RelativeLayout>
+            </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginTop="@dimen/textview_marginTop"
                 android:background="@color/gray_line" />
-        </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingTop="@dimen/textview_marginTop" >
-
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
+                android:layout_height="@dimen/row_height"
+                android:gravity="center_vertical"
+                android:orientation="vertical" >
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/textview_marginLeft"
-                    android:text="@string/reminder"
-                    android:textSize="@dimen/normal_textSize" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
 
-                <CheckBox
-                    android:id="@+id/checkbox"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toLeftOf="@+id/reminder_spinner" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/textview_marginLeft"
+                        android:text="@string/date_start"
+                        android:textSize="@dimen/normal_textSize" />
 
-                <Spinner
-                    android:id="@+id/reminder_spinner"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:entries="@array/reminder_spinner" />
-            </RelativeLayout>
+                    <Button
+                        android:id="@+id/start_date_btn"
+                        android:layout_width="110dp"
+                        android:layout_height="@dimen/select_time_button_height"
+                        android:layout_alignParentRight="true"
+                        android:background="@color/white" />
+                </RelativeLayout>
+            </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginTop="@dimen/textview_marginTop"
                 android:background="@color/gray_line" />
         </LinearLayout>
-    </LinearLayout>
+    </ScrollView>
 
     <LinearLayout
+        android:id="@+id/layout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

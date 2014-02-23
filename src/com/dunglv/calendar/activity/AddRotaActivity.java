@@ -18,7 +18,6 @@ public class AddRotaActivity extends RotaActivity implements OnClickListener {
 	@Override
 	public Rota getRota() {
 		rota = super.getRota();
-		rota.setDateStarted(System.currentTimeMillis());
 		return rota;
 	}
 

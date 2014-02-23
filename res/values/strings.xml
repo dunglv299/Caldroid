@@ -36,6 +36,7 @@
     <string name="make_all_week">MAKE ALL WEEKS</string>
     <string name="work_time">Work Time</string>
     <string name="alert_week">Number of week must be greater than 0</string>
+    <string name="date_start">Date start</string>
 
     <array name="color_spinner">
         <item></item>
