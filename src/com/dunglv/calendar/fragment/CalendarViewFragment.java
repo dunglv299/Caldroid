@@ -33,7 +33,6 @@ import com.dunglv.calendar.entity.RotaDay;
 import com.dunglv.calendar.util.Utils;
 
 public class CalendarViewFragment extends CaldroidFragment {
-	private CaldroidFragment caldroidFragment;
 	private SimpleDateFormat formatter;
 	View calendarTv;
 	public RotaDao rotaDao;
@@ -48,9 +47,9 @@ public class CalendarViewFragment extends CaldroidFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setUpCaldroidFragment();
 		initRotaDao();
 		initWeekTimeDao();
-		initData();
 		listRota = new ArrayList<Rota>();
 		listRota = rotaDao.loadAll();
 		listRotaDay = new ArrayList<RotaDay>();
@@ -92,7 +91,6 @@ public class CalendarViewFragment extends CaldroidFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View v = super.onCreateView(inflater, container, savedInstanceState);
-		setUpCaldroidFragment();
 		mListView = (ListView) v.findViewById(R.id.listRotaDate);
 		return v;
 	}
@@ -103,27 +101,6 @@ public class CalendarViewFragment extends CaldroidFragment {
 				getActivity(), month, year, getCaldroidData(), extraData,
 				listRotaDay);
 		return adapter;
-	}
-
-	private void initData() {
-		Calendar cal = Calendar.getInstance();
-		// Min date is last 7 days
-		cal.add(Calendar.DATE, -17);
-		Date blueDate = cal.getTime();
-
-		// Max date is next 7 days
-		cal = Calendar.getInstance();
-		cal.add(Calendar.DATE, 16);
-		Date greenDate = cal.getTime();
-
-		if (caldroidFragment != null) {
-			caldroidFragment.setBackgroundResourceForDate(R.color.blue,
-					blueDate);
-			caldroidFragment.setBackgroundResourceForDate(R.color.green,
-					greenDate);
-			caldroidFragment.setTextColorForDate(R.color.white, blueDate);
-			caldroidFragment.setTextColorForDate(R.color.white, greenDate);
-		}
 	}
 
 	public void initRotaDao() {
@@ -147,6 +124,7 @@ public class CalendarViewFragment extends CaldroidFragment {
 	private void setUpCaldroidFragment() {
 		formatter = new SimpleDateFormat("dd MMM yyyy", Locale.US);
 		setCaldroidListener(listener);
+		startDayOfWeek = Calendar.MONDAY;
 	}
 
 	// Setup listener

@@ -21,7 +21,6 @@ import com.dunglv.calendar.util.Utils;
 public class EditRotaActivity extends RotaActivity implements OnClickListener {
 	private long rotaId;
 	private Rota rota;
-	private long dateStarted;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -47,9 +46,9 @@ public class EditRotaActivity extends RotaActivity implements OnClickListener {
 			reminderSpinner.setSelection(indexReminder);
 		}
 		// Start date btn
-		dateStarted = rota.getDateStarted();
+		startDate = rota.getDateStarted();
 		startDateBtn
-				.setText(Utils.convertLongToTime("dd/MM/yyyy", dateStarted));
+				.setText(Utils.convertLongToTime("dd/MM/yyyy", startDate));
 	}
 
 	@Override
@@ -63,7 +62,7 @@ public class EditRotaActivity extends RotaActivity implements OnClickListener {
 	public Rota getRota() {
 		rota = super.getRota();
 		rota.setId(rotaId);
-		rota.setDateStarted(dateStarted);
+		rota.setDateStarted(startDate);
 		return rota;
 	}
 
