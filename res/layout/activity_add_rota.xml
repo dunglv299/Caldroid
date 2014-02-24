@@ -170,6 +170,38 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/textview_marginLeft"
+                        android:text="@string/date_start"
+                        android:textSize="@dimen/normal_textSize" />
+
+                    <Button
+                        android:id="@+id/start_date_btn"
+                        android:layout_width="110dp"
+                        android:layout_height="@dimen/select_time_button_height"
+                        android:layout_alignParentRight="true"
+                        android:background="@color/white" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/row_height"
+                android:gravity="center_vertical"
+                android:orientation="vertical" >
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/textview_marginLeft"
                         android:text="@string/reminder"
                         android:textSize="@dimen/normal_textSize" />
 
@@ -209,15 +241,16 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/textview_marginLeft"
-                        android:text="@string/date_start"
+                        android:text="@string/google_sync"
                         android:textSize="@dimen/normal_textSize" />
 
-                    <Button
-                        android:id="@+id/start_date_btn"
-                        android:layout_width="110dp"
-                        android:layout_height="@dimen/select_time_button_height"
+                    <CheckBox
+                        android:id="@+id/google_checkbox"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:background="@color/white" />
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="116dp" />
                 </RelativeLayout>
             </LinearLayout>
 

@@ -5,9 +5,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-import android.app.AlarmManager;
 import android.app.DatePickerDialog;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -32,7 +30,6 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.dunglv.calendar.R;
-import com.dunglv.calendar.adapter.AlarmReceiver;
 import com.dunglv.calendar.dao.DaoMaster;
 import com.dunglv.calendar.dao.DaoMaster.DevOpenHelper;
 import com.dunglv.calendar.dao.DaoSession;
@@ -57,7 +54,7 @@ public abstract class RotaActivity extends FragmentActivity implements
 	public RotaDao rotaDao;
 	public MySharedPreferences sharedPreferences;
 	public Button deleteBtn, startDateBtn;
-	public CheckBox mCheckBoxReminder;
+	public CheckBox mCheckBoxReminder, mCheckBoxGoogle;
 	public static Integer[] reminderArray = { 1, 5, 10, 15, 20, 25, 30, 45, 60,
 			120, 180, 12 * 60, 24 * 60 };
 	public static String[] colorsArray = { "#f6cd6c", "#5b93cb", "#a864a8",
@@ -66,6 +63,7 @@ public abstract class RotaActivity extends FragmentActivity implements
 	public int remindTime;
 	public long startDate;
 	public int startDayOfWeek;
+	public boolean isGoogleSync;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -88,7 +86,8 @@ public abstract class RotaActivity extends FragmentActivity implements
 		mWeekEd = (EditText) findViewById(R.id.week_number);
 		mRepeatTimeEd = (EditText) findViewById(R.id.time_number);
 		mCheckBoxReminder = (CheckBox) findViewById(R.id.checkbox);
-		mCheckBoxReminder.setOnCheckedChangeListener(this);
+		mCheckBoxGoogle = (CheckBox) findViewById(R.id.google_checkbox);
+		mCheckBoxGoogle.setOnCheckedChangeListener(this);
 		reminderSpinner = (Spinner) findViewById(R.id.reminder_spinner);
 		startDateBtn = (Button) findViewById(R.id.start_date_btn);
 		startDateBtn.setOnClickListener(this);
@@ -154,7 +153,9 @@ public abstract class RotaActivity extends FragmentActivity implements
 		case R.id.checkbox:
 			setSpinnerEnabled(reminderSpinner, isChecked);
 			break;
-
+		case R.id.google_checkbox:
+			isGoogleSync = isChecked;
+			break;
 		default:
 			break;
 		}
@@ -259,6 +260,7 @@ public abstract class RotaActivity extends FragmentActivity implements
 		rota.setReminderTime(mCheckBoxReminder.isChecked() ? remindTime : 0);
 		rota.setDateStarted(startDate);
 		rota.setStartDayOfWeek(startDayOfWeek);
+		rota.setIsGoogleSync(isGoogleSync);
 		return rota;
 	}
 

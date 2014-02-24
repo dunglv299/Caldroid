@@ -6,17 +6,24 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.CalendarContract;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -90,6 +97,9 @@ public class AddRotaNextFragment extends BaseFragment implements
 	private int startDayOfWeek;
 	private List<String> listDayOfWeek;
 	private Rota rota;
+	private Uri eventsUri;
+	private Cursor cursor;
+	int calendarId;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -157,7 +167,6 @@ public class AddRotaNextFragment extends BaseFragment implements
 		}
 		// Init when exists data
 		weekTime = listWeekTimes.get(0);
-		// TODO index cua tung day trong list
 		timeArray[listDayOfWeek.indexOf("MON")] = weekTime.getMonday();
 		timeArray[listDayOfWeek.indexOf("TUE")] = weekTime.getTuesday();
 		timeArray[listDayOfWeek.indexOf("WED")] = weekTime.getWednesday();
@@ -245,6 +254,11 @@ public class AddRotaNextFragment extends BaseFragment implements
 		case R.id.next_btn:
 			onNextPress();
 			onRemind();
+			if (rota.getIsGoogleSync()) {
+				for (int i = 0; i < LENGTH; i++) {
+					addEvent(startTime[i], endTime[i]);
+				}
+			}
 			break;
 		case R.id.copy_to_next:
 			copyToNext();
@@ -481,7 +495,7 @@ public class AddRotaNextFragment extends BaseFragment implements
 		Calendar cal = Calendar.getInstance();
 		cal.set(2013, 2, 17);
 		cal.add(Calendar.DAY_OF_WEEK, startDayOfWeek - Calendar.SUNDAY);
-		for (int i = 0; i < 7; i++) {
+		for (int i = 0; i < LENGTH; i++) {
 			Date date = cal.getTime();
 			list.add(fmt.format(date).toUpperCase());
 			cal.add(Calendar.DAY_OF_WEEK, 1);
@@ -502,6 +516,60 @@ public class AddRotaNextFragment extends BaseFragment implements
 		AlarmManager am = (AlarmManager) getActivity().getSystemService(
 				Context.ALARM_SERVICE);
 		am.set(AlarmManager.RTC_WAKEUP, time, sender);
+
+	}
+
+	@TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
+	private void addEvent(long startTime, long endTime) {
+		if (android.os.Build.VERSION.SDK_INT <= 7) {
+			eventsUri = Uri.parse("content://calendar/events");
+			cursor = getActivity().getContentResolver().query(
+					Uri.parse("content://calendar/calendars"),
+					new String[] { "_id", "displayName" }, null, null, null);
+
+		}
+
+		else if (android.os.Build.VERSION.SDK_INT <= 14) {
+			eventsUri = Uri.parse("content://com.android.calendar/events");
+			cursor = getActivity().getContentResolver().query(
+					Uri.parse("content://com.android.calendar/calendars"),
+					new String[] { "_id", "displayName" }, null, null, null);
+
+		}
+
+		else {
+			eventsUri = Uri.parse("content://com.android.calendar/events");
+			cursor = getActivity().getContentResolver().query(
+					Uri.parse("content://com.android.calendar/calendars"),
+					new String[] { "_id", "calendar_displayName" }, null, null,
+					null);
+
+		}
+
+		if (cursor.moveToFirst()) {
+			do {
+				int calId = cursor.getInt(0);
+				String calName = cursor.getString(1);
+				if (calName.contains("@gmail.com")) {
+					calendarId = calId;
+					break;
+				}
+				// do what ever you want here
+			} while (cursor.moveToNext());
+		}
+		TimeZone timeZone = TimeZone.getDefault();
+		ContentValues event = new ContentValues();
+		event.put(CalendarContract.Events.CALENDAR_ID, calendarId);
+		event.put(CalendarContract.Events.TITLE, rota.getName());
+		event.put(CalendarContract.Events.DESCRIPTION, "");
+		event.put(CalendarContract.Events.EVENT_LOCATION, "");
+		event.put(CalendarContract.Events.DTSTART, startTime);
+		event.put(CalendarContract.Events.DTEND, endTime);
+		event.put(CalendarContract.Events.STATUS, 1);
+		event.put(CalendarContract.Events.HAS_ALARM, 1);
+		event.put(CalendarContract.Events.EVENT_TIMEZONE, timeZone.getID());
+		// To Insert
+		getActivity().getContentResolver().insert(eventsUri, event);
 
 	}
 }
