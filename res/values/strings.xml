@@ -9,7 +9,6 @@
     <string-array name="nav_drawer_items">
         <item>Manage rota</item>
         <item>View calendar</item>
-        <item>Settings</item>
     </string-array>
     <!-- Nav Drawer List Item Icons -->
     <!-- Keep them in order as the titles are in -->

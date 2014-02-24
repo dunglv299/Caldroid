@@ -84,8 +84,6 @@ public class MainActivity extends SherlockFragmentActivity {
 				.getResourceId(0, -1)));
 		navDrawerItems.add(new ItemNavDrawer(navMenuTitles[1], navMenuIcons
 				.getResourceId(1, -1)));
-		navDrawerItems.add(new ItemNavDrawer(navMenuTitles[2], navMenuIcons
-				.getResourceId(2, -1)));
 
 		// Recycle the typed array
 		navMenuIcons.recycle();
