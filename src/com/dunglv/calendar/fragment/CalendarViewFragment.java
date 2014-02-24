@@ -75,9 +75,9 @@ public class CalendarViewFragment extends CaldroidFragment {
 				rotaDay.setRota(rota);
 				rotaDay.setTimeRepeat(time);
 				int weekId = (int) (i / 7) + 1;
-				if (weekId % time == 0) {
+				if (time > 1 && weekId % time == 0) {
 					weekId = time;
-				} else {
+				} else if (time > 1) {
 					weekId = weekId % time;
 				}
 				rotaDay.setWeekId(weekId);
