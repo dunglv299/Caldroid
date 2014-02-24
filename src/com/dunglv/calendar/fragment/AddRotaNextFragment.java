@@ -8,8 +8,11 @@ import java.util.List;
 import java.util.Locale;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
@@ -28,6 +31,7 @@ import android.widget.TimePicker;
 
 import com.dunglv.calendar.R;
 import com.dunglv.calendar.activity.AddRotaNextActivity;
+import com.dunglv.calendar.adapter.AlarmReceiver;
 import com.dunglv.calendar.dao.DaoMaster;
 import com.dunglv.calendar.dao.DaoMaster.DevOpenHelper;
 import com.dunglv.calendar.dao.DaoSession;
@@ -85,6 +89,7 @@ public class AddRotaNextFragment extends BaseFragment implements
 	private long weekTimeId;
 	private int startDayOfWeek;
 	private List<String> listDayOfWeek;
+	private Rota rota;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -182,6 +187,7 @@ public class AddRotaNextFragment extends BaseFragment implements
 		if (s.equals(TIME_ZERO)) {
 			button.setText("");
 		} else {
+			long time = Long.valueOf(s);
 			button.setText(Utils.convertStringToTime(s));
 		}
 	}
@@ -202,6 +208,8 @@ public class AddRotaNextFragment extends BaseFragment implements
 					public void onTimeSet(TimePicker view, int hourOfDay,
 							int minute) {
 						Calendar mCalendar = Calendar.getInstance();
+						mCalendar.add(Calendar.DAY_OF_MONTH, index
+								+ (currentWeek - 1) * 7);
 						mCalendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
 						mCalendar.set(Calendar.MINUTE, minute);
 						button.setText(DateFormat.format("h:mm a", mCalendar));
@@ -236,6 +244,7 @@ public class AddRotaNextFragment extends BaseFragment implements
 		switch (v.getId()) {
 		case R.id.next_btn:
 			onNextPress();
+			onRemind();
 			break;
 		case R.id.copy_to_next:
 			copyToNext();
@@ -251,7 +260,6 @@ public class AddRotaNextFragment extends BaseFragment implements
 		default:
 			break;
 		}
-
 	}
 
 	/**
@@ -389,7 +397,7 @@ public class AddRotaNextFragment extends BaseFragment implements
 		DaoMaster daoMaster = new DaoMaster(db);
 		DaoSession daoSession = daoMaster.newSession();
 		rotaDao = daoSession.getRotaDao();
-		Rota rota = rotaDao
+		rota = rotaDao
 				.queryBuilder()
 				.where(com.dunglv.calendar.dao.RotaDao.Properties.Id
 						.eq(((AddRotaNextActivity) getActivity()).getRotaId()))
@@ -425,6 +433,7 @@ public class AddRotaNextFragment extends BaseFragment implements
 						+ String.valueOf(endTime[i]);
 			}
 			timeArray[i] += String.valueOf(hourWorking[i]);
+
 		}
 	}
 
@@ -444,6 +453,27 @@ public class AddRotaNextFragment extends BaseFragment implements
 		return weekTime;
 	}
 
+	private long plusDay(long time, int index) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTimeInMillis(time);
+		cal.add(Calendar.DAY_OF_MONTH, index + (currentWeek - 1) * 7);
+		return cal.getTimeInMillis();
+	}
+
+	public void onRemind() {
+		// Notification
+		if (rota.getReminderTime() > 0) {
+			for (int i = 0; i < LENGTH; i++) {
+				if (startTime[i] != 0 && weekTime != null) {
+					Calendar cal = Calendar.getInstance();
+					cal.setTimeInMillis(startTime[i]);
+					cal.add(Calendar.MINUTE, -1 * rota.getReminderTime());
+					alarm(cal.getTimeInMillis(), (int) startTime[i]);
+				}
+			}
+		}
+	}
+
 	private List<String> getListWeekDay(int startDayOfWeek) {
 		List<String> list = new ArrayList<String>();
 		SimpleDateFormat fmt = new SimpleDateFormat("EEE", Locale.getDefault());
@@ -457,5 +487,21 @@ public class AddRotaNextFragment extends BaseFragment implements
 			cal.add(Calendar.DAY_OF_WEEK, 1);
 		}
 		return list;
+	}
+
+	private void alarm(long time, int id) {
+		Log.e("startAlarm", "startAlarm");
+		Intent intent = new Intent(getActivity(), AlarmReceiver.class);
+		intent.putExtra("alarm_message", rota.getName());
+		// In reality, you would want to have a static variable for the request
+		// code instead of 192837
+		PendingIntent sender = PendingIntent.getBroadcast(getActivity(), id,
+				intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+		// Get the AlarmManager service
+		AlarmManager am = (AlarmManager) getActivity().getSystemService(
+				Context.ALARM_SERVICE);
+		am.set(AlarmManager.RTC_WAKEUP, time, sender);
+
 	}
 }

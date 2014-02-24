@@ -38,6 +38,11 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" >
         </activity>
+
+        <receiver
+            android:name="com.dunglv.calendar.adapter.AlarmReceiver"
+            android:process=":remote" >
+        </receiver>
     </application>
 
 </manifest>

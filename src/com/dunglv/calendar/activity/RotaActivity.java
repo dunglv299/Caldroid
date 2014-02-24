@@ -5,7 +5,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -30,6 +32,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.dunglv.calendar.R;
+import com.dunglv.calendar.adapter.AlarmReceiver;
 import com.dunglv.calendar.dao.DaoMaster;
 import com.dunglv.calendar.dao.DaoMaster.DevOpenHelper;
 import com.dunglv.calendar.dao.DaoSession;
