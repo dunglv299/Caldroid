@@ -196,7 +196,6 @@ public class AddRotaNextFragment extends BaseFragment implements
 		if (s.equals(TIME_ZERO)) {
 			button.setText("");
 		} else {
-			long time = Long.valueOf(s);
 			button.setText(Utils.convertStringToTime(s));
 		}
 	}
@@ -224,8 +223,18 @@ public class AddRotaNextFragment extends BaseFragment implements
 						button.setText(DateFormat.format("h:mm a", mCalendar));
 						if (isStartTime) {
 							startTime[index] = mCalendar.getTimeInMillis();
+							if (endTime[index] == 0) {
+								endTime[index] = mCalendar.getTimeInMillis();
+								setTextButton(endBtn[index], endTime[index]
+										+ "");
+							}
 						} else {
 							endTime[index] = mCalendar.getTimeInMillis();
+							if (startTime[index] == 0) {
+								startTime[index] = mCalendar.getTimeInMillis();
+								setTextButton(startBtn[index], startTime[index]
+										+ "");
+							}
 						}
 					}
 				}, c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE), false);
@@ -254,11 +263,6 @@ public class AddRotaNextFragment extends BaseFragment implements
 		case R.id.next_btn:
 			onNextPress();
 			onRemind();
-			if (rota.getIsGoogleSync()) {
-				for (int i = 0; i < LENGTH; i++) {
-					addEvent(startTime[i], endTime[i]);
-				}
-			}
 			break;
 		case R.id.copy_to_next:
 			copyToNext();
@@ -309,6 +313,12 @@ public class AddRotaNextFragment extends BaseFragment implements
 		weekTimeDao.insertOrReplace(weekTime);
 		currentWeek++;
 		sharedPreferences.putInt(Utils.CURRENT_WEEK, currentWeek);
+		// Sync to google
+		if (rota.getIsGoogleSync()) {
+			for (int i = 0; i < LENGTH; i++) {
+				addEvent(startTime[i], endTime[i]);
+			}
+		}
 		if (currentWeek > weekCount) {
 			getActivity().finish();
 			return;

@@ -51,6 +51,10 @@ public class EditRotaActivity extends RotaActivity implements OnClickListener {
 
 		// Start day of week
 		startDayOfWeek = rota.getStartDayOfWeek();
+
+		// Google sync
+		// isGoogleSync = rota.getIsGoogleSync();
+		mCheckBoxGoogle.setChecked(rota.getIsGoogleSync());
 	}
 
 	@Override
