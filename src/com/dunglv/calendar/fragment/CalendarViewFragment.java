@@ -24,11 +24,9 @@ import com.dunglv.calendar.adapter.RotaDayAdapter;
 import com.dunglv.calendar.dao.DaoMaster;
 import com.dunglv.calendar.dao.DaoMaster.DevOpenHelper;
 import com.dunglv.calendar.dao.DaoSession;
+import com.dunglv.calendar.dao.DayTimeDao;
 import com.dunglv.calendar.dao.Rota;
 import com.dunglv.calendar.dao.RotaDao;
-import com.dunglv.calendar.dao.WeekTime;
-import com.dunglv.calendar.dao.WeekTimeDao;
-import com.dunglv.calendar.dao.WeekTimeDao.Properties;
 import com.dunglv.calendar.entity.RotaDay;
 import com.dunglv.calendar.util.Utils;
 
@@ -36,7 +34,7 @@ public class CalendarViewFragment extends CaldroidFragment {
 	private SimpleDateFormat formatter;
 	View calendarTv;
 	public RotaDao rotaDao;
-	public WeekTimeDao weekTimeDao;
+	public DayTimeDao dayTimeDao;
 	private List<Rota> listRota;
 	private List<RotaDay> listRotaDay;
 	private List<Rota> listRotaShow;
@@ -118,7 +116,7 @@ public class CalendarViewFragment extends CaldroidFragment {
 		SQLiteDatabase db = helper.getWritableDatabase();
 		DaoMaster daoMaster = new DaoMaster(db);
 		DaoSession daoSession = daoMaster.newSession();
-		weekTimeDao = daoSession.getWeekTimeDao();
+		dayTimeDao = daoSession.getDayTimeDao();
 	}
 
 	private void setUpCaldroidFragment() {
@@ -176,36 +174,37 @@ public class CalendarViewFragment extends CaldroidFragment {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(date);
 		int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+		Log.e("dayOfWeek", dayOfWeek + "");
 		String detailTime = null;
-		WeekTime weekTime = getWeekTimeDao(rotaId, weekId);
-		if (weekTime != null) {
-			if (Calendar.MONDAY == dayOfWeek) {
-				detailTime = weekTime.getMonday();
-			} else if (Calendar.TUESDAY == dayOfWeek) {
-				detailTime = weekTime.getTuesday();
-			} else if (Calendar.WEDNESDAY == dayOfWeek) {
-				detailTime = weekTime.getWednesday();
-			} else if (Calendar.THURSDAY == dayOfWeek) {
-				detailTime = weekTime.getThursday();
-			} else if (Calendar.FRIDAY == dayOfWeek) {
-				detailTime = weekTime.getFriday();
-			} else if (Calendar.SATURDAY == dayOfWeek) {
-				detailTime = weekTime.getSaturday();
-			} else if (Calendar.SUNDAY == dayOfWeek) {
-				detailTime = weekTime.getSunday();
-			}
-		}
+		// DayTime dayTime = getDayTimeDao(rotaId, weekId);
+		// if (weekTime != null) {
+		// if (Calendar.MONDAY == dayOfWeek) {
+		// detailTime = weekTime.getMonday();
+		// } else if (Calendar.TUESDAY == dayOfWeek) {
+		// detailTime = weekTime.getTuesday();
+		// } else if (Calendar.WEDNESDAY == dayOfWeek) {
+		// detailTime = weekTime.getWednesday();
+		// } else if (Calendar.THURSDAY == dayOfWeek) {
+		// detailTime = weekTime.getThursday();
+		// } else if (Calendar.FRIDAY == dayOfWeek) {
+		// detailTime = weekTime.getFriday();
+		// } else if (Calendar.SATURDAY == dayOfWeek) {
+		// detailTime = weekTime.getSaturday();
+		// } else if (Calendar.SUNDAY == dayOfWeek) {
+		// detailTime = weekTime.getSunday();
+		// }
+		// }
 		return detailTime;
 	}
 
-	private WeekTime getWeekTimeDao(long rotaId, int weekId) {
-		List<WeekTime> listWeekTime = weekTimeDao
-				.queryBuilder()
-				.where(Properties.WeekId.eq(weekId),
-						Properties.RotaId.eq(rotaId)).list();
-		if (listWeekTime != null && listWeekTime.size() > 0) {
-			return listWeekTime.get(0);
-		}
-		return null;
-	}
+	// private DayTime getDayTimeDao(long rotaId, int weekId) {
+	// List<DayTime> listWeekTime = dayTimeDao
+	// .queryBuilder()
+	// .where(Properties.WeekId.eq(weekId),
+	// Properties.RotaId.eq(rotaId)).list();
+	// if (listWeekTime != null && listWeekTime.size() > 0) {
+	// return listWeekTime.get(0);
+	// }
+	// return null;
+	// }
 }

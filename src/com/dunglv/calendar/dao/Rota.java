@@ -17,7 +17,6 @@ public class Rota {
     private Integer weekReapeat;
     private String timeRepeat;
     private Integer reminderTime;
-    private Integer startDayOfWeek;
     private Boolean isGoogleSync;
 
     /** Used to resolve relations */
@@ -26,7 +25,7 @@ public class Rota {
     /** Used for active entity operations. */
     private transient RotaDao myDao;
 
-    private List<WeekTime> weekTimeList;
+    private List<DayTime> dayTimeList;
 
     public Rota() {
     }
@@ -35,7 +34,7 @@ public class Rota {
         this.id = id;
     }
 
-    public Rota(Long id, String name, Long dateStarted, String color, Integer weekReapeat, String timeRepeat, Integer reminderTime, Integer startDayOfWeek, Boolean isGoogleSync) {
+    public Rota(Long id, String name, Long dateStarted, String color, Integer weekReapeat, String timeRepeat, Integer reminderTime, Boolean isGoogleSync) {
         this.id = id;
         this.name = name;
         this.dateStarted = dateStarted;
@@ -43,7 +42,6 @@ public class Rota {
         this.weekReapeat = weekReapeat;
         this.timeRepeat = timeRepeat;
         this.reminderTime = reminderTime;
-        this.startDayOfWeek = startDayOfWeek;
         this.isGoogleSync = isGoogleSync;
     }
 
@@ -109,14 +107,6 @@ public class Rota {
         this.reminderTime = reminderTime;
     }
 
-    public Integer getStartDayOfWeek() {
-        return startDayOfWeek;
-    }
-
-    public void setStartDayOfWeek(Integer startDayOfWeek) {
-        this.startDayOfWeek = startDayOfWeek;
-    }
-
     public Boolean getIsGoogleSync() {
         return isGoogleSync;
     }
@@ -126,25 +116,25 @@ public class Rota {
     }
 
     /** To-many relationship, resolved on first access (and after reset). Changes to to-many relations are not persisted, make changes to the target entity. */
-    public List<WeekTime> getWeekTimeList() {
-        if (weekTimeList == null) {
+    public List<DayTime> getDayTimeList() {
+        if (dayTimeList == null) {
             if (daoSession == null) {
                 throw new DaoException("Entity is detached from DAO context");
             }
-            WeekTimeDao targetDao = daoSession.getWeekTimeDao();
-            List<WeekTime> weekTimeListNew = targetDao._queryRota_WeekTimeList(id);
+            DayTimeDao targetDao = daoSession.getDayTimeDao();
+            List<DayTime> dayTimeListNew = targetDao._queryRota_DayTimeList(id);
             synchronized (this) {
-                if(weekTimeList == null) {
-                    weekTimeList = weekTimeListNew;
+                if(dayTimeList == null) {
+                    dayTimeList = dayTimeListNew;
                 }
             }
         }
-        return weekTimeList;
+        return dayTimeList;
     }
 
     /** Resets a to-many relationship, making the next get call to query for a fresh result. */
-    public synchronized void resetWeekTimeList() {
-        weekTimeList = null;
+    public synchronized void resetDayTimeList() {
+        dayTimeList = null;
     }
 
     /** Convenient call for {@link AbstractDao#delete(Object)}. Entity must attached to an entity context. */

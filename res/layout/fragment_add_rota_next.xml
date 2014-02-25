@@ -123,7 +123,7 @@
                         android:layout_alignBottom="@+id/startDate_btn2"
                         android:layout_alignParentLeft="true"
                         android:layout_marginLeft="25dp"
-                        android:text="TUE" />
+                        android:text="MON" />
 
                     <Button
                         android:id="@+id/startDate_btn2"
@@ -196,7 +196,7 @@
                         android:layout_alignBottom="@+id/startDate_btn3"
                         android:layout_alignParentLeft="true"
                         android:layout_marginLeft="25dp"
-                        android:text="WED" />
+                        android:text="MON" />
 
                     <Button
                         android:id="@+id/startDate_btn3"
@@ -269,7 +269,7 @@
                         android:layout_alignBottom="@+id/startDate_btn4"
                         android:layout_alignParentLeft="true"
                         android:layout_marginLeft="25dp"
-                        android:text="THU" />
+                        android:text="MON" />
 
                     <Button
                         android:id="@+id/startDate_btn4"
@@ -342,7 +342,7 @@
                         android:layout_alignBottom="@+id/startDate_btn5"
                         android:layout_alignParentLeft="true"
                         android:layout_marginLeft="25dp"
-                        android:text="FRI" />
+                        android:text="MON" />
 
                     <Button
                         android:id="@+id/startDate_btn5"
@@ -415,7 +415,7 @@
                         android:layout_alignBottom="@+id/startDate_btn6"
                         android:layout_alignParentLeft="true"
                         android:layout_marginLeft="25dp"
-                        android:text="SAT" />
+                        android:text="MON" />
 
                     <Button
                         android:id="@+id/startDate_btn6"
@@ -488,7 +488,7 @@
                         android:layout_alignBottom="@+id/startDate_btn7"
                         android:layout_alignParentLeft="true"
                         android:layout_marginLeft="25dp"
-                        android:text="SUN" />
+                        android:text="MON" />
 
                     <Button
                         android:id="@+id/startDate_btn7"

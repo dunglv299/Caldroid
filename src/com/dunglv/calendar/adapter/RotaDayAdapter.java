@@ -77,12 +77,12 @@ public class RotaDayAdapter extends BaseAdapter {
 		String detail = listDetailDay.get(position);
 		String startTime = AddRotaNextFragment.TIME_ZERO;
 		String endTime = AddRotaNextFragment.TIME_ZERO;
-		if (detail != null && !detail.isEmpty()) {
-			startTime = detail.substring(0, 13);
-			endTime = detail.substring(13, 26);
-		}
-		setTimeText(viewHolder.mStartTime, startTime, true);
-		setTimeText(viewHolder.mEndTime, endTime, false);
+		// if (detail != null && !detail.isEmpty()) {
+		// startTime = detail.substring(0, 13);
+		// endTime = detail.substring(13, 26);
+		// }
+		// setTimeText(viewHolder.mStartTime, startTime, true);
+		// setTimeText(viewHolder.mEndTime, endTime, false);
 		GradientDrawable bgShape = (GradientDrawable) viewHolder.mRectangle
 				.getBackground();
 		bgShape.setColor(Color.parseColor(rota.getColor()));
@@ -97,17 +97,17 @@ public class RotaDayAdapter extends BaseAdapter {
 		TextView mEndTime;
 	}
 
-	private void setTimeText(TextView tv, String s, boolean haicham) {
-		if (s.equals(AddRotaNextFragment.TIME_ZERO)) {
-			tv.setText("");
-		} else {
-			if (haicham) {
-				tv.setText(Utils.convertStringToTime(s) + " - ");
-				return;
-			}
-			tv.setText(Utils.convertStringToTime(s));
-
-		}
-	}
+	// private void setTimeText(TextView tv, String s, boolean haicham) {
+	// if (s.equals(AddRotaNextFragment.TIME_ZERO)) {
+	// tv.setText("");
+	// } else {
+	// if (haicham) {
+	// tv.setText(Utils.convertStringToTime(s) + " - ");
+	// return;
+	// }
+	// tv.setText(Utils.convertStringToTime(s));
+	//
+	// }
+	// }
 
 }

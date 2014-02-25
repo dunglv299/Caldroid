@@ -22,10 +22,9 @@ public class Utils {
 		return 0;
 	}
 
-	public static String convertStringToTime(String s) {
-		long time = Long.parseLong(s);
+	public static String convertLongToTime(long time) {
 		Date dateObj = new Date(time);
-		SimpleDateFormat sdfAM = new SimpleDateFormat("h:mm a", Locale.US);
+		SimpleDateFormat sdfAM = new SimpleDateFormat("dd/MM h:mm a", Locale.US);
 		return sdfAM.format(dateObj);
 	}
 

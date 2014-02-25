@@ -1,29 +1,18 @@
 package com.dunglv.calendar.fragment;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
-import java.util.TimeZone;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
-import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.CalendarContract;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -38,15 +27,14 @@ import android.widget.TimePicker;
 
 import com.dunglv.calendar.R;
 import com.dunglv.calendar.activity.AddRotaNextActivity;
-import com.dunglv.calendar.adapter.AlarmReceiver;
 import com.dunglv.calendar.dao.DaoMaster;
 import com.dunglv.calendar.dao.DaoMaster.DevOpenHelper;
 import com.dunglv.calendar.dao.DaoSession;
+import com.dunglv.calendar.dao.DayTime;
+import com.dunglv.calendar.dao.DayTimeDao;
+import com.dunglv.calendar.dao.DayTimeDao.Properties;
 import com.dunglv.calendar.dao.Rota;
 import com.dunglv.calendar.dao.RotaDao;
-import com.dunglv.calendar.dao.WeekTime;
-import com.dunglv.calendar.dao.WeekTimeDao;
-import com.dunglv.calendar.dao.WeekTimeDao.Properties;
 import com.dunglv.calendar.util.MySharedPreferences;
 import com.dunglv.calendar.util.Utils;
 
@@ -87,15 +75,11 @@ public class AddRotaNextFragment extends BaseFragment implements
 	private int[] hourWorking = new int[LENGTH];
 	private String[] timeArray = new String[LENGTH];
 
-	private WeekTimeDao weekTimeDao;
+	private DayTimeDao dayTimeDao;
 	private RotaDao rotaDao;
-	private List<WeekTime> listWeekTimes;
-	private WeekTime weekTime;
+	private List<DayTime> listDayTimes;
 	Button saveBtn;
 	RelativeLayout btnLayout;
-	private long weekTimeId;
-	private int startDayOfWeek;
-	private List<String> listDayOfWeek;
 	private Rota rota;
 	private Uri eventsUri;
 	private Cursor cursor;
@@ -105,8 +89,7 @@ public class AddRotaNextFragment extends BaseFragment implements
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		initRotaDao();
-		initWeekTimeDao();
-		listDayOfWeek = getListWeekDay(startDayOfWeek);
+		initDayTimeDao();
 	}
 
 	@Override
@@ -120,6 +103,9 @@ public class AddRotaNextFragment extends BaseFragment implements
 	}
 
 	private void initView(View v) {
+		sharedPreferences = new MySharedPreferences(getActivity());
+		weekCount = sharedPreferences.getInt(Utils.WEEK_REPEAT);
+		currentWeek = sharedPreferences.getInt(Utils.CURRENT_WEEK);
 		btnNext = (Button) v.findViewById(R.id.next_btn);
 		btnCopyNext = (Button) v.findViewById(R.id.copy_to_next);
 		btnMakeAll = (Button) v.findViewById(R.id.make_all_week_btn);
@@ -130,12 +116,16 @@ public class AddRotaNextFragment extends BaseFragment implements
 		btnMakeAll.setOnClickListener(this);
 		saveBtn.setOnClickListener(this);
 		tvWeekNumber = (TextView) v.findViewById(R.id.week_number);
-
+		Calendar cal = Calendar.getInstance();
+		cal.setTimeInMillis(rota.getDateStarted());
+		cal.add(Calendar.DAY_OF_MONTH, (currentWeek - 1) * 7);
 		for (int i = 0; i < LENGTH; i++) {
 			final int index = i;
 			// Init weekDay TextView
 			weekDayTv[index] = (TextView) v.findViewById(weekDayIdArray[index]);
-			weekDayTv[i].setText(listDayOfWeek.get(i));
+			weekDayTv[i].setText(new SimpleDateFormat("dd/MM.hh/mm").format(cal
+					.getTime()));
+			cal.add(Calendar.DAY_OF_MONTH, 1);
 
 			// Action pick start time
 			startBtn[index] = (Button) v.findViewById(startIdArray[index]);
@@ -161,42 +151,37 @@ public class AddRotaNextFragment extends BaseFragment implements
 	}
 
 	private void initData() {
-		listWeekTimes = getListWeekTimeDao();
-		if (listWeekTimes.size() == 0) {
-			return;
-		}
-		// Init when exists data
-		weekTime = listWeekTimes.get(0);
-		timeArray[listDayOfWeek.indexOf("MON")] = weekTime.getMonday();
-		timeArray[listDayOfWeek.indexOf("TUE")] = weekTime.getTuesday();
-		timeArray[listDayOfWeek.indexOf("WED")] = weekTime.getWednesday();
-		timeArray[listDayOfWeek.indexOf("THU")] = weekTime.getThursday();
-		timeArray[listDayOfWeek.indexOf("FRI")] = weekTime.getFriday();
-		timeArray[listDayOfWeek.indexOf("SAT")] = weekTime.getSaturday();
-		timeArray[listDayOfWeek.indexOf("SUN")] = weekTime.getSunday();
-		weekTimeId = weekTime.getId();
-		for (int i = 0; i < LENGTH; i++) {
-			String s1 = timeArray[i].substring(0, 13);
-			String s2 = timeArray[i].substring(13, 26);
-			startTime[i] = Long.parseLong(s1);
-			endTime[i] = Long.parseLong(s2);
-			setTextButton(startBtn[i], s1);
-			setTextButton(endBtn[i], s2);
-			String s3 = timeArray[i].substring(26);
-			if (s3.equals("0")) {
-				hourEditText[i].setText("");
-			} else {
-				hourEditText[i].setText(s3);
-			}
+		listDayTimes = getListDayTimeDao();
+		Calendar cal = Calendar.getInstance();
+		cal.setTimeInMillis(rota.getDateStarted());
+		cal.add(Calendar.DAY_OF_MONTH, (currentWeek - 1) * 7);
+		if (listDayTimes.size() >= currentWeek * 7) {
+			// Init when exists data
+			for (int i = 0; i < LENGTH; i++) {
+				weekDayTv[i].setText(new SimpleDateFormat("dd/MM.hh/mm")
+						.format(cal.getTime()));
+				cal.add(Calendar.DAY_OF_MONTH, 1);
 
+				DayTime dayTime = listDayTimes.get(i + (currentWeek - 1) * 7);
+				startTime[i] = dayTime.getStartTime();
+				endTime[i] = dayTime.getEndTime();
+				setTextButton(startBtn[i], startTime[i]);
+				setTextButton(endBtn[i], endTime[i]);
+				int hourWorking = dayTime.getHourWorking();
+				if (hourWorking == 0) {
+					hourEditText[i].setText("");
+				} else {
+					hourEditText[i].setText(hourWorking + "");
+				}
+			}
 		}
 	}
 
-	private void setTextButton(Button button, String s) {
-		if (s.equals(TIME_ZERO)) {
+	private void setTextButton(Button button, long time) {
+		if (time == 0) {
 			button.setText("");
 		} else {
-			button.setText(Utils.convertStringToTime(s));
+			button.setText(Utils.convertLongToTime(time));
 		}
 	}
 
@@ -216,24 +201,24 @@ public class AddRotaNextFragment extends BaseFragment implements
 					public void onTimeSet(TimePicker view, int hourOfDay,
 							int minute) {
 						Calendar mCalendar = Calendar.getInstance();
+						mCalendar.setTimeInMillis(rota.getDateStarted());
 						mCalendar.add(Calendar.DAY_OF_MONTH, index
 								+ (currentWeek - 1) * 7);
 						mCalendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
 						mCalendar.set(Calendar.MINUTE, minute);
-						button.setText(DateFormat.format("h:mm a", mCalendar));
+						button.setText(DateFormat.format("dd/MM h:mm a",
+								mCalendar));
 						if (isStartTime) {
 							startTime[index] = mCalendar.getTimeInMillis();
 							if (endTime[index] == 0) {
 								endTime[index] = mCalendar.getTimeInMillis();
-								setTextButton(endBtn[index], endTime[index]
-										+ "");
+								setTextButton(endBtn[index], endTime[index]);
 							}
 						} else {
 							endTime[index] = mCalendar.getTimeInMillis();
 							if (startTime[index] == 0) {
 								startTime[index] = mCalendar.getTimeInMillis();
-								setTextButton(startBtn[index], startTime[index]
-										+ "");
+								setTextButton(startBtn[index], startTime[index]);
 							}
 						}
 					}
@@ -245,10 +230,8 @@ public class AddRotaNextFragment extends BaseFragment implements
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		Log.e(TAG, "onActivityCreated");
-		sharedPreferences = new MySharedPreferences(getActivity());
 		isNextPress = false;
-		weekCount = sharedPreferences.getInt(Utils.WEEK_REPEAT);
-		currentWeek = sharedPreferences.getInt(Utils.CURRENT_WEEK);
+
 		if (currentWeek == weekCount) {
 			btnLayout.setVisibility(View.GONE);
 			saveBtn.setVisibility(View.VISIBLE);
@@ -262,7 +245,7 @@ public class AddRotaNextFragment extends BaseFragment implements
 		switch (v.getId()) {
 		case R.id.next_btn:
 			onNextPress();
-			onRemind();
+			// onRemind();
 			break;
 		case R.id.copy_to_next:
 			copyToNext();
@@ -295,30 +278,15 @@ public class AddRotaNextFragment extends BaseFragment implements
 	 */
 	private void onNextPress() {
 		Log.e("currentWeek: " + currentWeek, "" + weekCount);
-
-		// Get weektime ID for replace
-		listWeekTimes = getListWeekTimeDao();
-		if (listWeekTimes.size() > 0) {
-			weekTime = listWeekTimes.get(0);
-			weekTimeId = weekTime.getId();// End get weekTime id
+		listDayTimes = getListDayTimeDao();
+		for (int i = 0; i < LENGTH; i++) {
+			DayTime dayTime = collectData(i);
+			dayTime.setStartTime(startTime[i]);
+			dayTime.setEndTime(endTime[i]);
+			dayTimeDao.insertOrReplace(dayTime);
 		}
-		// Collect data
-		weekTime = collectData();
-		// Week time id = 0 mean record don't exits DB and insert new record
-		// If record is exists. Replaced
-		weekTime.setId(weekTimeId);
-		if (weekTimeId == 0) {
-			weekTime.setId(null);
-		}
-		weekTimeDao.insertOrReplace(weekTime);
 		currentWeek++;
 		sharedPreferences.putInt(Utils.CURRENT_WEEK, currentWeek);
-		// Sync to google
-		if (rota.getIsGoogleSync()) {
-			for (int i = 0; i < LENGTH; i++) {
-				addEvent(startTime[i], endTime[i]);
-			}
-		}
 		if (currentWeek > weekCount) {
 			getActivity().finish();
 			return;
@@ -332,45 +300,77 @@ public class AddRotaNextFragment extends BaseFragment implements
 	 */
 	private void copyToNext() {
 		onNextPress();
-		List<WeekTime> listNext = getListWeekTimeDao();
+		listDayTimes = getListDayTimeDao();
 		if (currentWeek <= weekCount) {
-			weekTime = collectData();
-			if (listNext.size() > 0) {
-				WeekTime nextWeekTime = listNext.get(0);
-				weekTime.setId(nextWeekTime.getId());
+			for (int i = 0; i < LENGTH; i++) {
+				DayTime dayTime = collectData(i);
+				// Plus day
+				if (startTime[i] > 0) {
+					Calendar cal = Calendar.getInstance();
+					cal.setTimeInMillis(startTime[i]);
+					cal.add(Calendar.DAY_OF_MONTH, LENGTH);
+					dayTime.setStartTime(cal.getTimeInMillis());
+					cal.setTimeInMillis(endTime[i]);
+					cal.add(Calendar.DAY_OF_MONTH, LENGTH);
+					dayTime.setEndTime(cal.getTimeInMillis());
+					dayTime.setRotaId(rota.getId());
+				} else {
+					dayTime.setStartTime(0l);
+					dayTime.setEndTime(0l);
+
+				}
+				dayTimeDao.insertOrReplace(dayTime);
 			}
-			weekTime.setWeekId(currentWeek);
-			weekTimeDao.insertOrReplace(weekTime);
 		}
 	}
 
-	private List<WeekTime> getListWeekTimeDao() {
-		List<WeekTime> listWeekTimes = weekTimeDao
+	public int getPlusDay() {
+		return (currentWeek - 1) * 7;
+	}
+
+	private List<DayTime> getListDayTimeDao() {
+		List<DayTime> listDayTimes = dayTimeDao
 				.queryBuilder()
-				.where(Properties.WeekId.eq(currentWeek),
-						Properties.RotaId
-								.eq(((AddRotaNextActivity) getActivity())
-										.getRotaId())).list();
-		return listWeekTimes;
+				.where(Properties.RotaId
+						.eq(((AddRotaNextActivity) getActivity()).getRotaId()))
+				.list();
+		return listDayTimes;
 	}
 
 	/**
 	 * make all week action
 	 */
 	private void onMakeAllWeek() {
-		List<WeekTime> listDelete = weekTimeDao
+		List<DayTime> listDelete = dayTimeDao
 				.queryBuilder()
-				.where(Properties.WeekId.between(currentWeek, weekCount),
+				.where(Properties.DayId.between((currentWeek - 1) * 7,
+						weekCount * 7),
 						Properties.RotaId
 								.eq(((AddRotaNextActivity) getActivity())
 										.getRotaId())).list();
-		weekTimeDao.deleteInTx(listDelete);
-		for (int i = currentWeek; i <= weekCount; i++) {
-			weekTime = collectData();
-			weekTime.setWeekId(i);
-			weekTimeDao.insert(weekTime);
-			isNextPress = true;
+		dayTimeDao.deleteInTx(listDelete);
+		for (int i = (currentWeek - 1) * 7; i < weekCount * 7; i++) {
+			DayTime dayTime = collectData(i % 7);
+			if (startTime[i % 7] > 0) {
+				Calendar cal = Calendar.getInstance();
+				cal.setTimeInMillis(startTime[i % 7]);
+				cal.add(Calendar.DAY_OF_MONTH, 7 * ((i / 7) - currentWeek + 1)
+						+ (i % 7));
+				dayTime.setStartTime(cal.getTimeInMillis());
+				cal.setTimeInMillis(endTime[i % 7]);
+				cal.add(Calendar.DAY_OF_MONTH, 7 * ((i / 7) - currentWeek + 1)
+						+ (i % 7));
+				dayTime.setEndTime(cal.getTimeInMillis());
+				dayTime.setRotaId(rota.getId());
+			} else {
+				dayTime.setStartTime(0l);
+				dayTime.setEndTime(0l);
 
+			}
+			dayTimeDao.insert(dayTime);
+		}
+		isNextPress = true;
+		for (int i = currentWeek; i <= weekCount; i++) {
 			if (i == weekCount) {
 				sharedPreferences.putInt(Utils.CURRENT_WEEK, i);
 			}
@@ -379,6 +379,21 @@ public class AddRotaNextFragment extends BaseFragment implements
 						true);
 			}
 		}
+	}
+
+	private DayTime collectData(int index) {
+		hourWorking[index] = Utils.convertStringToInt(hourEditText[index]
+				.getText().toString());
+		DayTime dayTime = new DayTime();
+		dayTime.setDayId(index + getPlusDay());
+		dayTime.setHourWorking(hourWorking[index]);
+		dayTime.setRotaId(rota.getId());
+		if (listDayTimes.size() < currentWeek * 7) {
+			dayTime.setId(null);
+		} else {
+			dayTime.setId(listDayTimes.get(index + getPlusDay()).getId());
+		}
+		return dayTime;
 	}
 
 	private class MakeAllWeekAsyntask extends AsyncTask<Void, Void, Void> {
@@ -426,160 +441,53 @@ public class AddRotaNextFragment extends BaseFragment implements
 				.where(com.dunglv.calendar.dao.RotaDao.Properties.Id
 						.eq(((AddRotaNextActivity) getActivity()).getRotaId()))
 				.list().get(0);
-		startDayOfWeek = rota.getStartDayOfWeek();
 	}
 
-	public void initWeekTimeDao() {
+	public void initDayTimeDao() {
 		DevOpenHelper helper = new DaoMaster.DevOpenHelper(getActivity(),
-				"weekTime-db", null);
+				"dayTime-db", null);
 		SQLiteDatabase db = helper.getWritableDatabase();
 		DaoMaster daoMaster = new DaoMaster(db);
 		DaoSession daoSession = daoMaster.newSession();
-		weekTimeDao = daoSession.getWeekTimeDao();
+		dayTimeDao = daoSession.getDayTimeDao();
 	}
 
 	/**
 	 * Parse time to save to DB
 	 */
-	private void parseTime() {
+	// private void parseTime() {
+	//
+	// for (int i = 0; i < LENGTH; i++) {
+	// hourWorking[i] = Utils.convertStringToInt(hourEditText[i].getText()
+	// .toString());
+	// if (startTime[i] == 0 && endTime[i] == 0) {
+	// timeArray[i] = TIME_ZERO + TIME_ZERO;
+	// } else if (startTime[i] == 0) {
+	// timeArray[i] = TIME_ZERO + String.valueOf(endTime[i]);
+	// } else if (endTime[i] == 0) {
+	// timeArray[i] = String.valueOf(startTime[i]) + TIME_ZERO;
+	// } else {
+	// timeArray[i] = String.valueOf(startTime[i])
+	// + String.valueOf(endTime[i]);
+	// }
+	// timeArray[i] += String.valueOf(hourWorking[i]);
+	//
+	// }
+	// }
 
-		for (int i = 0; i < LENGTH; i++) {
-			hourWorking[i] = Utils.convertStringToInt(hourEditText[i].getText()
-					.toString());
-			if (startTime[i] == 0 && endTime[i] == 0) {
-				timeArray[i] = TIME_ZERO + TIME_ZERO;
-			} else if (startTime[i] == 0) {
-				timeArray[i] = TIME_ZERO + String.valueOf(endTime[i]);
-			} else if (endTime[i] == 0) {
-				timeArray[i] = String.valueOf(startTime[i]) + TIME_ZERO;
-			} else {
-				timeArray[i] = String.valueOf(startTime[i])
-						+ String.valueOf(endTime[i]);
-			}
-			timeArray[i] += String.valueOf(hourWorking[i]);
+	// private WeekTime collectData() {
+	// // parseTime();
+	// DayTime dayTime = new DayTime();
+	// dayTime.setWeekId(currentWeek);
+	// dayTime.setRotaId(((AddRotaNextActivity) getActivity()).getRotaId());
+	// return dayTime;
+	// }
 
-		}
-	}
+	// private long plusDay(long time, int index) {
+	// Calendar cal = Calendar.getInstance();
+	// cal.setTimeInMillis(time);
+	// cal.add(Calendar.DAY_OF_MONTH, index + (currentWeek - 1) * 7);
+	// return cal.getTimeInMillis();
+	// }
 
-	private WeekTime collectData() {
-		parseTime();
-		weekTime = new WeekTime();
-		weekTime.setWeekId(currentWeek);
-		weekTime.setRotaId(((AddRotaNextActivity) getActivity()).getRotaId());
-		// TODO thay bang index of monday
-		weekTime.setMonday(timeArray[listDayOfWeek.indexOf("MON")]);
-		weekTime.setTuesday(timeArray[listDayOfWeek.indexOf("TUE")]);
-		weekTime.setWednesday(timeArray[listDayOfWeek.indexOf("WED")]);
-		weekTime.setThursday(timeArray[listDayOfWeek.indexOf("THU")]);
-		weekTime.setFriday(timeArray[listDayOfWeek.indexOf("FRI")]);
-		weekTime.setSaturday(timeArray[listDayOfWeek.indexOf("SAT")]);
-		weekTime.setSunday(timeArray[listDayOfWeek.indexOf("SUN")]);
-		return weekTime;
-	}
-
-	private long plusDay(long time, int index) {
-		Calendar cal = Calendar.getInstance();
-		cal.setTimeInMillis(time);
-		cal.add(Calendar.DAY_OF_MONTH, index + (currentWeek - 1) * 7);
-		return cal.getTimeInMillis();
-	}
-
-	public void onRemind() {
-		// Notification
-		if (rota.getReminderTime() > 0) {
-			for (int i = 0; i < LENGTH; i++) {
-				if (startTime[i] != 0 && weekTime != null) {
-					Calendar cal = Calendar.getInstance();
-					cal.setTimeInMillis(startTime[i]);
-					cal.add(Calendar.MINUTE, -1 * rota.getReminderTime());
-					alarm(cal.getTimeInMillis(), (int) startTime[i]);
-				}
-			}
-		}
-	}
-
-	private List<String> getListWeekDay(int startDayOfWeek) {
-		List<String> list = new ArrayList<String>();
-		SimpleDateFormat fmt = new SimpleDateFormat("EEE", Locale.getDefault());
-		// 17 Feb 2013 is Sunday
-		Calendar cal = Calendar.getInstance();
-		cal.set(2013, 2, 17);
-		cal.add(Calendar.DAY_OF_WEEK, startDayOfWeek - Calendar.SUNDAY);
-		for (int i = 0; i < LENGTH; i++) {
-			Date date = cal.getTime();
-			list.add(fmt.format(date).toUpperCase());
-			cal.add(Calendar.DAY_OF_WEEK, 1);
-		}
-		return list;
-	}
-
-	private void alarm(long time, int id) {
-		Log.e("startAlarm", "startAlarm");
-		Intent intent = new Intent(getActivity(), AlarmReceiver.class);
-		intent.putExtra("alarm_message", rota.getName());
-		// In reality, you would want to have a static variable for the request
-		// code instead of 192837
-		PendingIntent sender = PendingIntent.getBroadcast(getActivity(), id,
-				intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-		// Get the AlarmManager service
-		AlarmManager am = (AlarmManager) getActivity().getSystemService(
-				Context.ALARM_SERVICE);
-		am.set(AlarmManager.RTC_WAKEUP, time, sender);
-
-	}
-
-	@TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
-	private void addEvent(long startTime, long endTime) {
-		if (android.os.Build.VERSION.SDK_INT <= 7) {
-			eventsUri = Uri.parse("content://calendar/events");
-			cursor = getActivity().getContentResolver().query(
-					Uri.parse("content://calendar/calendars"),
-					new String[] { "_id", "displayName" }, null, null, null);
-
-		}
-
-		else if (android.os.Build.VERSION.SDK_INT <= 14) {
-			eventsUri = Uri.parse("content://com.android.calendar/events");
-			cursor = getActivity().getContentResolver().query(
-					Uri.parse("content://com.android.calendar/calendars"),
-					new String[] { "_id", "displayName" }, null, null, null);
-
-		}
-
-		else {
-			eventsUri = Uri.parse("content://com.android.calendar/events");
-			cursor = getActivity().getContentResolver().query(
-					Uri.parse("content://com.android.calendar/calendars"),
-					new String[] { "_id", "calendar_displayName" }, null, null,
-					null);
-
-		}
-
-		if (cursor.moveToFirst()) {
-			do {
-				int calId = cursor.getInt(0);
-				String calName = cursor.getString(1);
-				if (calName.contains("@gmail.com")) {
-					calendarId = calId;
-					break;
-				}
-				// do what ever you want here
-			} while (cursor.moveToNext());
-		}
-		TimeZone timeZone = TimeZone.getDefault();
-		ContentValues event = new ContentValues();
-		event.put(CalendarContract.Events.CALENDAR_ID, calendarId);
-		event.put(CalendarContract.Events.TITLE, rota.getName());
-		event.put(CalendarContract.Events.DESCRIPTION, "");
-		event.put(CalendarContract.Events.EVENT_LOCATION, "");
-		event.put(CalendarContract.Events.DTSTART, startTime);
-		event.put(CalendarContract.Events.DTEND, endTime);
-		event.put(CalendarContract.Events.STATUS, 1);
-		event.put(CalendarContract.Events.HAS_ALARM, 1);
-		event.put(CalendarContract.Events.EVENT_TIMEZONE, timeZone.getID());
-		// To Insert
-		getActivity().getContentResolver().insert(eventsUri, event);
-
-	}
 }

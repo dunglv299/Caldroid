@@ -10,12 +10,12 @@ import android.view.View.OnClickListener;
 
 import com.dunglv.calendar.R;
 import com.dunglv.calendar.dao.DaoMaster;
-import com.dunglv.calendar.dao.DaoSession;
-import com.dunglv.calendar.dao.Rota;
-import com.dunglv.calendar.dao.WeekTime;
-import com.dunglv.calendar.dao.WeekTimeDao;
 import com.dunglv.calendar.dao.DaoMaster.DevOpenHelper;
-import com.dunglv.calendar.dao.WeekTimeDao.Properties;
+import com.dunglv.calendar.dao.DaoSession;
+import com.dunglv.calendar.dao.DayTime;
+import com.dunglv.calendar.dao.DayTimeDao;
+import com.dunglv.calendar.dao.DayTimeDao.Properties;
+import com.dunglv.calendar.dao.Rota;
 import com.dunglv.calendar.util.Utils;
 
 public class EditRotaActivity extends RotaActivity implements OnClickListener {
@@ -50,7 +50,6 @@ public class EditRotaActivity extends RotaActivity implements OnClickListener {
 		startDateBtn.setText(Utils.convertLongToTime("dd/MM/yyyy", startDate));
 
 		// Start day of week
-		startDayOfWeek = rota.getStartDayOfWeek();
 
 		// Google sync
 		// isGoogleSync = rota.getIsGoogleSync();
@@ -69,7 +68,6 @@ public class EditRotaActivity extends RotaActivity implements OnClickListener {
 		rota = super.getRota();
 		rota.setId(rotaId);
 		rota.setDateStarted(startDate);
-		rota.setStartDayOfWeek(startDayOfWeek);
 		return rota;
 	}
 
@@ -106,15 +104,15 @@ public class EditRotaActivity extends RotaActivity implements OnClickListener {
 	}
 
 	public void deleteWeekTimeDao(long rotaId) {
-		DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, "weekTime-db",
+		DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, "dayTime-db",
 				null);
 		SQLiteDatabase db = helper.getWritableDatabase();
 		DaoMaster daoMaster = new DaoMaster(db);
 		DaoSession daoSession = daoMaster.newSession();
-		WeekTimeDao weekTimeDao = daoSession.getWeekTimeDao();
+		DayTimeDao dayTimeDao = daoSession.getDayTimeDao();
 
-		List<WeekTime> listDelete = weekTimeDao.queryBuilder()
+		List<DayTime> listDelete = dayTimeDao.queryBuilder()
 				.where(Properties.RotaId.eq(rotaId)).list();
-		weekTimeDao.deleteInTx(listDelete);
+		dayTimeDao.deleteInTx(listDelete);
 	}
 }
