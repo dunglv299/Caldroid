@@ -354,19 +354,20 @@ public class AddRotaNextFragment extends BaseFragment implements
 			if (startTime[i % 7] > 0) {
 				Calendar cal = Calendar.getInstance();
 				cal.setTimeInMillis(startTime[i % 7]);
-				cal.add(Calendar.DAY_OF_MONTH, 7 * ((i / 7) - currentWeek + 1)
-						+ (i % 7));
+				cal.add(Calendar.DAY_OF_MONTH, 7 * ((i / 7) - currentWeek + 1));
 				dayTime.setStartTime(cal.getTimeInMillis());
 				cal.setTimeInMillis(endTime[i % 7]);
-				cal.add(Calendar.DAY_OF_MONTH, 7 * ((i / 7) - currentWeek + 1)
-						+ (i % 7));
+				cal.add(Calendar.DAY_OF_MONTH, 7 * ((i / 7) - currentWeek + 1));
 				dayTime.setEndTime(cal.getTimeInMillis());
 				dayTime.setRotaId(rota.getId());
+
 			} else {
 				dayTime.setStartTime(0l);
 				dayTime.setEndTime(0l);
 
 			}
+			dayTime.setId(null);
+			dayTime.setDayId(i);
 			dayTimeDao.insert(dayTime);
 		}
 		isNextPress = true;
