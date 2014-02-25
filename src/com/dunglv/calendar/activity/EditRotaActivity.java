@@ -1,19 +1,15 @@
 package com.dunglv.calendar.activity;
 
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 
 import com.dunglv.calendar.R;
-import com.dunglv.calendar.dao.DaoMaster;
-import com.dunglv.calendar.dao.DaoMaster.DevOpenHelper;
-import com.dunglv.calendar.dao.DaoSession;
 import com.dunglv.calendar.dao.DayTime;
-import com.dunglv.calendar.dao.DayTimeDao;
 import com.dunglv.calendar.dao.DayTimeDao.Properties;
 import com.dunglv.calendar.dao.Rota;
 import com.dunglv.calendar.util.Utils;
@@ -21,6 +17,7 @@ import com.dunglv.calendar.util.Utils;
 public class EditRotaActivity extends RotaActivity implements OnClickListener {
 	private long rotaId;
 	private Rota rota;
+	private long previousDay;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +44,7 @@ public class EditRotaActivity extends RotaActivity implements OnClickListener {
 		}
 		// Start date btn
 		startDate = rota.getDateStarted();
+		previousDay = startDate;
 		startDateBtn.setText(Utils.convertLongToTime("dd/MM/yyyy", startDate));
 
 		// Start day of week
@@ -60,7 +58,6 @@ public class EditRotaActivity extends RotaActivity implements OnClickListener {
 	public void initView() {
 		super.initView();
 		setTitle("Edit Rota");
-		deleteBtn.setVisibility(View.VISIBLE);
 	}
 
 	@Override
@@ -73,6 +70,7 @@ public class EditRotaActivity extends RotaActivity implements OnClickListener {
 
 	@Override
 	public void onContinue() {
+		changeDate();
 		if (getRota().getWeekReapeat() == 0) {
 			Utils.showAlert(this, getString(R.string.alert_week));
 			return;
@@ -83,7 +81,8 @@ public class EditRotaActivity extends RotaActivity implements OnClickListener {
 	}
 
 	@Override
-	void onSave() {
+	public void onSave() {
+		super.onSave();
 		rotaDao.update(getRota());
 		finish();
 	}
@@ -94,25 +93,47 @@ public class EditRotaActivity extends RotaActivity implements OnClickListener {
 		switch (v.getId()) {
 		case R.id.delete_btn:
 			rotaDao.delete(getRota());
-			deleteWeekTimeDao(rotaId);
+			deleteDayTimeDao(rotaId);
 			finish();
 			break;
-
 		default:
 			break;
 		}
 	}
 
-	public void deleteWeekTimeDao(long rotaId) {
-		DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, "dayTime-db",
-				null);
-		SQLiteDatabase db = helper.getWritableDatabase();
-		DaoMaster daoMaster = new DaoMaster(db);
-		DaoSession daoSession = daoMaster.newSession();
-		DayTimeDao dayTimeDao = daoSession.getDayTimeDao();
-
+	public void deleteDayTimeDao(long rotaId) {
+		initDayTimeDao();
 		List<DayTime> listDelete = dayTimeDao.queryBuilder()
 				.where(Properties.RotaId.eq(rotaId)).list();
 		dayTimeDao.deleteInTx(listDelete);
+	}
+
+	public void changeDate() {
+		// Get change Time
+		Calendar cal1 = Calendar.getInstance();
+		Calendar cal2 = Calendar.getInstance();
+		cal1.setTimeInMillis(previousDay);
+		cal2.setTimeInMillis(startDate);
+		previousDay = startDate;
+		int plusDay = cal2.get(Calendar.DAY_OF_YEAR)
+				- cal1.get(Calendar.DAY_OF_YEAR);
+		initDayTimeDao();
+		List<DayTime> listChange = dayTimeDao
+				.queryBuilder()
+				.where(Properties.RotaId.eq(rotaId), Properties.StartTime.gt(0))
+				.list();
+		for (DayTime dayTime : listChange) {
+			Calendar cal = Calendar.getInstance();
+			// Stat time
+			cal.setTimeInMillis(dayTime.getStartTime());
+			cal.add(Calendar.DAY_OF_MONTH, plusDay);
+			dayTime.setStartTime(cal.getTimeInMillis());
+
+			// End time
+			cal.setTimeInMillis(dayTime.getEndTime());
+			cal.add(Calendar.DAY_OF_MONTH, plusDay);
+			dayTime.setEndTime(cal.getTimeInMillis());
+			dayTimeDao.update(dayTime);
+		}
 	}
 }

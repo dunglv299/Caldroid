@@ -1,5 +1,6 @@
 package com.dunglv.calendar.activity;
 
+import android.view.View;
 import android.view.View.OnClickListener;
 
 import com.dunglv.calendar.R;
@@ -8,6 +9,7 @@ import com.dunglv.calendar.util.Utils;
 
 public class AddRotaActivity extends RotaActivity implements OnClickListener {
 	private Rota rota;
+	private long rotaId;
 
 	@Override
 	public void initView() {
@@ -16,8 +18,26 @@ public class AddRotaActivity extends RotaActivity implements OnClickListener {
 	}
 
 	@Override
+	public void onClick(View v) {
+		super.onClick(v);
+		switch (v.getId()) {
+		case R.id.delete_btn:
+			if (getRota().getId() != null) {
+				rotaDao.delete(getRota());
+			}
+			finish();
+			break;
+		default:
+			break;
+		}
+	}
+
+	@Override
 	public Rota getRota() {
 		rota = super.getRota();
+		if (rotaId != 0) {
+			rota.setId(rotaId);
+		}
 		return rota;
 	}
 
@@ -28,12 +48,13 @@ public class AddRotaActivity extends RotaActivity implements OnClickListener {
 			return;
 		}
 		super.onContinue();
-		long rotaId = rotaDao.insertOrReplace(getRota());
+		rotaId = rotaDao.insertOrReplace(getRota());
 		sharedPreferences.putLong(Utils.ROTA_ID, rotaId);
 	}
 
 	@Override
-	void onSave() {
+	public void onSave() {
+		super.onSave();
 		rotaDao.insertOrReplace(getRota());
 		finish();
 	}

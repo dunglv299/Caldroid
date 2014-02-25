@@ -3,14 +3,24 @@ package com.dunglv.calendar.activity;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 
+import android.annotation.TargetApi;
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.CalendarContract;
 import android.support.v4.app.FragmentActivity;
 import android.text.format.DateFormat;
 import android.util.Log;
@@ -30,9 +40,13 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.dunglv.calendar.R;
+import com.dunglv.calendar.adapter.AlarmReceiver;
 import com.dunglv.calendar.dao.DaoMaster;
 import com.dunglv.calendar.dao.DaoMaster.DevOpenHelper;
 import com.dunglv.calendar.dao.DaoSession;
+import com.dunglv.calendar.dao.DayTime;
+import com.dunglv.calendar.dao.DayTimeDao;
+import com.dunglv.calendar.dao.DayTimeDao.Properties;
 import com.dunglv.calendar.dao.Rota;
 import com.dunglv.calendar.dao.RotaDao;
 import com.dunglv.calendar.util.MySharedPreferences;
@@ -40,7 +54,6 @@ import com.dunglv.calendar.util.Utils;
 
 public abstract class RotaActivity extends FragmentActivity implements
 		OnClickListener, OnCheckedChangeListener {
-	private static final String TAG = "RotaActivity";
 	public static final int REQUES_CODE_FINISH = 100;
 	private String colorRota;
 	public Spinner colorSpinner;
@@ -63,6 +76,7 @@ public abstract class RotaActivity extends FragmentActivity implements
 	public int remindTime;
 	public long startDate;
 	public boolean isGoogleSync;
+	public DayTimeDao dayTimeDao;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -234,17 +248,18 @@ public abstract class RotaActivity extends FragmentActivity implements
 		rotaDao = daoSession.getRotaDao();
 	}
 
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (requestCode == REQUES_CODE_FINISH) {
-			if (resultCode == RESULT_OK) {
-				Log.e(TAG, "dunglv");
-				finish();
-			}
-			if (resultCode == RESULT_CANCELED) {
-				// Write your code if there's no result
-			}
-		}
-	}// onActivityResult
+	// protected void onActivityResult(int requestCode, int resultCode, Intent
+	// data) {
+	// if (requestCode == REQUES_CODE_FINISH) {
+	// if (resultCode == RESULT_OK) {
+	// Log.e(TAG, "dunglv");
+	// finish();
+	// }
+	// if (resultCode == RESULT_CANCELED) {
+	// // Write your code if there's no result
+	// }
+	// }
+	// }// onActivityResult
 
 	/**
 	 * Collect data for sava data to DB
@@ -269,13 +284,131 @@ public abstract class RotaActivity extends FragmentActivity implements
 		startActivityForResult(intent, REQUES_CODE_FINISH);
 	}
 
-	abstract void onSave();
+	public void onSave() {
+		initDayTimeDao();
+		Rota rota = getRota();
+		List<DayTime> listData = dayTimeDao
+				.queryBuilder()
+				.where(Properties.RotaId.eq(rota.getId()),
+						Properties.StartTime.gt(0)).list();
+		if (rota.getReminderTime() > 0) {
+			onRemind(rota, listData);
+		}
+		if (rota.getIsGoogleSync()) {
+			onGoogleSync(rota, listData);
+		}
+	}
 
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
 		sharedPreferences.putInt(Utils.CURRENT_WEEK, 0);
 		sharedPreferences.putInt(Utils.ROTA_ID, 0);
+	}
+
+	public void initDayTimeDao() {
+		DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, "dayTime-db",
+				null);
+		SQLiteDatabase db = helper.getWritableDatabase();
+		DaoMaster daoMaster = new DaoMaster(db);
+		DaoSession daoSession = daoMaster.newSession();
+		dayTimeDao = daoSession.getDayTimeDao();
+	}
+
+	private void onGoogleSync(Rota rota, List<DayTime> listData) {
+		for (DayTime dayTime : listData) {
+			if (dayTime.getIsSyncGoogle() == null || !dayTime.getIsSyncGoogle()) {
+				addEvent(dayTime.getStartTime(), dayTime.getEndTime(), rota);
+				dayTime.setIsSyncGoogle(true);
+				dayTimeDao.update(dayTime);
+			}
+		}
+	}
+
+	public void onRemind(Rota rota, List<DayTime> listRemind) {
+		// Notification
+		for (DayTime dayTime : listRemind) {
+			if (dayTime.getStartTime() > 0) {
+				Calendar cal = Calendar.getInstance();
+				cal.setTimeInMillis(dayTime.getStartTime());
+				cal.add(Calendar.MINUTE, -1 * rota.getReminderTime());
+				if (cal.getTimeInMillis() > System.currentTimeMillis()) {
+					alarm(cal.getTimeInMillis(), dayTime.getId().intValue(),
+							rota);
+				}
+			}
+		}
+	}
+
+	private void alarm(long time, int id, Rota rota) {
+		Log.e("startAlarm", "startAlarm");
+		Intent intent = new Intent(this, AlarmReceiver.class);
+		intent.putExtra("alarm_message", rota.getName());
+		// In reality, you would want to have a static variable for the request
+		// code instead of 192837
+		PendingIntent sender = PendingIntent.getBroadcast(this, id, intent,
+				PendingIntent.FLAG_UPDATE_CURRENT);
+
+		// Get the AlarmManager service
+		AlarmManager am = (AlarmManager) this.getSystemService(ALARM_SERVICE);
+		am.set(AlarmManager.RTC_WAKEUP, time, sender);
+	}
+
+	@TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
+	private void addEvent(long startTime, long endTime, Rota rota) {
+		Uri eventsUri;
+		Cursor cursor;
+		int calendarId = 0;
+
+		if (android.os.Build.VERSION.SDK_INT <= 7) {
+			eventsUri = Uri.parse("content://calendar/events");
+			cursor = this.getContentResolver().query(
+					Uri.parse("content://calendar/calendars"),
+					new String[] { "_id", "displayName" }, null, null, null);
+
+		}
+
+		else if (android.os.Build.VERSION.SDK_INT <= 14) {
+			eventsUri = Uri.parse("content://com.android.calendar/events");
+			cursor = this.getContentResolver().query(
+					Uri.parse("content://com.android.calendar/calendars"),
+					new String[] { "_id", "displayName" }, null, null, null);
+
+		}
+
+		else {
+			eventsUri = Uri.parse("content://com.android.calendar/events");
+			cursor = this.getContentResolver().query(
+					Uri.parse("content://com.android.calendar/calendars"),
+					new String[] { "_id", "calendar_displayName" }, null, null,
+					null);
+
+		}
+
+		if (cursor.moveToFirst()) {
+			do {
+				int calId = cursor.getInt(0);
+				String calName = cursor.getString(1);
+				if (calName.contains("@gmail.com")) {
+					calendarId = calId;
+					break;
+				}
+				// do what ever you want here
+			} while (cursor.moveToNext());
+		}
+		TimeZone timeZone = TimeZone.getDefault();
+		ContentValues event = new ContentValues();
+		event.put(CalendarContract.Events.CALENDAR_ID, calendarId);
+		event.put(CalendarContract.Events.TITLE, rota.getName());
+		event.put(CalendarContract.Events.DESCRIPTION, "");
+		event.put(CalendarContract.Events.EVENT_LOCATION, "");
+		event.put(CalendarContract.Events.DTSTART, startTime);
+		event.put(CalendarContract.Events.DTEND, endTime);
+		event.put(CalendarContract.Events.STATUS, 1);
+		event.put(CalendarContract.Events.HAS_ALARM, 1);
+		event.put(CalendarContract.Events.EVENT_TIMEZONE, timeZone.getID());
+		// To Insert
+		this.getContentResolver().insert(eventsUri, event);
 
 	}
 }

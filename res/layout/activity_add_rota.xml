@@ -302,8 +302,7 @@
             android:background="@color/green"
             android:text="@string/delete_btn"
             android:textColor="@color/white"
-            android:textSize="@dimen/next_textSize"
-            android:visibility="gone" />
+            android:textSize="@dimen/next_textSize" />
     </LinearLayout>
 
 </RelativeLayout>

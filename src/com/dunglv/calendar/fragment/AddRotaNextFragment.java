@@ -214,6 +214,10 @@ public class AddRotaNextFragment extends BaseFragment implements
 								endTime[index] = mCalendar.getTimeInMillis();
 								setTextButton(endBtn[index], endTime[index]);
 							}
+							if (startTime[index] > endTime[index]) {
+								endTime[index] = startTime[index];
+								setTextButton(endBtn[index], endTime[index]);
+							}
 						} else {
 							endTime[index] = mCalendar.getTimeInMillis();
 							if (startTime[index] == 0) {
@@ -254,8 +258,8 @@ public class AddRotaNextFragment extends BaseFragment implements
 			new MakeAllWeekAsyntask().execute();
 			break;
 		case R.id.save_btn:
-			Intent returnIntent = new Intent();
-			getActivity().setResult(Activity.RESULT_OK, returnIntent);
+			// Intent returnIntent = new Intent();
+			// getActivity().setResult(Activity.RESULT_OK, returnIntent);
 			onNextPress();
 			break;
 		default:
@@ -452,43 +456,4 @@ public class AddRotaNextFragment extends BaseFragment implements
 		DaoSession daoSession = daoMaster.newSession();
 		dayTimeDao = daoSession.getDayTimeDao();
 	}
-
-	/**
-	 * Parse time to save to DB
-	 */
-	// private void parseTime() {
-	//
-	// for (int i = 0; i < LENGTH; i++) {
-	// hourWorking[i] = Utils.convertStringToInt(hourEditText[i].getText()
-	// .toString());
-	// if (startTime[i] == 0 && endTime[i] == 0) {
-	// timeArray[i] = TIME_ZERO + TIME_ZERO;
-	// } else if (startTime[i] == 0) {
-	// timeArray[i] = TIME_ZERO + String.valueOf(endTime[i]);
-	// } else if (endTime[i] == 0) {
-	// timeArray[i] = String.valueOf(startTime[i]) + TIME_ZERO;
-	// } else {
-	// timeArray[i] = String.valueOf(startTime[i])
-	// + String.valueOf(endTime[i]);
-	// }
-	// timeArray[i] += String.valueOf(hourWorking[i]);
-	//
-	// }
-	// }
-
-	// private WeekTime collectData() {
-	// // parseTime();
-	// DayTime dayTime = new DayTime();
-	// dayTime.setWeekId(currentWeek);
-	// dayTime.setRotaId(((AddRotaNextActivity) getActivity()).getRotaId());
-	// return dayTime;
-	// }
-
-	// private long plusDay(long time, int index) {
-	// Calendar cal = Calendar.getInstance();
-	// cal.setTimeInMillis(time);
-	// cal.add(Calendar.DAY_OF_MONTH, index + (currentWeek - 1) * 7);
-	// return cal.getTimeInMillis();
-	// }
-
 }
