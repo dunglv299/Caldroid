@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import com.dunglv.calendar.R;
 import com.dunglv.calendar.dao.Rota;
-import com.dunglv.calendar.fragment.AddRotaNextFragment;
 import com.dunglv.calendar.util.Utils;
 
 public class RotaDayAdapter extends BaseAdapter {
@@ -74,15 +73,18 @@ public class RotaDayAdapter extends BaseAdapter {
 		} else {
 			viewHolder.mRotaName.setText(rota.getName());
 		}
-		String detail = listDetailDay.get(position);
-		String startTime = AddRotaNextFragment.TIME_ZERO;
-		String endTime = AddRotaNextFragment.TIME_ZERO;
-		// if (detail != null && !detail.isEmpty()) {
-		// startTime = detail.substring(0, 13);
-		// endTime = detail.substring(13, 26);
-		// }
-		// setTimeText(viewHolder.mStartTime, startTime, true);
-		// setTimeText(viewHolder.mEndTime, endTime, false);
+		String detail = "";
+		if (listDetailDay.size() > 0) {
+			detail = listDetailDay.get(position % listDetailDay.size());
+		}
+		long startTime = 0;
+		long endTime = 0;
+		if (detail != null && !detail.isEmpty()) {
+			startTime = Long.valueOf(detail.substring(0, 13));
+			endTime = Long.valueOf(detail.substring(13, 26));
+		}
+		setTimeText(viewHolder.mStartTime, startTime, true);
+		setTimeText(viewHolder.mEndTime, endTime, false);
 		GradientDrawable bgShape = (GradientDrawable) viewHolder.mRectangle
 				.getBackground();
 		bgShape.setColor(Color.parseColor(rota.getColor()));
@@ -97,17 +99,17 @@ public class RotaDayAdapter extends BaseAdapter {
 		TextView mEndTime;
 	}
 
-	// private void setTimeText(TextView tv, String s, boolean haicham) {
-	// if (s.equals(AddRotaNextFragment.TIME_ZERO)) {
-	// tv.setText("");
-	// } else {
-	// if (haicham) {
-	// tv.setText(Utils.convertStringToTime(s) + " - ");
-	// return;
-	// }
-	// tv.setText(Utils.convertStringToTime(s));
-	//
-	// }
-	// }
+	private void setTimeText(TextView tv, long time, boolean haicham) {
+		if (time == 0) {
+			tv.setText("");
+		} else {
+			if (haicham) {
+				tv.setText(Utils.convertLongToTime(time) + " - ");
+				return;
+			}
+			tv.setText(Utils.convertLongToTime(time));
+
+		}
+	}
 
 }

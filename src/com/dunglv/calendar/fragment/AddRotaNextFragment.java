@@ -123,8 +123,8 @@ public class AddRotaNextFragment extends BaseFragment implements
 			final int index = i;
 			// Init weekDay TextView
 			weekDayTv[index] = (TextView) v.findViewById(weekDayIdArray[index]);
-			weekDayTv[i].setText(new SimpleDateFormat("dd/MM.hh/mm").format(cal
-					.getTime()));
+			weekDayTv[i].setText(new SimpleDateFormat("EEE").format(
+					cal.getTime()).toUpperCase());
 			cal.add(Calendar.DAY_OF_MONTH, 1);
 
 			// Action pick start time
@@ -158,8 +158,8 @@ public class AddRotaNextFragment extends BaseFragment implements
 		if (listDayTimes.size() >= currentWeek * 7) {
 			// Init when exists data
 			for (int i = 0; i < LENGTH; i++) {
-				weekDayTv[i].setText(new SimpleDateFormat("dd/MM.hh/mm")
-						.format(cal.getTime()));
+				weekDayTv[i].setText(new SimpleDateFormat("EEE").format(
+						cal.getTime()).toUpperCase());
 				cal.add(Calendar.DAY_OF_MONTH, 1);
 
 				DayTime dayTime = listDayTimes.get(i + (currentWeek - 1) * 7);
@@ -206,8 +206,7 @@ public class AddRotaNextFragment extends BaseFragment implements
 								+ (currentWeek - 1) * 7);
 						mCalendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
 						mCalendar.set(Calendar.MINUTE, minute);
-						button.setText(DateFormat.format("dd/MM h:mm a",
-								mCalendar));
+						button.setText(DateFormat.format("h:mm a", mCalendar));
 						if (isStartTime) {
 							startTime[index] = mCalendar.getTimeInMillis();
 							if (endTime[index] == 0) {

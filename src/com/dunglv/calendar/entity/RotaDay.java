@@ -2,6 +2,7 @@ package com.dunglv.calendar.entity;
 
 import java.util.Date;
 
+import com.dunglv.calendar.dao.DayTime;
 import com.dunglv.calendar.dao.Rota;
 
 public class RotaDay {
@@ -12,7 +13,7 @@ public class RotaDay {
 	private String color;
 	private Rota rota;
 	private int timeRepeat;
-	private int weekId;
+	private DayTime dayTime;
 
 	/**
 	 * @return the day
@@ -120,18 +121,17 @@ public class RotaDay {
 	}
 
 	/**
-	 * @return the weekId
+	 * @return the dayTime
 	 */
-	public int getWeekId() {
-		return weekId;
+	public DayTime getDayTime() {
+		return dayTime;
 	}
 
 	/**
-	 * @param weekId
-	 *            the weekId to set
+	 * @param dayTime
+	 *            the dayTime to set
 	 */
-	public void setWeekId(int weekId) {
-		this.weekId = weekId;
+	public void setDayTime(DayTime dayTime) {
+		this.dayTime = dayTime;
 	}
-
 }

@@ -84,6 +84,7 @@ public class EditRotaActivity extends RotaActivity implements OnClickListener {
 	public void onSave() {
 		super.onSave();
 		rotaDao.update(getRota());
+		deleteDayChangeWeek(getRota().getId());
 		finish();
 	}
 
@@ -105,6 +106,15 @@ public class EditRotaActivity extends RotaActivity implements OnClickListener {
 		initDayTimeDao();
 		List<DayTime> listDelete = dayTimeDao.queryBuilder()
 				.where(Properties.RotaId.eq(rotaId)).list();
+		dayTimeDao.deleteInTx(listDelete);
+	}
+
+	public void deleteDayChangeWeek(long rotaId) {
+		List<DayTime> listDelete = dayTimeDao
+				.queryBuilder()
+				.where(Properties.RotaId.eq(rotaId),
+						Properties.DayId.ge(getRota().getWeekReapeat() * 7))
+				.list();
 		dayTimeDao.deleteInTx(listDelete);
 	}
 
