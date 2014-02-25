@@ -146,16 +146,18 @@ public class CalendarViewFragment extends CaldroidFragment {
 					listRotaShow.add(rota);
 
 					// Add detail time to list
-					// listDayTime = getListDayTimeDao(rota.getId());
+					listDayTime = getListDayTimeDao(rota.getId());
 					int time = rotaDay.getTimeRepeat();
 					for (int i = 0; i < time; i++) {
 						for (DayTime dayTime : listDayTime) {
 							Calendar c = Calendar.getInstance();
 							c.setTimeInMillis(dayTime.getStartTime());
 							c.add(Calendar.DAY_OF_MONTH, listDayTime.size() * i);
-							if (Utils.isSameDay(date, c.getTime())) {
+							if (Utils.isSameDay(date, c.getTime())
+									&& dayTime.getRotaId() == rota.getId()) {
 								String detailTime = dayTime.getStartTime() + ""
-										+ dayTime.getEndTime();
+										+ dayTime.getEndTime()
+										+ dayTime.getRotaId();
 								listDetailDay.add(detailTime);
 							}
 						}

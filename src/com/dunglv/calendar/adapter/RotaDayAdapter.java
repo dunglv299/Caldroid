@@ -79,12 +79,20 @@ public class RotaDayAdapter extends BaseAdapter {
 		}
 		long startTime = 0;
 		long endTime = 0;
+		long rotaId = 0;
 		if (detail != null && !detail.isEmpty()) {
 			startTime = Long.valueOf(detail.substring(0, 13));
 			endTime = Long.valueOf(detail.substring(13, 26));
+			rotaId = Long.valueOf(detail.substring(26, 27));
 		}
-		setTimeText(viewHolder.mStartTime, startTime, true);
-		setTimeText(viewHolder.mEndTime, endTime, false);
+
+		if (rotaId == rota.getId()) {
+			setTimeText(viewHolder.mStartTime, startTime, true);
+			setTimeText(viewHolder.mEndTime, endTime, false);
+		} else {
+			setTimeText(viewHolder.mStartTime, 0, true);
+			setTimeText(viewHolder.mEndTime, 0, false);
+		}
 		GradientDrawable bgShape = (GradientDrawable) viewHolder.mRectangle
 				.getBackground();
 		bgShape.setColor(Color.parseColor(rota.getColor()));
