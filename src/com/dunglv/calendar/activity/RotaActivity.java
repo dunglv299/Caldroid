@@ -316,11 +316,30 @@ public abstract class RotaActivity extends FragmentActivity implements
 	}
 
 	private void onGoogleSync(Rota rota, List<DayTime> listData) {
+		int time = 0;
+		if (!rota.getTimeRepeat().isEmpty()
+				&& !rota.getTimeRepeat().equals("0")) {
+			time = Integer.parseInt(rota.getTimeRepeat());
+		} else {
+			time = 1;
+		}
 		for (DayTime dayTime : listData) {
 			if (dayTime.getIsSyncGoogle() == null || !dayTime.getIsSyncGoogle()) {
-				addEvent(dayTime.getStartTime(), dayTime.getEndTime(), rota);
-				dayTime.setIsSyncGoogle(true);
-				dayTimeDao.update(dayTime);
+				for (int i = 0; i < time; i++) {
+					Calendar calendarStart = Calendar.getInstance();
+					Calendar calendarEnd = Calendar.getInstance();
+					calendarStart.setTimeInMillis(dayTime.getStartTime());
+					calendarEnd.setTimeInMillis(dayTime.getEndTime());
+					calendarStart.add(Calendar.DAY_OF_YEAR,
+							7 * i * rota.getWeekReapeat());
+					calendarEnd.add(Calendar.DAY_OF_YEAR,
+							7 * i * rota.getWeekReapeat());
+					addEvent(calendarStart.getTimeInMillis(),
+							calendarEnd.getTimeInMillis(), rota);
+					dayTime.setIsSyncGoogle(true);
+					dayTimeDao.update(dayTime);
+				}
+
 			}
 		}
 	}

@@ -4,13 +4,9 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
-import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.format.DateFormat;
@@ -69,11 +65,11 @@ public class AddRotaNextFragment extends BaseFragment implements
 	private Button[] startBtn = new Button[LENGTH];
 	private Button[] endBtn = new Button[LENGTH];
 	private EditText[] hourEditText = new EditText[LENGTH];
+	private boolean[] isGoogleSyncs = new boolean[LENGTH];
 
 	private long[] startTime = new long[LENGTH];
 	private long[] endTime = new long[LENGTH];
 	private int[] hourWorking = new int[LENGTH];
-	private String[] timeArray = new String[LENGTH];
 
 	private DayTimeDao dayTimeDao;
 	private RotaDao rotaDao;
@@ -81,8 +77,6 @@ public class AddRotaNextFragment extends BaseFragment implements
 	Button saveBtn;
 	RelativeLayout btnLayout;
 	private Rota rota;
-	private Uri eventsUri;
-	private Cursor cursor;
 	int calendarId;
 
 	@Override
@@ -167,12 +161,21 @@ public class AddRotaNextFragment extends BaseFragment implements
 				endTime[i] = dayTime.getEndTime();
 				setTextButton(startBtn[i], startTime[i]);
 				setTextButton(endBtn[i], endTime[i]);
+				// Init hour working
 				int hourWorking = dayTime.getHourWorking();
 				if (hourWorking == 0) {
 					hourEditText[i].setText("");
 				} else {
 					hourEditText[i].setText(hourWorking + "");
 				}
+				// Init google sync
+				if (dayTime.getIsSyncGoogle() == null
+						|| !dayTime.getIsSyncGoogle()) {
+					isGoogleSyncs[i] = false;
+				} else {
+					isGoogleSyncs[i] = true;
+				}
+
 			}
 		}
 	}
@@ -392,6 +395,7 @@ public class AddRotaNextFragment extends BaseFragment implements
 		dayTime.setDayId(index + getPlusDay());
 		dayTime.setHourWorking(hourWorking[index]);
 		dayTime.setRotaId(rota.getId());
+		dayTime.setIsSyncGoogle(isGoogleSyncs[index]);
 		if (listDayTimes.size() < currentWeek * 7) {
 			dayTime.setId(null);
 		} else {
