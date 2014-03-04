@@ -88,6 +88,7 @@ public class CaldroidSampleCustomAdapter extends CaldroidGridAdapter {
 		int numberOfRota = getNumberOfRota(dateTime);
 		if (numberOfRota > 0) {
 			for (int i = 0; i < numberOfRota; i++) {
+				// Restricted 4 round
 				if (i == 4) {
 					break;
 				}
@@ -112,7 +113,8 @@ public class CaldroidSampleCustomAdapter extends CaldroidGridAdapter {
 		for (RotaDay rotaDay : listRotaDay) {
 			if (dateTime.getDay() == rotaDay.getDay()
 					&& dateTime.getMonth() == rotaDay.getMonth()
-					&& dateTime.getYear() == rotaDay.getYear()) {
+					&& dateTime.getYear() == rotaDay.getYear()
+					&& rotaDay.getDayTime().getStartTime() > 0) {
 				listColors.add(rotaDay.getColor());
 				index++;
 			}

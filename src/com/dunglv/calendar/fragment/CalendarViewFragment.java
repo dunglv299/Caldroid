@@ -56,29 +56,32 @@ public class CalendarViewFragment extends CaldroidFragment {
 		listRotaDay = new ArrayList<RotaDay>();
 		for (Rota rota : listRota) {
 			listDayTime = getListDayTimeDao(rota.getId());
-			Calendar calendar = Calendar.getInstance();
-			calendar.setTimeInMillis(rota.getDateStarted());
-			int time = 0;
-			if (!rota.getTimeRepeat().isEmpty()
-					&& !rota.getTimeRepeat().equals("0")) {
-				time = Integer.parseInt(rota.getTimeRepeat());
-			} else {
-				time = 1;
-			}
-			for (int j = 0; j < time; j++) {
-				// for (int i = 0; i < listDayTime.size(); i++) {
-				for (int i = 0; i < 7 * rota.getWeekReapeat(); i++) {
-					RotaDay rotaDay = new RotaDay();
-					rotaDay.setDay(calendar.get(Calendar.DAY_OF_MONTH));
-					rotaDay.setMonth(calendar.get(Calendar.MONTH) + 1);
-					rotaDay.setYear(calendar.get(Calendar.YEAR));
-					rotaDay.setDateTime(calendar.getTime());
-					rotaDay.setColor(rota.getColor());
-					rotaDay.setRota(rota);
-					rotaDay.setTimeRepeat(time);
-					rotaDay.setDayTime(listDayTime.get(i % listDayTime.size()));
-					listRotaDay.add(rotaDay);
-					calendar.add(Calendar.DATE, 1);
+			if (listDayTime.size() > 0) {
+				Calendar calendar = Calendar.getInstance();
+				calendar.setTimeInMillis(rota.getDateStarted());
+				int time = 0;
+				if (!rota.getTimeRepeat().isEmpty()
+						&& !rota.getTimeRepeat().equals("0")) {
+					time = Integer.parseInt(rota.getTimeRepeat());
+				} else {
+					time = 1;
+				}
+				for (int j = 0; j < time; j++) {
+					// for (int i = 0; i < listDayTime.size(); i++) {
+					for (int i = 0; i < 7 * rota.getWeekReapeat(); i++) {
+						RotaDay rotaDay = new RotaDay();
+						rotaDay.setDay(calendar.get(Calendar.DAY_OF_MONTH));
+						rotaDay.setMonth(calendar.get(Calendar.MONTH) + 1);
+						rotaDay.setYear(calendar.get(Calendar.YEAR));
+						rotaDay.setDateTime(calendar.getTime());
+						rotaDay.setColor(rota.getColor());
+						rotaDay.setRota(rota);
+						rotaDay.setTimeRepeat(time);
+						rotaDay.setDayTime(listDayTime.get(i
+								% listDayTime.size()));
+						listRotaDay.add(rotaDay);
+						calendar.add(Calendar.DATE, 1);
+					}
 				}
 			}
 		}

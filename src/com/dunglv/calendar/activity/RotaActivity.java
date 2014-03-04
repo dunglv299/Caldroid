@@ -287,15 +287,21 @@ public abstract class RotaActivity extends FragmentActivity implements
 	public void onSave() {
 		initDayTimeDao();
 		Rota rota = getRota();
-		List<DayTime> listData = dayTimeDao
-				.queryBuilder()
-				.where(Properties.RotaId.eq(rota.getId()),
-						Properties.StartTime.gt(0)).list();
-		if (rota.getReminderTime() > 0) {
-			onRemind(rota, listData);
-		}
-		if (rota.getIsGoogleSync()) {
-			onGoogleSync(rota, listData);
+		if (rota.getId() != null) {
+			List<DayTime> listData = dayTimeDao
+					.queryBuilder()
+					.where(Properties.RotaId.eq(rota.getId()),
+							Properties.StartTime.gt(0)).list();
+			if (rota.getReminderTime() > 0) {
+				onRemind(rota, listData);
+			}
+			if (rota.getIsGoogleSync()) {
+				onGoogleSync(rota, listData);
+			}
+		} else {
+			// Utils.showAlert(this,
+			// "Please select day by press \"Save & Continue\"");
+			// return;
 		}
 	}
 

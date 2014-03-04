@@ -67,12 +67,6 @@ public class RotaDayAdapter extends BaseAdapter {
 			viewHolder = (ViewHolder) view.getTag();
 		}
 		// Bind that data efficiently!
-		Rota rota = listRota.get(position);
-		if (rota.getName().isEmpty()) {
-			viewHolder.mRotaName.setText("Untitled");
-		} else {
-			viewHolder.mRotaName.setText(rota.getName());
-		}
 		String detail = "";
 		if (listDetailDay.size() > 0) {
 			detail = listDetailDay.get(position % listDetailDay.size());
@@ -85,18 +79,25 @@ public class RotaDayAdapter extends BaseAdapter {
 			endTime = Long.valueOf(detail.substring(13, 26));
 			rotaId = Long.valueOf(detail.substring(26, 27));
 		}
-
+		Rota rota = listRota.get(position);
 		if (rotaId == rota.getId()) {
+			if (rota.getName().isEmpty()) {
+				viewHolder.mRotaName.setText("Untitled");
+			} else {
+				viewHolder.mRotaName.setText(rota.getName());
+			}
+
 			setTimeText(viewHolder.mStartTime, startTime, true);
 			setTimeText(viewHolder.mEndTime, endTime, false);
+			GradientDrawable bgShape = (GradientDrawable) viewHolder.mRectangle
+					.getBackground();
+			bgShape.setColor(Color.parseColor(rota.getColor()));
 		} else {
-			setTimeText(viewHolder.mStartTime, 0, true);
-			setTimeText(viewHolder.mEndTime, 0, false);
+			viewHolder.mRotaName.setVisibility(View.GONE);
+			viewHolder.mStartTime.setVisibility(View.GONE);
+			viewHolder.mEndTime.setVisibility(View.GONE);
+			viewHolder.mRectangle.setVisibility(View.GONE);
 		}
-		GradientDrawable bgShape = (GradientDrawable) viewHolder.mRectangle
-				.getBackground();
-		bgShape.setColor(Color.parseColor(rota.getColor()));
-
 		return view;
 	}
 
