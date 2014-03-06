@@ -23,9 +23,10 @@ import com.actionbarsherlock.view.MenuItem;
 import com.dunglv.calendar.R;
 import com.dunglv.calendar.adapter.NavDrawerListAdapter;
 import com.dunglv.calendar.entity.ItemNavDrawer;
+import com.dunglv.calendar.fragment.AboutFragment;
 import com.dunglv.calendar.fragment.CalendarViewFragment;
+import com.dunglv.calendar.fragment.HowToUseFragment;
 import com.dunglv.calendar.fragment.ListRotaFragment;
-import com.dunglv.calendar.fragment.SettingFragment;
 
 @SuppressLint("SimpleDateFormat")
 public class MainActivity extends SherlockFragmentActivity {
@@ -50,7 +51,7 @@ public class MainActivity extends SherlockFragmentActivity {
 		// requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_main);
 		initNavigationDrawer();
-		displayView(1);
+		displayView(0);
 	}
 
 	public void goToFragment(Fragment f) {
@@ -84,7 +85,10 @@ public class MainActivity extends SherlockFragmentActivity {
 				.getResourceId(0, -1)));
 		navDrawerItems.add(new ItemNavDrawer(navMenuTitles[1], navMenuIcons
 				.getResourceId(1, -1)));
-
+		navDrawerItems.add(new ItemNavDrawer(navMenuTitles[2], navMenuIcons
+				.getResourceId(2, -1)));
+		navDrawerItems.add(new ItemNavDrawer(navMenuTitles[3], navMenuIcons
+				.getResourceId(3, -1)));
 		// Recycle the typed array
 		navMenuIcons.recycle();
 
@@ -140,8 +144,9 @@ public class MainActivity extends SherlockFragmentActivity {
 
 	private void replaceFragment(Fragment f) {
 		FragmentManager fragmentManager = getSupportFragmentManager();
-		fragmentManager.beginTransaction().replace(R.id.main_content, f)
-				.commit();
+		FragmentTransaction transaction = fragmentManager.beginTransaction();
+		transaction.replace(R.id.main_content, f);
+		transaction.commit();
 	}
 
 	/**
@@ -167,7 +172,16 @@ public class MainActivity extends SherlockFragmentActivity {
 			}, 270);
 			break;
 		case 2:
-			replaceFragment(new SettingFragment());
+			new Handler().postDelayed(new Runnable() {
+				@Override
+				public void run() {
+					replaceFragment(new HowToUseFragment());
+				}
+			}, 200);
+
+			break;
+		case 3:
+			replaceFragment(new AboutFragment());
 			break;
 		default:
 			break;

@@ -9,13 +9,16 @@
     <string-array name="nav_drawer_items">
         <item>Manage rota</item>
         <item>View calendar</item>
+        <item>How to use</item>
+        <item>About</item>
     </string-array>
     <!-- Nav Drawer List Item Icons -->
     <!-- Keep them in order as the titles are in -->
     <array name="nav_drawer_icons">
         <item>@drawable/ic_clock</item>
         <item>@drawable/ic_calendar</item>
-        <item>@drawable/ic_settings</item>
+        <item>@drawable/ic_howtouse</item>
+        <item>@drawable/ic_about</item>
     </array>
     <!-- Manage shift -->
     <string name="new_rota">New Rota</string>
@@ -69,5 +72,8 @@
         <item>12 hours</item>
         <item>24 hours</item>
     </array>
+    <!-- about screen -->
+    <string name="copy_right">© Copyright Starmark-Ventures Ltd</string>
+    <string name="address">153 High Rd. Broxbourne, Hertfordshire. EN10 7BS, UK\nEmail: contact@starmark-ventures.com\nphone: + (44) 0208 4326 331</string>
 
 </resources>
