@@ -83,6 +83,7 @@ public class EditRotaActivity extends RotaActivity implements OnClickListener {
 	@Override
 	public void onSave() {
 		super.onSave();
+		changeDate();
 		rotaDao.update(getRota());
 		deleteDayChangeWeek(getRota().getId());
 		finish();

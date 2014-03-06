@@ -77,9 +77,13 @@ public class CalendarViewFragment extends CaldroidFragment {
 						rotaDay.setColor(rota.getColor());
 						rotaDay.setRota(rota);
 						rotaDay.setTimeRepeat(time);
-						rotaDay.setDayTime(listDayTime.get(i
-								% listDayTime.size()));
-						listRotaDay.add(rotaDay);
+						DayTime dayTime = listDayTime.get(i
+								% listDayTime.size());
+						// Just only add data when daytime has data
+						if (dayTime.getStartTime() > 0) {
+							rotaDay.setDayTime(dayTime);
+							listRotaDay.add(rotaDay);
+						}
 						calendar.add(Calendar.DATE, 1);
 					}
 				}
