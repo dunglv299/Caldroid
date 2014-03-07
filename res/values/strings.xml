@@ -76,4 +76,10 @@
     <string name="copy_right">© Copyright Starmark-Ventures Ltd</string>
     <string name="address">153 High Rd. Broxbourne, Hertfordshire. EN10 7BS, UK\nEmail: contact@starmark-ventures.com\nphone: + (44) 0208 4326 331</string>
 
+    <string-array name="descriptions">
+        <item>Create and edit your rotas on this page, you will name and input further details on the next screen</item>
+        <item>Input the times for each shift on this page, this will take you through each week should they be different.</item>
+        <item>This is where you will be able to view your upcoming shifts as well as view the times on each day. Alternatively you can view this information through Google Calender</item>
+    </string-array>
+
 </resources>

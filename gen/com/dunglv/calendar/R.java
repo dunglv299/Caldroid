@@ -10,6 +10,7 @@ package com.dunglv.calendar;
 public final class R {
     public static final class array {
         public static final int color_spinner=0x7f0b0002;
+        public static final int descriptions=0x7f0b0004;
         /**  Nav Drawer List Item Icons 
  Keep them in order as the titles are in 
          */
@@ -1377,12 +1378,12 @@ containing a value of this type.
         public static final int abs__up=0x7f040010;
         public static final int bottom=0x7f040003;
         public static final int button_layout=0x7f040047;
-        public static final int calendar_gridview=0x7f040089;
-        public static final int calendar_left_arrow=0x7f040082;
-        public static final int calendar_month_year_textview=0x7f040083;
-        public static final int calendar_right_arrow=0x7f040084;
-        public static final int calendar_title_view=0x7f040081;
-        public static final int calendar_tv=0x7f040088;
+        public static final int calendar_gridview=0x7f04008a;
+        public static final int calendar_left_arrow=0x7f040083;
+        public static final int calendar_month_year_textview=0x7f040084;
+        public static final int calendar_right_arrow=0x7f040085;
+        public static final int calendar_title_view=0x7f040082;
+        public static final int calendar_tv=0x7f040089;
         public static final int checkbox=0x7f04003e;
         public static final int circular_image_view=0x7f04004b;
         public static final int color_spinner=0x7f04003c;
@@ -1390,10 +1391,11 @@ containing a value of this type.
         public static final int copy_to_next=0x7f040079;
         public static final int custom_cell=0x7f040049;
         public static final int delete_btn=0x7f040043;
+        public static final int description_tv=0x7f040081;
         public static final int disableHome=0x7f04000e;
         public static final int drawer_layout=0x7f040045;
         public static final int edit_query=0x7f04002b;
-        public static final int endDate_btn=0x7f040091;
+        public static final int endDate_btn=0x7f040092;
         public static final int endDate_btn1=0x7f040051;
         public static final int endDate_btn2=0x7f040057;
         public static final int endDate_btn3=0x7f04005d;
@@ -1401,7 +1403,7 @@ containing a value of this type.
         public static final int endDate_btn5=0x7f040069;
         public static final int endDate_btn6=0x7f04006f;
         public static final int endDate_btn7=0x7f040075;
-        public static final int endTime_tv=0x7f04008d;
+        public static final int endTime_tv=0x7f04008e;
         public static final int frame_add_next=0x7f040044;
         public static final int google_checkbox=0x7f040040;
         public static final int homeAsUp=0x7f04000b;
@@ -1417,27 +1419,27 @@ containing a value of this type.
         public static final int layout1=0x7f040037;
         public static final int layout2=0x7f040038;
         public static final int listMode=0x7f040007;
-        public static final int listRotaDate=0x7f040087;
+        public static final int listRotaDate=0x7f040088;
         public static final int list_rota=0x7f04007d;
         public static final int list_slidermenu=0x7f040048;
         public static final int mImageView=0x7f040080;
         public static final int main_content=0x7f040046;
         public static final int make_all_week_btn=0x7f04007a;
-        public static final int months_infinite_pager=0x7f040086;
+        public static final int months_infinite_pager=0x7f040087;
         public static final int newRota_btn=0x7f04007e;
         public static final int next_btn=0x7f040078;
         public static final int none=0x7f040000;
         public static final int normal=0x7f040006;
         public static final int pager=0x7f04007b;
-        public static final int rectangleView=0x7f04008a;
+        public static final int rectangleView=0x7f04008b;
         public static final int reminder_spinner=0x7f04003f;
-        public static final int rota_date=0x7f04008b;
+        public static final int rota_date=0x7f04008c;
         public static final int rota_name=0x7f040039;
         public static final int save_btn=0x7f040042;
         public static final int showCustom=0x7f04000d;
         public static final int showHome=0x7f04000a;
         public static final int showTitle=0x7f04000c;
-        public static final int startDate_btn=0x7f040090;
+        public static final int startDate_btn=0x7f040091;
         public static final int startDate_btn1=0x7f04004f;
         public static final int startDate_btn2=0x7f040055;
         public static final int startDate_btn3=0x7f04005b;
@@ -1445,10 +1447,10 @@ containing a value of this type.
         public static final int startDate_btn5=0x7f040067;
         public static final int startDate_btn6=0x7f04006d;
         public static final int startDate_btn7=0x7f040073;
-        public static final int startTime_tv=0x7f04008c;
+        public static final int startTime_tv=0x7f04008d;
         public static final int start_date_btn=0x7f04003d;
         public static final int tabMode=0x7f040008;
-        public static final int text_spinner=0x7f04008e;
+        public static final int text_spinner=0x7f04008f;
         public static final int textview1=0x7f040050;
         public static final int textview2=0x7f040056;
         public static final int textview3=0x7f04005c;
@@ -1465,7 +1467,7 @@ containing a value of this type.
         public static final int underline=0x7f040002;
         public static final int useLogo=0x7f040009;
         public static final int week_number=0x7f04003a;
-        public static final int weekday=0x7f04008f;
+        public static final int weekday=0x7f040090;
         public static final int weekday1=0x7f04004e;
         public static final int weekday2=0x7f040054;
         public static final int weekday3=0x7f04005a;
@@ -1473,7 +1475,7 @@ containing a value of this type.
         public static final int weekday5=0x7f040066;
         public static final int weekday6=0x7f04006c;
         public static final int weekday7=0x7f040072;
-        public static final int weekday_gridview=0x7f040085;
+        public static final int weekday_gridview=0x7f040086;
         public static final int worktime_tv=0x7f040052;
         public static final int worktime_tv2=0x7f040058;
         public static final int worktime_tv3=0x7f04005e;

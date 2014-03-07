@@ -12,11 +12,13 @@ import com.dunglv.calendar.R;
 public class StepFragment extends BaseFragment {
 	ImageView mImageView;
 	TextView mTextView;
+	TextView mDescriptionTextView;
 	private int position;
 	private int imageStep[] = { R.drawable.calendar_step1,
 			R.drawable.calendar_step2, R.drawable.calendar_step3 };
 	private String[] titleStep = { "1.Manage Shift", "2.Manage Weekdays",
 			"3.Calendar View" };
+	private String[] descriptions;
 
 	public static StepFragment newInstance(int position) {
 		StepFragment stepFragment = new StepFragment();
@@ -33,6 +35,10 @@ public class StepFragment extends BaseFragment {
 				imageStep[position]));
 		mTextView = (TextView) v.findViewById(R.id.title_tv);
 		mTextView.setText(titleStep[position]);
+
+		descriptions = getResources().getStringArray(R.array.descriptions);
+		mDescriptionTextView = (TextView) v.findViewById(R.id.description_tv);
+		mDescriptionTextView.setText(descriptions[position]);
 		return v;
 	}
 }
