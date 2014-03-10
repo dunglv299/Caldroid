@@ -31,6 +31,7 @@ public class RotaDao extends AbstractDao<Rota, Long> {
         public final static Property TimeRepeat = new Property(5, String.class, "timeRepeat", false, "TIME_REPEAT");
         public final static Property ReminderTime = new Property(6, Integer.class, "reminderTime", false, "REMINDER_TIME");
         public final static Property IsGoogleSync = new Property(7, Boolean.class, "isGoogleSync", false, "IS_GOOGLE_SYNC");
+        public final static Property CalendarUri = new Property(8, String.class, "calendarUri", false, "CALENDAR_URI");
     };
 
     private DaoSession daoSession;
@@ -56,7 +57,8 @@ public class RotaDao extends AbstractDao<Rota, Long> {
                 "'WEEK_REAPEAT' INTEGER," + // 4: weekReapeat
                 "'TIME_REPEAT' TEXT," + // 5: timeRepeat
                 "'REMINDER_TIME' INTEGER," + // 6: reminderTime
-                "'IS_GOOGLE_SYNC' INTEGER);"); // 7: isGoogleSync
+                "'IS_GOOGLE_SYNC' INTEGER," + // 7: isGoogleSync
+                "'CALENDAR_URI' TEXT);"); // 8: calendarUri
     }
 
     /** Drops the underlying database table. */
@@ -109,6 +111,11 @@ public class RotaDao extends AbstractDao<Rota, Long> {
         if (isGoogleSync != null) {
             stmt.bindLong(8, isGoogleSync ? 1l: 0l);
         }
+ 
+        String calendarUri = entity.getCalendarUri();
+        if (calendarUri != null) {
+            stmt.bindString(9, calendarUri);
+        }
     }
 
     @Override
@@ -134,7 +141,8 @@ public class RotaDao extends AbstractDao<Rota, Long> {
             cursor.isNull(offset + 4) ? null : cursor.getInt(offset + 4), // weekReapeat
             cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // timeRepeat
             cursor.isNull(offset + 6) ? null : cursor.getInt(offset + 6), // reminderTime
-            cursor.isNull(offset + 7) ? null : cursor.getShort(offset + 7) != 0 // isGoogleSync
+            cursor.isNull(offset + 7) ? null : cursor.getShort(offset + 7) != 0, // isGoogleSync
+            cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8) // calendarUri
         );
         return entity;
     }
@@ -150,6 +158,7 @@ public class RotaDao extends AbstractDao<Rota, Long> {
         entity.setTimeRepeat(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
         entity.setReminderTime(cursor.isNull(offset + 6) ? null : cursor.getInt(offset + 6));
         entity.setIsGoogleSync(cursor.isNull(offset + 7) ? null : cursor.getShort(offset + 7) != 0);
+        entity.setCalendarUri(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));
      }
     
     /** @inheritdoc */

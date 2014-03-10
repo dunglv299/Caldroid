@@ -93,8 +93,8 @@
                         android:layout_alignLeft="@+id/endDate_btn1"
                         android:layout_marginTop="40dp"
                         android:layout_toRightOf="@+id/worktime_tv"
-                        android:inputType="number"
-                        android:maxLength="2" />
+                        android:inputType="numberDecimal"
+                        android:maxLength="3" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -108,6 +108,15 @@
                         android:layout_height="1dp"
                         android:layout_alignParentBottom="true"
                         android:background="@color/gray_line" />
+
+                    <ImageView
+                        android:id="@+id/delete1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="@dimen/delete_margin_right"
+                        android:layout_marginTop="@dimen/delete_margin_top"
+                        android:src="@drawable/ic_clear" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -166,8 +175,8 @@
                         android:layout_alignLeft="@+id/endDate_btn2"
                         android:layout_marginTop="40dp"
                         android:layout_toRightOf="@+id/worktime_tv2"
-                        android:inputType="number"
-                        android:maxLength="2" />
+                        android:inputType="numberDecimal"
+                        android:maxLength="3" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -181,6 +190,15 @@
                         android:layout_height="1dp"
                         android:layout_alignParentBottom="true"
                         android:background="@color/gray_line" />
+
+                    <ImageView
+                        android:id="@+id/delete2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="@dimen/delete_margin_right"
+                        android:layout_marginTop="@dimen/delete_margin_top"
+                        android:src="@drawable/ic_clear" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -239,8 +257,8 @@
                         android:layout_alignLeft="@+id/endDate_btn3"
                         android:layout_marginTop="40dp"
                         android:layout_toRightOf="@+id/worktime_tv3"
-                        android:inputType="number"
-                        android:maxLength="2" />
+                        android:inputType="numberDecimal"
+                        android:maxLength="3" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -254,6 +272,15 @@
                         android:layout_height="1dp"
                         android:layout_alignParentBottom="true"
                         android:background="@color/gray_line" />
+
+                    <ImageView
+                        android:id="@+id/delete3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="@dimen/delete_margin_right"
+                        android:layout_marginTop="@dimen/delete_margin_top"
+                        android:src="@drawable/ic_clear" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -312,8 +339,8 @@
                         android:layout_alignLeft="@+id/endDate_btn4"
                         android:layout_marginTop="40dp"
                         android:layout_toRightOf="@+id/worktime_tv4"
-                        android:inputType="number"
-                        android:maxLength="2" />
+                        android:inputType="numberDecimal"
+                        android:maxLength="3" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -327,6 +354,15 @@
                         android:layout_height="1dp"
                         android:layout_alignParentBottom="true"
                         android:background="@color/gray_line" />
+
+                    <ImageView
+                        android:id="@+id/delete4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="@dimen/delete_margin_right"
+                        android:layout_marginTop="@dimen/delete_margin_top"
+                        android:src="@drawable/ic_clear" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -385,8 +421,8 @@
                         android:layout_alignLeft="@+id/endDate_btn5"
                         android:layout_marginTop="40dp"
                         android:layout_toRightOf="@+id/worktime_tv5"
-                        android:inputType="number"
-                        android:maxLength="2" />
+                        android:inputType="numberDecimal"
+                        android:maxLength="3" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -400,6 +436,15 @@
                         android:layout_height="1dp"
                         android:layout_alignParentBottom="true"
                         android:background="@color/gray_line" />
+
+                    <ImageView
+                        android:id="@+id/delete5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="@dimen/delete_margin_right"
+                        android:layout_marginTop="@dimen/delete_margin_top"
+                        android:src="@drawable/ic_clear" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -458,8 +503,8 @@
                         android:layout_alignLeft="@+id/endDate_btn6"
                         android:layout_marginTop="40dp"
                         android:layout_toRightOf="@+id/worktime_tv6"
-                        android:inputType="number"
-                        android:maxLength="2" />
+                        android:inputType="numberDecimal"
+                        android:maxLength="3" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -473,6 +518,15 @@
                         android:layout_height="1dp"
                         android:layout_alignParentBottom="true"
                         android:background="@color/gray_line" />
+
+                    <ImageView
+                        android:id="@+id/delete6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="@dimen/delete_margin_right"
+                        android:layout_marginTop="@dimen/delete_margin_top"
+                        android:src="@drawable/ic_clear" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -531,8 +585,8 @@
                         android:layout_alignLeft="@+id/endDate_btn7"
                         android:layout_marginTop="40dp"
                         android:layout_toRightOf="@+id/worktime_tv7"
-                        android:inputType="number"
-                        android:maxLength="2" />
+                        android:inputType="numberDecimal"
+                        android:maxLength="3" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -546,6 +600,15 @@
                         android:layout_height="1dp"
                         android:layout_alignParentBottom="true"
                         android:background="@color/gray_line" />
+
+                    <ImageView
+                        android:id="@+id/delete7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="@dimen/delete_margin_right"
+                        android:layout_marginTop="@dimen/delete_margin_top"
+                        android:src="@drawable/ic_clear" />
                 </RelativeLayout>
             </LinearLayout>
         </ScrollView>

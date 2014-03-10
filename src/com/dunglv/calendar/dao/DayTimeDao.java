@@ -33,7 +33,7 @@ public class DayTimeDao extends AbstractDao<DayTime, Long> {
         public final static Property RotaId = new Property(2, long.class, "rotaId", false, "ROTA_ID");
         public final static Property StartTime = new Property(3, Long.class, "startTime", false, "START_TIME");
         public final static Property EndTime = new Property(4, Long.class, "endTime", false, "END_TIME");
-        public final static Property HourWorking = new Property(5, Integer.class, "hourWorking", false, "HOUR_WORKING");
+        public final static Property HourWorking = new Property(5, Double.class, "hourWorking", false, "HOUR_WORKING");
         public final static Property IsSyncGoogle = new Property(6, Boolean.class, "isSyncGoogle", false, "IS_SYNC_GOOGLE");
     };
 
@@ -59,7 +59,7 @@ public class DayTimeDao extends AbstractDao<DayTime, Long> {
                 "'ROTA_ID' INTEGER NOT NULL ," + // 2: rotaId
                 "'START_TIME' INTEGER," + // 3: startTime
                 "'END_TIME' INTEGER," + // 4: endTime
-                "'HOUR_WORKING' INTEGER," + // 5: hourWorking
+                "'HOUR_WORKING' REAL," + // 5: hourWorking
                 "'IS_SYNC_GOOGLE' INTEGER);"); // 6: isSyncGoogle
     }
 
@@ -95,9 +95,9 @@ public class DayTimeDao extends AbstractDao<DayTime, Long> {
             stmt.bindLong(5, endTime);
         }
  
-        Integer hourWorking = entity.getHourWorking();
+        Double hourWorking = entity.getHourWorking();
         if (hourWorking != null) {
-            stmt.bindLong(6, hourWorking);
+            stmt.bindDouble(6, hourWorking);
         }
  
         Boolean isSyncGoogle = entity.getIsSyncGoogle();
@@ -127,7 +127,7 @@ public class DayTimeDao extends AbstractDao<DayTime, Long> {
             cursor.getLong(offset + 2), // rotaId
             cursor.isNull(offset + 3) ? null : cursor.getLong(offset + 3), // startTime
             cursor.isNull(offset + 4) ? null : cursor.getLong(offset + 4), // endTime
-            cursor.isNull(offset + 5) ? null : cursor.getInt(offset + 5), // hourWorking
+            cursor.isNull(offset + 5) ? null : cursor.getDouble(offset + 5), // hourWorking
             cursor.isNull(offset + 6) ? null : cursor.getShort(offset + 6) != 0 // isSyncGoogle
         );
         return entity;
@@ -141,7 +141,7 @@ public class DayTimeDao extends AbstractDao<DayTime, Long> {
         entity.setRotaId(cursor.getLong(offset + 2));
         entity.setStartTime(cursor.isNull(offset + 3) ? null : cursor.getLong(offset + 3));
         entity.setEndTime(cursor.isNull(offset + 4) ? null : cursor.getLong(offset + 4));
-        entity.setHourWorking(cursor.isNull(offset + 5) ? null : cursor.getInt(offset + 5));
+        entity.setHourWorking(cursor.isNull(offset + 5) ? null : cursor.getDouble(offset + 5));
         entity.setIsSyncGoogle(cursor.isNull(offset + 6) ? null : cursor.getShort(offset + 6) != 0);
      }
     

@@ -73,8 +73,8 @@
         <item>24 hours</item>
     </array>
     <!-- about screen -->
-    <string name="copy_right">© Copyright Starmark-Ventures Ltd</string>
-    <string name="address">153 High Rd. Broxbourne, Hertfordshire. EN10 7BS, UK\nEmail: contact@starmark-ventures.com\nphone: + (44) 0208 4326 331</string>
+    <string name="feedback">Your feedback is important to us</string>
+    <string name="address">contact@starmark-ventures.com</string>
 
     <string-array name="descriptions">
         <item>Create and edit your rotas on this page, you will name and input further details on the next screen</item>

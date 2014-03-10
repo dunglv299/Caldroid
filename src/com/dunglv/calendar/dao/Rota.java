@@ -18,6 +18,7 @@ public class Rota {
     private String timeRepeat;
     private Integer reminderTime;
     private Boolean isGoogleSync;
+    private String calendarUri;
 
     /** Used to resolve relations */
     private transient DaoSession daoSession;
@@ -34,7 +35,7 @@ public class Rota {
         this.id = id;
     }
 
-    public Rota(Long id, String name, Long dateStarted, String color, Integer weekReapeat, String timeRepeat, Integer reminderTime, Boolean isGoogleSync) {
+    public Rota(Long id, String name, Long dateStarted, String color, Integer weekReapeat, String timeRepeat, Integer reminderTime, Boolean isGoogleSync, String calendarUri) {
         this.id = id;
         this.name = name;
         this.dateStarted = dateStarted;
@@ -43,6 +44,7 @@ public class Rota {
         this.timeRepeat = timeRepeat;
         this.reminderTime = reminderTime;
         this.isGoogleSync = isGoogleSync;
+        this.calendarUri = calendarUri;
     }
 
     /** called by internal mechanisms, do not call yourself. */
@@ -113,6 +115,14 @@ public class Rota {
 
     public void setIsGoogleSync(Boolean isGoogleSync) {
         this.isGoogleSync = isGoogleSync;
+    }
+
+    public String getCalendarUri() {
+        return calendarUri;
+    }
+
+    public void setCalendarUri(String calendarUri) {
+        this.calendarUri = calendarUri;
     }
 
     /** To-many relationship, resolved on first access (and after reset). Changes to to-many relations are not persisted, make changes to the target entity. */

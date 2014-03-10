@@ -4,7 +4,11 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
+import android.app.NotificationManager;
+import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 
@@ -18,6 +22,8 @@ public class EditRotaActivity extends RotaActivity implements OnClickListener {
 	private long rotaId;
 	private Rota rota;
 	private long previousDay;
+	private String calendarUri;
+	private String[] arrayUri;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +58,7 @@ public class EditRotaActivity extends RotaActivity implements OnClickListener {
 		// Google sync
 		// isGoogleSync = rota.getIsGoogleSync();
 		mCheckBoxGoogle.setChecked(rota.getIsGoogleSync());
+		calendarUri = rota.getCalendarUri();
 	}
 
 	@Override
@@ -65,6 +72,7 @@ public class EditRotaActivity extends RotaActivity implements OnClickListener {
 		rota = super.getRota();
 		rota.setId(rotaId);
 		rota.setDateStarted(startDate);
+		rota.setCalendarUri(calendarUri);
 		return rota;
 	}
 
@@ -107,6 +115,12 @@ public class EditRotaActivity extends RotaActivity implements OnClickListener {
 		initDayTimeDao();
 		List<DayTime> listDelete = dayTimeDao.queryBuilder()
 				.where(Properties.RotaId.eq(rotaId)).list();
+		cancelRemind(listDelete);
+		// Delete event
+		arrayUri = calendarUri.split(",");
+		for (int i = 0; i < arrayUri.length; i++) {
+			deleteEvent(arrayUri[i]);
+		}
 		dayTimeDao.deleteInTx(listDelete);
 	}
 
@@ -137,14 +151,34 @@ public class EditRotaActivity extends RotaActivity implements OnClickListener {
 			Calendar cal = Calendar.getInstance();
 			// Stat time
 			cal.setTimeInMillis(dayTime.getStartTime());
-			cal.add(Calendar.DAY_OF_MONTH, plusDay);
+			cal.add(Calendar.DAY_OF_YEAR, plusDay);
 			dayTime.setStartTime(cal.getTimeInMillis());
 
 			// End time
 			cal.setTimeInMillis(dayTime.getEndTime());
-			cal.add(Calendar.DAY_OF_MONTH, plusDay);
+			cal.add(Calendar.DAY_OF_YEAR, plusDay);
 			dayTime.setEndTime(cal.getTimeInMillis());
 			dayTimeDao.update(dayTime);
 		}
+	}
+
+	public void cancelRemind(List<DayTime> listRemind) {
+		// Notification
+		for (DayTime dayTime : listRemind) {
+			cancelNotification(dayTime.getId().intValue());
+		}
+	}
+
+	public void cancelNotification(int notificationId) {
+		if (Context.NOTIFICATION_SERVICE != null) {
+			String ns = Context.NOTIFICATION_SERVICE;
+			NotificationManager nMgr = (NotificationManager) getSystemService(ns);
+			nMgr.cancel(notificationId);
+		}
+	}
+
+	private void deleteEvent(String uri) {
+		Log.e("delete uri", uri + "");
+		getContentResolver().delete(Uri.parse(uri), null, null);
 	}
 }

@@ -22,6 +22,13 @@ public class Utils {
 		return 0;
 	}
 
+	public static double convertStringToDouble(String s) {
+		if (s != null && !s.equals("")) {
+			return Double.parseDouble(s);
+		}
+		return 0;
+	}
+
 	public static String convertLongToTime(long time) {
 		Date dateObj = new Date(time);
 		SimpleDateFormat sdfAM = new SimpleDateFormat("h:mm a", Locale.US);

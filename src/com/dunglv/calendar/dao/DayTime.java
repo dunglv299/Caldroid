@@ -14,7 +14,7 @@ public class DayTime {
     private long rotaId;
     private Long startTime;
     private Long endTime;
-    private Integer hourWorking;
+    private Double hourWorking;
     private Boolean isSyncGoogle;
 
     /** Used to resolve relations */
@@ -34,7 +34,7 @@ public class DayTime {
         this.id = id;
     }
 
-    public DayTime(Long id, Integer dayId, long rotaId, Long startTime, Long endTime, Integer hourWorking, Boolean isSyncGoogle) {
+    public DayTime(Long id, Integer dayId, long rotaId, Long startTime, Long endTime, Double hourWorking, Boolean isSyncGoogle) {
         this.id = id;
         this.dayId = dayId;
         this.rotaId = rotaId;
@@ -90,11 +90,11 @@ public class DayTime {
         this.endTime = endTime;
     }
 
-    public Integer getHourWorking() {
+    public Double getHourWorking() {
         return hourWorking;
     }
 
-    public void setHourWorking(Integer hourWorking) {
+    public void setHourWorking(Double hourWorking) {
         this.hourWorking = hourWorking;
     }
 

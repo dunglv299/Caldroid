@@ -77,6 +77,7 @@ public abstract class RotaActivity extends FragmentActivity implements
 	public long startDate;
 	public boolean isGoogleSync;
 	public DayTimeDao dayTimeDao;
+	public String listUri = "";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +100,7 @@ public abstract class RotaActivity extends FragmentActivity implements
 		mWeekEd = (EditText) findViewById(R.id.week_number);
 		mRepeatTimeEd = (EditText) findViewById(R.id.time_number);
 		mCheckBoxReminder = (CheckBox) findViewById(R.id.checkbox);
+		mCheckBoxReminder.setOnCheckedChangeListener(this);
 		mCheckBoxGoogle = (CheckBox) findViewById(R.id.google_checkbox);
 		mCheckBoxGoogle.setOnCheckedChangeListener(this);
 		reminderSpinner = (Spinner) findViewById(R.id.reminder_spinner);
@@ -110,7 +112,7 @@ public abstract class RotaActivity extends FragmentActivity implements
 		setCustomColorSpinner();
 		reminderSpinnerListener();
 		sharedPreferences = new MySharedPreferences(this);
-		setSpinnerEnabled(reminderSpinner, false);
+		setSpinnerEnabled(reminderSpinner, true);
 		startDateBtn.setText(new SimpleDateFormat("dd/MM/yyyy", Locale.US)
 				.format(new Date()));
 
@@ -164,7 +166,7 @@ public abstract class RotaActivity extends FragmentActivity implements
 	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 		switch (buttonView.getId()) {
 		case R.id.checkbox:
-			setSpinnerEnabled(reminderSpinner, isChecked);
+			setSpinnerEnabled(reminderSpinner, !isChecked);
 			break;
 		case R.id.google_checkbox:
 			isGoogleSync = isChecked;
@@ -248,19 +250,6 @@ public abstract class RotaActivity extends FragmentActivity implements
 		rotaDao = daoSession.getRotaDao();
 	}
 
-	// protected void onActivityResult(int requestCode, int resultCode, Intent
-	// data) {
-	// if (requestCode == REQUES_CODE_FINISH) {
-	// if (resultCode == RESULT_OK) {
-	// Log.e(TAG, "dunglv");
-	// finish();
-	// }
-	// if (resultCode == RESULT_CANCELED) {
-	// // Write your code if there's no result
-	// }
-	// }
-	// }// onActivityResult
-
 	/**
 	 * Collect data for sava data to DB
 	 */
@@ -274,6 +263,7 @@ public abstract class RotaActivity extends FragmentActivity implements
 		rota.setReminderTime(mCheckBoxReminder.isChecked() ? remindTime : 0);
 		rota.setDateStarted(startDate);
 		rota.setIsGoogleSync(isGoogleSync);
+		rota.setCalendarUri(listUri);
 		return rota;
 	}
 
@@ -298,10 +288,6 @@ public abstract class RotaActivity extends FragmentActivity implements
 			if (rota.getIsGoogleSync()) {
 				onGoogleSync(rota, listData);
 			}
-		} else {
-			// Utils.showAlert(this,
-			// "Please select day by press \"Save & Continue\"");
-			// return;
 		}
 	}
 
@@ -340,8 +326,9 @@ public abstract class RotaActivity extends FragmentActivity implements
 							7 * i * rota.getWeekReapeat());
 					calendarEnd.add(Calendar.DAY_OF_YEAR,
 							7 * i * rota.getWeekReapeat());
-					addEvent(calendarStart.getTimeInMillis(),
+					Uri uri = addEvent(calendarStart.getTimeInMillis(),
 							calendarEnd.getTimeInMillis(), rota);
+					listUri += uri.toString() + ",";
 					dayTime.setIsSyncGoogle(true);
 					dayTimeDao.update(dayTime);
 				}
@@ -380,7 +367,7 @@ public abstract class RotaActivity extends FragmentActivity implements
 	}
 
 	@TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
-	private void addEvent(long startTime, long endTime, Rota rota) {
+	private Uri addEvent(long startTime, long endTime, Rota rota) {
 		Uri eventsUri;
 		Cursor cursor;
 		int calendarId = 0;
@@ -433,7 +420,9 @@ public abstract class RotaActivity extends FragmentActivity implements
 		event.put(CalendarContract.Events.HAS_ALARM, 1);
 		event.put(CalendarContract.Events.EVENT_TIMEZONE, timeZone.getID());
 		// To Insert
-		this.getContentResolver().insert(eventsUri, event);
-
+		Uri uri = this.getContentResolver().insert(eventsUri, event);
+		cursor.close();
+		Log.e("uri", uri + "");
+		return uri;
 	}
 }

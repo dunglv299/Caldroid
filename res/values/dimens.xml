@@ -14,5 +14,7 @@
 
     <dimen name="select_time_button_width">98dp</dimen>
     <dimen name="select_time_button_height">35dp</dimen>
+    <dimen name="delete_margin_right">15dp</dimen>
+    <dimen name="delete_margin_top">10dp</dimen>
 
 </resources>

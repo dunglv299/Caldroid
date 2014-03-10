@@ -17,6 +17,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -61,15 +62,20 @@ public class AddRotaNextFragment extends BaseFragment implements
 	private static final int[] hourIdArray = { R.id.hour_edittext,
 			R.id.hour_edittext2, R.id.hour_edittext3, R.id.hour_edittext4,
 			R.id.hour_edittext5, R.id.hour_edittext6, R.id.hour_edittext7 };
+
+	private static final int[] deleteIdArray = { R.id.delete1, R.id.delete2,
+			R.id.delete3, R.id.delete4, R.id.delete5, R.id.delete6,
+			R.id.delete7 };
 	private TextView[] weekDayTv = new TextView[LENGTH];
 	private Button[] startBtn = new Button[LENGTH];
 	private Button[] endBtn = new Button[LENGTH];
 	private EditText[] hourEditText = new EditText[LENGTH];
+	private ImageView[] deleteBtn = new ImageView[LENGTH];
 	private boolean[] isGoogleSyncs = new boolean[LENGTH];
 
 	private long[] startTime = new long[LENGTH];
 	private long[] endTime = new long[LENGTH];
-	private int[] hourWorking = new int[LENGTH];
+	private double[] hourWorking = new double[LENGTH];
 
 	private DayTimeDao dayTimeDao;
 	private RotaDao rotaDao;
@@ -141,6 +147,16 @@ public class AddRotaNextFragment extends BaseFragment implements
 			});
 			// Init editText and get data
 			hourEditText[i] = (EditText) v.findViewById(hourIdArray[i]);
+
+			// Init delete btn
+			deleteBtn[i] = (ImageView) v.findViewById(deleteIdArray[i]);
+			deleteBtn[i].setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					clearTimeText(index);
+				}
+			});
 		}
 	}
 
@@ -162,7 +178,7 @@ public class AddRotaNextFragment extends BaseFragment implements
 				setTextButton(startBtn[i], startTime[i]);
 				setTextButton(endBtn[i], endTime[i]);
 				// Init hour working
-				int hourWorking = dayTime.getHourWorking();
+				double hourWorking = dayTime.getHourWorking();
 				if (hourWorking == 0) {
 					hourEditText[i].setText("");
 				} else {
@@ -198,6 +214,9 @@ public class AddRotaNextFragment extends BaseFragment implements
 	private void showTimePicker(final Button button, final boolean isStartTime,
 			final int index) {
 		Calendar c = Calendar.getInstance();
+		if (startTime[index] > 0) {
+			c.setTimeInMillis(isStartTime ? startTime[index] : endTime[index]);
+		}
 		final TimePickerDialog dateDialog = new TimePickerDialog(getActivity(),
 				new TimePickerDialog.OnTimeSetListener() {
 					@Override
@@ -213,17 +232,16 @@ public class AddRotaNextFragment extends BaseFragment implements
 						if (isStartTime) {
 							startTime[index] = mCalendar.getTimeInMillis();
 							if (endTime[index] == 0) {
-								endTime[index] = mCalendar.getTimeInMillis();
+								endTime[index] = mCalendar.getTimeInMillis() + 10000l;
 								setTextButton(endBtn[index], endTime[index]);
 							}
 							if (startTime[index] > endTime[index]) {
-								endTime[index] = startTime[index];
 								setTextButton(endBtn[index], endTime[index]);
 							}
 						} else {
 							endTime[index] = mCalendar.getTimeInMillis();
 							if (startTime[index] == 0) {
-								startTime[index] = mCalendar.getTimeInMillis();
+								startTime[index] = mCalendar.getTimeInMillis() - 10000l;
 								setTextButton(startBtn[index], startTime[index]);
 							}
 						}
@@ -389,7 +407,7 @@ public class AddRotaNextFragment extends BaseFragment implements
 	}
 
 	private DayTime collectData(int index) {
-		hourWorking[index] = Utils.convertStringToInt(hourEditText[index]
+		hourWorking[index] = Utils.convertStringToDouble(hourEditText[index]
 				.getText().toString());
 		DayTime dayTime = new DayTime();
 		dayTime.setDayId(index + getPlusDay());
@@ -458,5 +476,12 @@ public class AddRotaNextFragment extends BaseFragment implements
 		DaoMaster daoMaster = new DaoMaster(db);
 		DaoSession daoSession = daoMaster.newSession();
 		dayTimeDao = daoSession.getDayTimeDao();
+	}
+
+	private void clearTimeText(int index) {
+		startTime[index] = 0;
+		endTime[index] = 0;
+		setTextButton(startBtn[index], startTime[index]);
+		setTextButton(endBtn[index], endTime[index]);
 	}
 }
