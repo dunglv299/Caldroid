@@ -59,6 +59,7 @@ public class EditRotaActivity extends RotaActivity implements OnClickListener {
 		// isGoogleSync = rota.getIsGoogleSync();
 		mCheckBoxGoogle.setChecked(rota.getIsGoogleSync());
 		calendarUri = rota.getCalendarUri();
+		calendar.setTimeInMillis(rota.getDateStarted());
 	}
 
 	@Override
@@ -181,4 +182,5 @@ public class EditRotaActivity extends RotaActivity implements OnClickListener {
 		Log.e("delete uri", uri + "");
 		getContentResolver().delete(Uri.parse(uri), null, null);
 	}
+
 }

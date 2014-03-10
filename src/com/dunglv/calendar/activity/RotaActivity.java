@@ -78,6 +78,7 @@ public abstract class RotaActivity extends FragmentActivity implements
 	public boolean isGoogleSync;
 	public DayTimeDao dayTimeDao;
 	public String listUri = "";
+	public Calendar calendar;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -118,6 +119,7 @@ public abstract class RotaActivity extends FragmentActivity implements
 
 		Calendar mCalendar = Calendar.getInstance();
 		startDate = mCalendar.getTimeInMillis();
+		calendar = Calendar.getInstance();
 	}
 
 	@Override
@@ -130,7 +132,7 @@ public abstract class RotaActivity extends FragmentActivity implements
 			onSave();
 			break;
 		case R.id.start_date_btn:
-			showDatePicker(startDateBtn);
+			showDatePicker(startDateBtn, calendar);
 			break;
 		default:
 			break;
@@ -140,8 +142,7 @@ public abstract class RotaActivity extends FragmentActivity implements
 	/**
 	 * Show time picker dialog
 	 */
-	private void showDatePicker(final Button button) {
-		Calendar c = Calendar.getInstance();
+	public void showDatePicker(final Button button, Calendar c) {
 		final DatePickerDialog dateDialog = new DatePickerDialog(this,
 				new DatePickerDialog.OnDateSetListener() {
 					@Override
