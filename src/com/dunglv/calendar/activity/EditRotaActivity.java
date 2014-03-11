@@ -179,8 +179,11 @@ public class EditRotaActivity extends RotaActivity implements OnClickListener {
 	}
 
 	private void deleteEvent(String uri) {
-		Log.e("delete uri", uri + "");
-		getContentResolver().delete(Uri.parse(uri), null, null);
+		try {
+			getContentResolver().delete(Uri.parse(uri), null, null);
+			Log.e("delete uri", uri + "");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
-
 }
