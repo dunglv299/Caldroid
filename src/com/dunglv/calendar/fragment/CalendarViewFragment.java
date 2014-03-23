@@ -1,12 +1,5 @@
 package com.dunglv.calendar.fragment;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,23 +7,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-
 import com.caldroid.caldroidcustom.CaldroidFragment;
 import com.caldroid.caldroidcustom.CaldroidGridAdapter;
 import com.caldroid.caldroidcustom.CaldroidListener;
 import com.dunglv.calendar.R;
 import com.dunglv.calendar.adapter.CaldroidSampleCustomAdapter;
 import com.dunglv.calendar.adapter.RotaDayAdapter;
-import com.dunglv.calendar.dao.DaoMaster;
+import com.dunglv.calendar.dao.*;
 import com.dunglv.calendar.dao.DaoMaster.DevOpenHelper;
-import com.dunglv.calendar.dao.DaoSession;
-import com.dunglv.calendar.dao.DayTime;
-import com.dunglv.calendar.dao.DayTimeDao;
 import com.dunglv.calendar.dao.DayTimeDao.Properties;
-import com.dunglv.calendar.dao.Rota;
-import com.dunglv.calendar.dao.RotaDao;
 import com.dunglv.calendar.entity.RotaDay;
 import com.dunglv.calendar.util.Utils;
+
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class CalendarViewFragment extends CaldroidFragment {
 	private SimpleDateFormat formatter;
