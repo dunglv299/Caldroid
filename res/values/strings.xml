@@ -55,7 +55,7 @@
 
     <!-- setting screen -->
     <string name="google_sync">Google Sync</string>
-    <string name="reminder">Reminder</string>
+    <string name="reminder">Reminder and Google Sync</string>
 
     <array name="reminder_spinner">
         <item>1 minute</item>

@@ -42,5 +42,5 @@
     <color name="today_color">#33b5e5</color>
     <color name="today_background">#eaf7fc</color>
     <color name="selected_date">#4d5155</color>
-
+    <color name="previous_month">#66cccfff</color>
 </resources>

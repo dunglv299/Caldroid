@@ -1,308 +1,284 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/add_shift_background"
-    android:orientation="vertical" >
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/add_shift_background"
+                android:orientation="vertical">
 
     <ScrollView
-        android:id="@+id/layout1"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/layout2" >
+            android:id="@+id/layout1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/layout2">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingTop="26dp" >
-
-            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" >
+                android:orientation="vertical"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="26dp">
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/textview_marginLeft"
-                    android:text="@string/name"
-                    android:textSize="@dimen/normal_textSize" />
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/textview_marginLeft"
+                        android:text="@string/name"
+                        android:textSize="@dimen/normal_textSize"/>
 
                 <EditText
-                    android:id="@+id/rota_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/rota_name_hint"
-                    android:singleLine="true"
-                    android:textColor="@color/caldroid_cyan" />
+                        android:id="@+id/rota_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/rota_name_hint"
+                        android:singleLine="true"
+                        android:textColor="@color/caldroid_cyan"/>
 
                 <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="@dimen/textview_marginTop"
-                    android:background="@color/gray_line" />
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="@dimen/textview_marginTop"
+                        android:background="@color/gray_line"/>
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingTop="@dimen/textview_marginTop" >
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingTop="@dimen/textview_marginTop">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/textview_marginLeft"
-                    android:text="@string/how_many_week"
-                    android:textSize="@dimen/normal_textSize" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" >
-
-                    <EditText
-                        android:id="@+id/week_number"
-                        android:layout_width="45dp"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:inputType="number"
-                        android:maxLength="2"
-                        android:textColor="@color/caldroid_cyan" />
-
-                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="weeks" />
+                        android:layout_marginLeft="@dimen/textview_marginLeft"
+                        android:text="@string/how_many_week"
+                        android:textSize="@dimen/normal_textSize"/>
+
+                <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                    <EditText
+                            android:id="@+id/week_number"
+                            android:layout_width="45dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:inputType="number"
+                            android:maxLength="2"
+                            android:textColor="@color/caldroid_cyan"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="weeks"/>
                 </LinearLayout>
 
                 <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="@dimen/textview_marginTop"
-                    android:background="@color/gray_line" />
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="@dimen/textview_marginTop"
+                        android:background="@color/gray_line"/>
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingTop="@dimen/textview_marginTop" >
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingTop="@dimen/textview_marginTop">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/textview_marginLeft"
-                    android:text="@string/repeat_rota_for"
-                    android:textSize="@dimen/normal_textSize" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" >
-
-                    <EditText
-                        android:id="@+id/time_number"
-                        android:layout_width="45dp"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:inputType="number"
-                        android:maxLength="2"
-                        android:textColor="@color/caldroid_cyan" />
-
-                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="times" />
+                        android:layout_marginLeft="@dimen/textview_marginLeft"
+                        android:text="@string/repeat_rota_for"
+                        android:textSize="@dimen/normal_textSize"/>
+
+                <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                    <EditText
+                            android:id="@+id/time_number"
+                            android:layout_width="45dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:inputType="number"
+                            android:maxLength="2"
+                            android:textColor="@color/caldroid_cyan"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="times"/>
                 </LinearLayout>
             </LinearLayout>
 
             <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/gray_line" />
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray_line"/>
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/row_height"
-                android:gravity="center_vertical"
-                android:orientation="vertical" >
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/row_height"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
 
                 <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" >
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/textview_marginLeft"
-                        android:text="@string/color"
-                        android:textSize="@dimen/normal_textSize" />
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/textview_marginLeft"
+                            android:text="@string/color"
+                            android:textSize="@dimen/normal_textSize"/>
 
                     <Spinner
-                        android:id="@+id/color_spinner"
-                        android:layout_width="70dp"
-                        android:layout_height="30dp"
-                        android:layout_alignParentRight="true"
-                        android:entries="@array/color_spinner" />
+                            android:id="@+id/color_spinner"
+                            android:layout_width="70dp"
+                            android:layout_height="30dp"
+                            android:layout_alignParentRight="true"
+                            android:entries="@array/color_spinner"/>
                 </RelativeLayout>
             </LinearLayout>
 
             <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/gray_line" />
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray_line"/>
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/row_height"
-                android:gravity="center_vertical"
-                android:orientation="vertical" >
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/row_height"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
 
                 <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" >
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/textview_marginLeft"
-                        android:text="@string/date_start"
-                        android:textSize="@dimen/normal_textSize" />
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/textview_marginLeft"
+                            android:text="@string/date_start"
+                            android:textSize="@dimen/normal_textSize"/>
 
                     <Button
-                        android:id="@+id/start_date_btn"
-                        android:layout_width="110dp"
-                        android:layout_height="@dimen/select_time_button_height"
-                        android:layout_alignParentRight="true"
-                        android:background="@color/white" />
+                            android:id="@+id/start_date_btn"
+                            android:layout_width="110dp"
+                            android:layout_height="@dimen/select_time_button_height"
+                            android:layout_alignParentRight="true"
+                            android:background="@color/white"/>
                 </RelativeLayout>
             </LinearLayout>
 
             <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/gray_line" />
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray_line"/>
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/row_height"
-                android:gravity="center_vertical"
-                android:orientation="vertical" >
+                    android:layout_width="match_parent"
+                    android:layout_height="90dp"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
 
                 <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" >
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/textview_marginLeft"
-                        android:text="@string/reminder"
-                        android:textSize="@dimen/normal_textSize" />
+                            android:id="@+id/tv_reminder"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/textview_marginLeft"
+                            android:text="@string/reminder"
+                            android:textSize="@dimen/normal_textSize"/>
 
-                    <CheckBox
-                        android:id="@+id/checkbox"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_toLeftOf="@+id/reminder_spinner" />
+                    <LinearLayout
+                            android:layout_marginTop="5dp"
+                            android:layout_below="@id/tv_reminder"
+                            android:layout_alignParentRight="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
 
-                    <Spinner
-                        android:id="@+id/reminder_spinner"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:entries="@array/reminder_spinner" />
+                        <CheckBox
+                                android:id="@+id/google_checkbox"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_toLeftOf="@+id/reminder_spinner"/>
+
+                        <Spinner
+                                android:id="@+id/reminder_spinner"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:entries="@array/reminder_spinner"/>
+                    </LinearLayout>
                 </RelativeLayout>
             </LinearLayout>
 
             <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/gray_line" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/row_height"
-                android:gravity="center_vertical"
-                android:orientation="vertical" >
-
-                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" >
+                    android:layout_height="1dp"
+                    android:background="@color/gray_line"/>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/textview_marginLeft"
-                        android:text="@string/google_sync"
-                        android:textSize="@dimen/normal_textSize" />
-
-                    <CheckBox
-                        android:id="@+id/google_checkbox"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="116dp" />
-                </RelativeLayout>
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/gray_line" />
         </LinearLayout>
     </ScrollView>
 
     <LinearLayout
-        android:id="@+id/layout2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="11dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp" >
+            android:id="@+id/layout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="11dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp">
 
         <Button
-            android:id="@+id/continue_btn"
-            android:layout_width="130dp"
-            android:layout_height="wrap_content"
-            android:background="@color/green"
-            android:gravity="center"
-            android:text="@string/continue_btn"
-            android:textColor="@color/white"
-            android:textSize="@dimen/next_textSize" />
+                android:id="@+id/continue_btn"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:background="@color/green"
+                android:gravity="center"
+                android:text="@string/continue_btn"
+                android:textColor="@color/white"
+                android:textSize="@dimen/next_textSize"/>
 
         <Button
-            android:id="@+id/save_btn"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_weight="1"
-            android:background="@color/green"
-            android:text="@string/save_btn"
-            android:textColor="@color/white"
-            android:textSize="@dimen/next_textSize" />
+                android:id="@+id/save_btn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1"
+                android:background="@color/green"
+                android:text="@string/save_btn"
+                android:textColor="@color/white"
+                android:textSize="@dimen/next_textSize"/>
 
         <Button
-            android:id="@+id/delete_btn"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_weight="1"
-            android:background="@color/green"
-            android:text="@string/delete_btn"
-            android:textColor="@color/white"
-            android:textSize="@dimen/next_textSize" />
+                android:id="@+id/delete_btn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_weight="1"
+                android:background="@color/green"
+                android:text="@string/delete_btn"
+                android:textColor="@color/white"
+                android:textSize="@dimen/next_textSize"/>
     </LinearLayout>
 
 </RelativeLayout>
