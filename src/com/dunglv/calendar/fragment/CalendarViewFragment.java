@@ -40,6 +40,12 @@ public class CalendarViewFragment extends CaldroidFragment {
     ListView mListView;
     private RotaDayAdapter rotaDayAdapter;
     private CaldroidSampleCustomAdapter adapter;
+    public DaoMaster daoMaster;
+    public DaoSession daoSession;
+    private SQLiteDatabase db;
+    public DayOffDao dayOffDao;
+    private List<DayOff> listDayOff;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,6 +53,7 @@ public class CalendarViewFragment extends CaldroidFragment {
         setUpCaldroidFragment();
         initRotaDao();
         initDayTimeDao();
+        initDayOffDao();
         fillDataToList();
     }
 
@@ -103,7 +110,7 @@ public class CalendarViewFragment extends CaldroidFragment {
     public CaldroidGridAdapter getNewDatesGridAdapter(int month, int year) {
         adapter = new CaldroidSampleCustomAdapter(
                 getActivity(), month, year, getCaldroidData(), extraData,
-                listRotaDay);
+                listRotaDay, listDayOff);
         return adapter;
     }
 
@@ -198,8 +205,14 @@ public class CalendarViewFragment extends CaldroidFragment {
                             addShift(date);
                             break;
                         case 1:
+                            markAsSick(date);
+                            adapter.notifyDataSetChanged();
+                            refreshView();
                             break;
                         case 2:
+                            markAsAnnual(date);
+                            adapter.notifyDataSetChanged();
+                            refreshView();
                             break;
                     }
                 }
@@ -227,7 +240,31 @@ public class CalendarViewFragment extends CaldroidFragment {
         getActivity().startActivityForResult(intent, REQUES_ADD_ROTA);
     }
 
-    public void markAsSick() {
+    public void initDayOffDao() {
+        DevOpenHelper helper = new DaoMaster.DevOpenHelper(getActivity(), "DayOff-db",
+                null);
+        db = helper.getWritableDatabase();
+        daoMaster = new DaoMaster(db);
+        daoSession = daoMaster.newSession();
+        dayOffDao = daoSession.getDayOffDao();
+        listDayOff = dayOffDao.queryBuilder().orderDesc(DayOffDao.Properties.Id)
+                .list();
 
+    }
+
+    public void markAsSick(Date date) {
+        DayOff dayOff = new DayOff();
+        dayOff.setDayOfTime(date.getTime());
+        dayOff.setOffType(1);//1 is sick, 2 is annual
+        dayOffDao.insert(dayOff);
+        listDayOff.add(dayOff);
+    }
+
+    public void markAsAnnual(Date date) {
+        DayOff dayOff = new DayOff();
+        dayOff.setDayOfTime(date.getTime());
+        dayOff.setOffType(2);//1 is sick, 2 is annual
+        dayOffDao.insert(dayOff);
+        listDayOff.add(dayOff);
     }
 }

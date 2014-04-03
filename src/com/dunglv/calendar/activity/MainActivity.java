@@ -51,7 +51,7 @@ public class MainActivity extends SherlockFragmentActivity {
         // requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
         initNavigationDrawer();
-        displayView(0);
+        displayView(1);
     }
 
     public void goToFragment(Fragment f) {

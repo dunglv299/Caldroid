@@ -11,23 +11,31 @@ import android.widget.TextView;
 import com.caldroid.caldroidcustom.CaldroidFragment;
 import com.caldroid.caldroidcustom.CaldroidGridAdapter;
 import com.dunglv.calendar.R;
+import com.dunglv.calendar.dao.DayOff;
 import com.dunglv.calendar.entity.RotaDay;
 import hirondelle.date4j.DateTime;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.TimeZone;
 
 public class CaldroidSampleCustomAdapter extends CaldroidGridAdapter {
     private List<String> listColors;
     private float scale;
     private List<RotaDay> listRotaDay;
+    private List<DayOff> listDayOff;
+    private List<Long> listDateOff = new ArrayList<Long>();
 
     public CaldroidSampleCustomAdapter(Context context, int month, int year,
                                        HashMap<String, Object> caldroidData,
-                                       HashMap<String, Object> extraData, List<RotaDay> listRotaDay) {
+                                       HashMap<String, Object> extraData, List<RotaDay> listRotaDay, List<DayOff> listDayOff) {
         super(context, month, year, caldroidData, extraData);
         this.listRotaDay = listRotaDay;
+        this.listDayOff = listDayOff;
+        for (DayOff dayOff : listDayOff) {
+            listDateOff.add(dayOff.getDayOfTime());
+        }
         scale = context.getResources().getDisplayMetrics().density;
     }
 
@@ -84,21 +92,32 @@ public class CaldroidSampleCustomAdapter extends CaldroidGridAdapter {
                 .findViewById(R.id.circular_image_view);
         linearLayout.removeAllViews();
         int numberOfRota = getNumberOfRota(dateTime);
-        if (numberOfRota > 0) {
-            for (int i = 0; i < numberOfRota; i++) {
-                // Restricted 4 round
-                if (i == 4) {
-                    break;
+        int index = listDateOff.indexOf(dateTime.getMilliseconds(TimeZone.getDefault()));
+        // Check sick day
+        if (index != -1) {
+            if (listDayOff.get(index).getOffType() == 1) {
+                linearLayout.setBackgroundColor(Color.GRAY);
+            } else if (listDayOff.get(index).getOffType() == 2) {
+                linearLayout.setBackgroundColor(Color.RED);
+            }
+
+        } else {
+            if (numberOfRota > 0) {
+                for (int i = 0; i < numberOfRota; i++) {
+                    // Restricted 4 round
+                    if (i == 4) {
+                        break;
+                    }
+                    MyCircleView circleView = new MyCircleView(context,
+                            Color.parseColor(listColors.get(i)));
+                    int circleSize = (int) context.getResources().getDimension(R.dimen.circle_size);
+                    LinearLayout.LayoutParams vp = new LinearLayout.LayoutParams(
+                            circleSize, circleSize);
+                    vp.leftMargin = circleSize / 4;
+                    vp.rightMargin = circleSize / 4;
+                    circleView.setLayoutParams(vp);
+                    linearLayout.addView(circleView);
                 }
-                MyCircleView circleView = new MyCircleView(context,
-                        Color.parseColor(listColors.get(i)));
-                int pixels = (int) (8 * scale + 0.5f);
-                LinearLayout.LayoutParams vp = new LinearLayout.LayoutParams(
-                        pixels, pixels);
-                vp.leftMargin = (int) (1 * scale + 0.5f);
-                vp.rightMargin = (int) (1 * scale + 0.5f);
-                circleView.setLayoutParams(vp);
-                linearLayout.addView(circleView);
             }
         }
 
@@ -118,5 +137,14 @@ public class CaldroidSampleCustomAdapter extends CaldroidGridAdapter {
             }
         }
         return index;
+    }
+
+    @Override
+    public void notifyDataSetChanged() {
+        super.notifyDataSetChanged();
+        listDateOff = new ArrayList<Long>();
+        for (DayOff dayOff : listDayOff) {
+            listDateOff.add(dayOff.getDayOfTime());
+        }
     }
 }
