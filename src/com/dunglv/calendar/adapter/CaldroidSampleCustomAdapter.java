@@ -95,10 +95,16 @@ public class CaldroidSampleCustomAdapter extends CaldroidGridAdapter {
         int index = listDateOff.indexOf(dateTime.getMilliseconds(TimeZone.getDefault()));
         // Check sick day
         if (index != -1) {
+            View sickView = new View(context);
+            LinearLayout.LayoutParams vp = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+            vp.topMargin = 20;
+            sickView.setLayoutParams(vp);
+            linearLayout.addView(sickView);
             if (listDayOff.get(index).getOffType() == 1) {
-                linearLayout.setBackgroundColor(Color.GRAY);
+                sickView.setBackgroundColor(Color.GRAY);
             } else if (listDayOff.get(index).getOffType() == 2) {
-                linearLayout.setBackgroundColor(Color.RED);
+                sickView.setBackgroundColor(Color.RED);
             }
 
         } else {

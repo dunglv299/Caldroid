@@ -150,6 +150,15 @@ public class CalendarViewFragment extends CaldroidFragment {
 
         @Override
         public void onSelectDate(Date date, View view) {
+            // Hide list when select day off
+            for (DayOff dayOff : listDayOff) {
+                if (dayOff.getDayOfTime() == date.getTime()) {
+                    mListView.setVisibility(View.GONE);
+                    setSelectedDates(date, date);
+                    refreshView();
+                    return;
+                }
+            }
             Log.e(TAG, formatter.format(date));
             listRotaShow = new ArrayList<Rota>();
             listDetailDay = new ArrayList<String>();
@@ -181,6 +190,7 @@ public class CalendarViewFragment extends CaldroidFragment {
             }
             rotaDayAdapter = new RotaDayAdapter(getActivity(), listRotaShow,
                     listDetailDay);
+            mListView.setVisibility(View.VISIBLE);
             mListView.setAdapter(rotaDayAdapter);
             setSelectedDates(date, date);
             refreshView();
